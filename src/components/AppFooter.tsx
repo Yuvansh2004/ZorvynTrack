@@ -67,10 +67,10 @@ export const AppFooter = () => {
               <p className="text-[10px] text-slate-500 font-bold mt-1 italic">Internship Applicant</p>
             </div>
             <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
-              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold whitespace-nowrap overflow-hidden text-ellipsis leading-tight">
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold whitespace-nowrap tracking-tighter leading-tight">
                 Personal: <span className="text-indigo-600 dark:text-indigo-400 font-black">yuvanshkoli1011@gmail.com</span>
               </p>
-              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold whitespace-nowrap overflow-hidden text-ellipsis leading-tight">
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold whitespace-nowrap tracking-tighter leading-tight">
                 College: <span className="text-indigo-600 dark:text-indigo-400 font-black">yuvanshkoli2324@ternaengg.ac.in</span>
               </p>
             </div>
