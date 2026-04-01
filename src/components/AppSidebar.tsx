@@ -37,12 +37,12 @@ export function AppSidebar() {
 
   const SidebarContentNode = () => (
     <div className="flex flex-col h-full bg-white dark:bg-slate-950">
-      <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4">
+      <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4 overflow-hidden">
         <div className={cn(
           "flex w-full items-center",
-          isMobile || isOpen ? "justify-between" : "justify-center gap-1.5"
+          isMobile || isOpen ? "justify-between" : "justify-center gap-2"
         )}>
-          <div className="flex items-center gap-3 overflow-hidden">
+          <div className="flex items-center gap-3 shrink-0">
             <div className="bg-indigo-600 rounded-xl p-2 shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
               <ZorvynLogo className="w-4 h-4 text-white" />
             </div>

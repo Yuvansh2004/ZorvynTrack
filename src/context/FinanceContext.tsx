@@ -42,7 +42,6 @@ export interface Transaction {
   createdAt: number;
 }
 
-// Data Generation Constants
 const CATEGORIES = ['Food', 'Transport', 'Education', 'Utilities', 'Health', 'Leisure', 'Electronics', 'Shopping', 'Subscriptions'];
 const DESCRIPTIONS: Record<string, string[]> = {
   Food: ['UPI: Cafeteria Terminal', 'Zomato Office Protocol', 'Swiggy Dinner Sync', 'Grocery Mart Verification', 'Coffee Node Hub'],
@@ -61,10 +60,8 @@ const generateRandomData = () => {
   const baseTime = 1767225600000; // Jan 1st, 2026
 
   DEMO_ACCOUNTS.forEach((user) => {
-    // Each user gets 50-100 transactions
     const count = Math.floor(Math.random() * 51) + 50; 
     
-    // Monthly stipends/income
     allTransactions.push({
       id: Math.random().toString(36).substr(2, 9),
       date: '2026-01-01',
@@ -85,7 +82,6 @@ const generateRandomData = () => {
         ? Math.floor(Math.random() * 5000) + 1000 
         : Math.floor(Math.random() * 2000) + 50;
       
-      // Random date between Jan 1 and Feb 15, 2026
       const randomDays = Math.floor(Math.random() * 45);
       const randomHours = Math.floor(Math.random() * 24);
       const timestamp = baseTime + (randomDays * 86400000) + (randomHours * 3600000);
@@ -173,7 +169,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setHasSeenTutorial(true);
     }
 
-    // Initial system boot loading
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
@@ -205,7 +200,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerTransition = (callback: () => void) => {
     setIsTransitioning(true);
-    const duration = Math.floor(Math.random() * 4000) + 1000; // 1 to 5 seconds
+    const duration = Math.floor(Math.random() * 4000) + 1000; 
     setTimeout(() => {
       callback();
       setIsTransitioning(false);
