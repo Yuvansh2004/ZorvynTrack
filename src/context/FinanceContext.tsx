@@ -40,33 +40,6 @@ export const DEMO_ACCOUNTS: User[] = [
   },
 ];
 
-const INITIAL_DATA: Transaction[] = [
-  // Yuvansh (Admin) Data
-  { id: 'y1', date: '2024-05-20', description: 'Monthly Internship Stipend', amount: 25000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-  { id: 'y2', date: '2024-05-19', description: 'Laptop Monthly Installment', amount: 8500, category: 'Electronics', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-  { id: 'y3', date: '2024-05-18', description: 'Grocery Shopping', amount: 3200, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-  { id: 'y4', date: '2024-05-15', description: 'Zomato Food Order', amount: 450, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-  { id: 'y5', date: '2024-05-12', description: 'Amazon Kindle Book', amount: 299, category: 'Education', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-  { id: 'y6', date: '2024-05-10', description: 'Fuel Refill', amount: 1200, category: 'Transport', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-  { id: 'y7', date: '2024-05-25', description: 'Interest Credit', amount: 150, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-
-  // Aditya (Viewer) Data
-  { id: 'a1', date: '2024-05-22', description: 'University Course Fee', amount: 5000, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
-  { id: 'a2', date: '2024-05-21', description: 'Coding Competition Prize', amount: 2000, category: 'Income', type: 'Income', ownerEmail: 'aditya.rao@zorvyn.com' },
-  { id: 'a3', date: '2024-05-19', description: 'Cafeteria Expenses', amount: 1500, category: 'Food', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
-  { id: 'a4', date: '2024-05-17', description: 'Mobile Recharge', amount: 799, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
-  { id: 'a5', date: '2024-05-14', description: 'Uber Trip', amount: 320, category: 'Transport', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
-  { id: 'a6', date: '2024-05-10', description: 'Netflix Subscription', amount: 499, category: 'Entertainment', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
-
-  // Priya (Viewer) Data
-  { id: 'p1', date: '2024-05-20', description: 'Freelance Design Project', amount: 12000, category: 'Freelance', type: 'Income', ownerEmail: 'priya.sharma@zorvyn.com' },
-  { id: 'p2', date: '2024-05-19', description: 'Adobe Creative Cloud', amount: 2100, category: 'Subscription', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com' },
-  { id: 'p3', date: '2024-05-18', description: 'Starbucks Coffee', amount: 450, category: 'Food', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com' },
-  { id: 'p4', date: '2024-05-15', description: 'Gym Membership', amount: 2000, category: 'Health', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com' },
-  { id: 'p5', date: '2024-05-10', description: 'Art Supplies Purchase', amount: 3500, category: 'Hobby', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com' },
-  { id: 'p6', date: '2024-05-24', description: 'Portfolio Website Hosting', amount: 1200, category: 'Tech', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com' },
-];
-
 export interface Transaction {
   id: string;
   date: string;
@@ -75,7 +48,35 @@ export interface Transaction {
   category: string;
   type: TransactionType;
   ownerEmail: string;
+  createdAt: number;
 }
+
+const INITIAL_DATA: Transaction[] = [
+  // Yuvansh (Admin) Data
+  { id: 'y1', date: '2024-05-20', description: 'Monthly Internship Stipend', amount: 25000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'y2', date: '2024-05-19', description: 'Laptop Monthly Installment', amount: 8500, category: 'Electronics', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'y3', date: '2024-05-18', description: 'Grocery Shopping', amount: 3200, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'y4', date: '2024-05-15', description: 'Zomato Food Order', amount: 450, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'y5', date: '2024-05-12', description: 'Amazon Kindle Book', amount: 299, category: 'Education', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'y6', date: '2024-05-10', description: 'Fuel Refill', amount: 1200, category: 'Transport', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'y7', date: '2024-05-25', description: 'Interest Credit', amount: 150, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: Date.now() - 3600000 },
+
+  // Aditya (Viewer) Data
+  { id: 'a1', date: '2024-05-22', description: 'University Course Fee', amount: 5000, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'a2', date: '2024-05-21', description: 'Coding Competition Prize', amount: 2000, category: 'Income', type: 'Income', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'a3', date: '2024-05-19', description: 'Cafeteria Expenses', amount: 1500, category: 'Food', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'a4', date: '2024-05-17', description: 'Mobile Recharge', amount: 799, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'a5', date: '2024-05-14', description: 'Uber Trip', amount: 320, category: 'Transport', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'a6', date: '2024-05-10', description: 'Netflix Subscription', amount: 499, category: 'Entertainment', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: Date.now() - 3600000 },
+
+  // Priya (Viewer) Data
+  { id: 'p1', date: '2024-05-20', description: 'Freelance Design Project', amount: 12000, category: 'Freelance', type: 'Income', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'p2', date: '2024-05-19', description: 'Adobe Creative Cloud', amount: 2100, category: 'Subscription', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'p3', date: '2024-05-18', description: 'Starbucks Coffee', amount: 450, category: 'Food', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'p4', date: '2024-05-15', description: 'Gym Membership', amount: 2000, category: 'Health', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'p5', date: '2024-05-10', description: 'Art Supplies Purchase', amount: 3500, category: 'Hobby', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: Date.now() - 3600000 },
+  { id: 'p6', date: '2024-05-24', description: 'Portfolio Website Hosting', amount: 1200, category: 'Tech', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: Date.now() - 3600000 },
+];
 
 interface FinanceContextType {
   transactions: Transaction[];
@@ -83,7 +84,7 @@ interface FinanceContextType {
   setUserRole: (role: UserRole) => void;
   activeView: ViewType;
   setActiveView: (view: ViewType) => void;
-  addTransaction: (transaction: Omit<Transaction, 'id' | 'ownerEmail'>) => void;
+  addTransaction: (transaction: Omit<Transaction, 'id' | 'ownerEmail' | 'createdAt'>) => void;
   updateTransaction: (id: string, updates: Partial<Transaction>) => void;
   deleteTransaction: (id: string) => void;
   resetLedger: () => void;
@@ -186,24 +187,39 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     setCurrentUser({ ...currentUser, name });
   };
 
-  const addTransaction = (transaction: Omit<Transaction, 'id' | 'ownerEmail'>) => {
+  const addTransaction = (transaction: Omit<Transaction, 'id' | 'ownerEmail' | 'createdAt'>) => {
     if (!currentUser) return;
     const newTransaction: Transaction = {
       ...transaction,
       id: Math.random().toString(36).substr(2, 9),
-      ownerEmail: currentUser.email 
+      ownerEmail: currentUser.email,
+      createdAt: Date.now()
     };
     setMasterLedger(prev => [newTransaction, ...prev]);
   };
 
   const updateTransaction = (id: string, updates: Partial<Transaction>) => {
-    if (userRole !== 'Admin') return;
-    setMasterLedger(prev => prev.map(t => t.id === id ? { ...t, ...updates } : t));
+    const transaction = masterLedger.find(t => t.id === id);
+    if (!transaction) return;
+
+    const isOwner = currentUser && transaction.ownerEmail === currentUser.email;
+    const isWithinWindow = (Date.now() - transaction.createdAt) < 30000;
+
+    if (userRole === 'Admin' || (isOwner && isWithinWindow)) {
+      setMasterLedger(prev => prev.map(t => t.id === id ? { ...t, ...updates } : t));
+    }
   };
 
   const deleteTransaction = (id: string) => {
-    if (userRole !== 'Admin') return;
-    setMasterLedger(prev => prev.filter(t => t.id !== id));
+    const transaction = masterLedger.find(t => t.id === id);
+    if (!transaction) return;
+
+    const isOwner = currentUser && transaction.ownerEmail === currentUser.email;
+    const isWithinWindow = (Date.now() - transaction.createdAt) < 30000;
+
+    if (userRole === 'Admin' || (isOwner && isWithinWindow)) {
+      setMasterLedger(prev => prev.filter(t => t.id !== id));
+    }
   };
 
   const resetLedger = () => {

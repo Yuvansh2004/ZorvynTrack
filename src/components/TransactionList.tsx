@@ -1,10 +1,10 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFinance, Transaction } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, X, Pencil, ArrowRight, ListFilter } from 'lucide-react';
+import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, X, Pencil, ArrowRight, ListFilter, Clock } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/select';
 
 export const TransactionList = () => {
-  const { transactions, userRole, deleteTransaction } = useFinance();
+  const { transactions, userRole, deleteTransaction, currentUser } = useFinance();
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('All');
   const [startDate, setStartDate] = useState<string>('');
@@ -24,6 +24,12 @@ export const TransactionList = () => {
   const [rowsLimit, setRowsLimit] = useState<string>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const filtered = transactions.filter(t => {
     const term = searchTerm.toLowerCase();
@@ -59,14 +65,24 @@ export const TransactionList = () => {
     a.click();
   };
 
+  const canEdit = (t: Transaction) => {
+    if (userRole === 'Admin') return true;
+    const isOwner = currentUser && t.ownerEmail === currentUser.email;
+    const isWithinWindow = (now - t.createdAt) < 30000;
+    return !!(isOwner && isWithinWindow);
+  };
+
+  const hasAnyActions = displayData.some(t => canEdit(t)) || userRole === 'Admin';
+
   return (
     <Card className="border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden">
       <CardHeader className="space-y-6">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
           <div>
             <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Transaction Ledger</CardTitle>
-            <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-bold">
-              {userRole === 'Admin' ? 'Management Mode (Full Access)' : 'Audit Mode (Read Only)'}
+            <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-bold flex items-center gap-2">
+              {userRole === 'Admin' ? 'Management Mode (Full Access)' : 'Audit Mode (Grace Edit Enabled)'}
+              {userRole !== 'Admin' && <Clock className="w-3 h-3 text-amber-500" />}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -175,60 +191,67 @@ export const TransactionList = () => {
                 {userRole === 'Admin' && (
                   <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Owner</th>
                 )}
-                {userRole === 'Admin' && <th className="pb-4 text-right font-black uppercase text-[10px] tracking-widest">Action</th>}
+                {hasAnyActions && <th className="pb-4 text-right font-black uppercase text-[10px] tracking-widest">Action</th>}
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50 dark:divide-slate-900">
               <AnimatePresence mode="popLayout">
-                {displayData.map((t) => (
-                  <motion.tr 
-                    key={t.id} 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="group hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors"
-                  >
-                    <td className="py-4 text-slate-500 font-bold tabular-nums">{t.date}</td>
-                    <td className="py-4 font-bold text-slate-800 dark:text-slate-200">{t.description}</td>
-                    <td className="py-4">
-                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">
-                        {t.category}
-                      </span>
-                    </td>
-                    <td className={`py-4 font-black tabular-nums ${t.type === 'Income' ? 'text-emerald-600' : 'text-rose-500'}`}>
-                      {t.type === 'Income' ? '+' : '-'}{formatINR(t.amount)}
-                    </td>
-                    {userRole === 'Admin' && (
+                {displayData.map((t) => {
+                  const editable = canEdit(t);
+                  return (
+                    <motion.tr 
+                      key={t.id} 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="group hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors"
+                    >
+                      <td className="py-4 text-slate-500 font-bold tabular-nums">{t.date}</td>
+                      <td className="py-4 font-bold text-slate-800 dark:text-slate-200">{t.description}</td>
                       <td className="py-4">
-                        <span className="text-[10px] text-indigo-500 font-bold italic truncate block max-w-[120px]" title={t.ownerEmail}>
-                          {t.ownerEmail.split('@')[0]}
+                        <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">
+                          {t.category}
                         </span>
                       </td>
-                    )}
-                    {userRole === 'Admin' && (
-                      <td className="py-4 text-right">
-                        <div className="flex items-center justify-end gap-1">
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => setEditingTransaction(t)}
-                            className="text-slate-300 hover:text-indigo-600 hover:bg-transparent transition-colors"
-                          >
-                            <Pencil className="w-4 h-4" />
-                          </Button>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => deleteTransaction(t.id)}
-                            className="text-slate-300 hover:text-rose-500 hover:bg-transparent transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
+                      <td className={`py-4 font-black tabular-nums ${t.type === 'Income' ? 'text-emerald-600' : 'text-rose-500'}`}>
+                        {t.type === 'Income' ? '+' : '-'}{formatINR(t.amount)}
                       </td>
-                    )}
-                  </motion.tr>
-                ))}
+                      {userRole === 'Admin' && (
+                        <td className="py-4">
+                          <span className="text-[10px] text-indigo-500 font-bold italic truncate block max-w-[120px]" title={t.ownerEmail}>
+                            {t.ownerEmail.split('@')[0]}
+                          </span>
+                        </td>
+                      )}
+                      {hasAnyActions && (
+                        <td className="py-4 text-right">
+                          {editable ? (
+                            <div className="flex items-center justify-end gap-1">
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                onClick={() => setEditingTransaction(t)}
+                                className="text-slate-300 hover:text-indigo-600 hover:bg-transparent transition-colors"
+                              >
+                                <Pencil className="w-4 h-4" />
+                              </Button>
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                onClick={() => deleteTransaction(t.id)}
+                                className="text-slate-300 hover:text-rose-500 hover:bg-transparent transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          ) : (
+                            <span className="text-[9px] font-black uppercase text-slate-300 tracking-widest italic pr-2">Permanent</span>
+                          )}
+                        </td>
+                      )}
+                    </motion.tr>
+                  );
+                })}
               </AnimatePresence>
             </tbody>
           </table>
@@ -241,7 +264,7 @@ export const TransactionList = () => {
         </div>
       </CardContent>
       <AddTransactionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      {userRole === 'Admin' && editingTransaction && (
+      {editingTransaction && (
         <EditTransactionModal 
           isOpen={!!editingTransaction} 
           onClose={() => setEditingTransaction(null)} 
