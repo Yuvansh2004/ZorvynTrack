@@ -26,53 +26,53 @@ import {
 import { useFinance, ViewType } from '@/context/FinanceContext';
 
 const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', view: 'Dashboard' as ViewType },
-  { icon: History, label: 'Transactions', view: 'Transactions' as ViewType },
-  { icon: PieChart, label: 'Analytics', view: 'Analytics' as ViewType },
-  { icon: CreditCard, label: 'Digital Vault', view: 'Cards' as ViewType },
-  { icon: TrendingUp, label: 'Portfolios', view: 'Investments' as ViewType },
+  { icon: LayoutDashboard, label: 'Market Intelligence', view: 'Dashboard' as ViewType },
+  { icon: History, label: 'Ledger Terminal', view: 'Transactions' as ViewType },
+  { icon: PieChart, label: 'Quantum Analytics', view: 'Analytics' as ViewType },
+  { icon: CreditCard, label: 'Asset Vault', view: 'Cards' as ViewType },
+  { icon: TrendingUp, label: 'Alpha Portfolios', view: 'Investments' as ViewType },
 ];
 
 const settingsItems = [
-  { icon: Settings, label: 'Terminal Settings', view: 'Settings' as ViewType },
+  { icon: Settings, label: 'Kernel Config', view: 'Settings' as ViewType },
 ];
 
 export function AppSidebar() {
   const { activeView, setActiveView } = useFinance();
 
   return (
-    <Sidebar className="border-r border-slate-800/50 bg-[#020617]">
-      <SidebarHeader className="p-6">
-        <div className="flex items-center gap-3 group cursor-pointer" onClick={() => setActiveView('Dashboard')}>
+    <Sidebar className="border-r border-slate-800/50 bg-[#020617] font-body">
+      <SidebarHeader className="p-8">
+        <div className="flex items-center gap-4 group cursor-pointer" onClick={() => setActiveView('Dashboard')}>
           <div className="relative">
-            <div className="p-2.5 bg-primary/20 rounded-2xl group-hover:bg-primary/30 transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] border border-primary/20">
-              <Zap className="w-6 h-6 text-primary fill-primary/20" />
+            <div className="p-3 bg-primary/10 rounded-2xl group-hover:bg-primary/20 transition-all shadow-[0_0_30px_rgba(59,130,246,0.2)] border border-primary/20">
+              <Zap className="w-7 h-7 text-primary fill-primary/10 italic" />
             </div>
-            <div className="absolute -top-1 -right-1 bg-slate-950 rounded-full p-0.5 border border-primary/50">
-              <Shield className="w-2.5 h-2.5 text-primary" />
+            <div className="absolute -top-1 -right-1 bg-[#020617] rounded-full p-1 border border-primary/40">
+              <Shield className="w-3 h-3 text-primary" />
             </div>
           </div>
           <div>
-            <h1 className="text-xl font-black tracking-tighter text-white uppercase italic leading-none">Zorvyn</h1>
-            <p className="text-[9px] text-primary font-black uppercase tracking-[3px] mt-1">Quantum Node</p>
+            <h1 className="text-2xl font-black tracking-tighter text-white uppercase italic leading-none">Zorvyn</h1>
+            <p className="text-[9px] text-primary font-black uppercase tracking-[4px] mt-1.5 opacity-70">Global Terminal</p>
           </div>
         </div>
       </SidebarHeader>
       
-      <SidebarContent>
+      <SidebarContent className="px-4">
         <SidebarGroup>
-          <SidebarGroupLabel className="px-6 text-[10px] font-black text-slate-600 uppercase tracking-[2px] mb-2">Systems Interface</SidebarGroupLabel>
-          <SidebarGroupContent className="px-3">
-            <SidebarMenu>
+          <SidebarGroupLabel className="px-4 text-[10px] font-black text-slate-600 uppercase tracking-[3px] mb-4">Operations Interface</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-2">
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
                   <SidebarMenuButton 
                     isActive={activeView === item.view}
                     onClick={() => setActiveView(item.view)}
-                    className="hover:bg-slate-900/50 transition-all rounded-xl h-12 px-4 data-[active=true]:bg-primary/10 data-[active=true]:text-primary border border-transparent data-[active=true]:border-primary/10"
+                    className="hover:bg-slate-900/50 transition-all rounded-xl h-14 px-5 data-[active=true]:bg-primary/10 data-[active=true]:text-primary border border-transparent data-[active=true]:border-primary/10"
                   >
                     <item.icon className={`w-5 h-5 ${activeView === item.view ? 'text-primary' : 'text-slate-500'}`} />
-                    <span className="font-bold tracking-tight uppercase text-[11px] tracking-widest">{item.label}</span>
+                    <span className="font-bold uppercase text-[10px] tracking-widest">{item.label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -80,19 +80,19 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup className="mt-auto pb-6">
-          <SidebarGroupLabel className="px-6 text-[10px] font-black text-slate-600 uppercase tracking-[2px] mb-2">Kernel</SidebarGroupLabel>
-          <SidebarGroupContent className="px-3">
+        <SidebarGroup className="mt-auto pb-8">
+          <SidebarGroupLabel className="px-4 text-[10px] font-black text-slate-600 uppercase tracking-[3px] mb-4">Core Kernel</SidebarGroupLabel>
+          <SidebarGroupContent>
             <SidebarMenu>
               {settingsItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
                   <SidebarMenuButton 
                     isActive={activeView === item.view}
                     onClick={() => setActiveView(item.view)}
-                    className="hover:bg-slate-900/50 transition-all rounded-xl h-12 px-4 border border-transparent"
+                    className="hover:bg-slate-900/50 transition-all rounded-xl h-14 px-5 border border-transparent"
                   >
                     <item.icon className="w-5 h-5 text-slate-500" />
-                    <span className="font-bold tracking-tight uppercase text-[11px] tracking-widest">{item.label}</span>
+                    <span className="font-bold uppercase text-[10px] tracking-widest">{item.label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
