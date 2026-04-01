@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import { useFinance, DEMO_ACCOUNTS } from '@/context/FinanceContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, ArrowRight, Mail, Lock, Eye, EyeOff, Info, Sun, Moon } from 'lucide-react';
+import { Shield, Mail, Lock, Eye, EyeOff, Info, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -43,18 +42,18 @@ export const LoginPage = () => {
       const success = login(email, password);
       if (success) {
         toast({
-          title: "Access Granted",
-          description: "Welcome to your personalized terminal.",
+          title: "Login Successful",
+          description: "Welcome to ZorvynTrack.",
         });
       } else {
         toast({
           variant: "destructive",
-          title: "Access Denied",
-          description: "Invalid credentials.",
+          title: "Login Failed",
+          description: "Invalid email or password.",
         });
         setIsSubmitting(false);
       }
-    }, 1200);
+    }, 800);
   };
 
   const fillDemo = (acc: typeof DEMO_ACCOUNTS[0]) => {
@@ -65,75 +64,47 @@ export const LoginPage = () => {
 
   return (
     <div className={cn(
-      "min-h-screen flex items-center justify-center p-8 relative overflow-hidden font-body transition-colors duration-500",
+      "min-h-screen flex items-center justify-center p-6 relative font-body transition-colors duration-300",
       isDarkMode ? "bg-slate-950" : "bg-slate-50"
     )}>
-      {/* Background Mesh */}
-      <div className={cn(
-        "absolute inset-0 bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] bg-[size:5rem_5rem] opacity-[0.03]",
-        isDarkMode ? "text-indigo-500" : "text-slate-300"
-      )}></div>
-      
-      {/* Theme Toggle */}
-      <div className="absolute top-8 right-8 z-20">
+      <div className="absolute top-6 right-6 z-20">
         <Button 
-          variant="outline" 
+          variant="ghost" 
           size="icon" 
           onClick={() => setIsDarkMode(!isDarkMode)}
-          className={cn(
-            "rounded-full border shadow-sm",
-            isDarkMode ? "bg-slate-900 border-slate-800 text-slate-400 hover:text-white" : "bg-white border-slate-200 text-slate-500 hover:text-indigo-600"
-          )}
+          className="rounded-full"
         >
           {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </Button>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-[440px] z-10 space-y-8"
-      >
-        <div className="flex flex-col items-center mb-6">
-          <motion.div 
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            className="relative"
-          >
-            <div className={cn(
-              "p-6 rounded-[2rem] mb-6 border transition-all duration-500",
-              isDarkMode 
-                ? "bg-indigo-600/10 border-indigo-500/20 shadow-[0_0_80px_rgba(79,70,229,0.3)]" 
-                : "bg-white border-indigo-100 shadow-[0_20px_40px_rgba(0,0,0,0.05)]"
-            )}>
-              <ZorvynLogo className="w-12 h-12 text-indigo-600" />
-            </div>
-          </motion.div>
+      <div className="w-full max-w-md space-y-8">
+        <div className="text-center space-y-2">
+          <div className="inline-flex items-center justify-center p-3 bg-indigo-600 rounded-2xl shadow-lg mb-4">
+            <ZorvynLogo className="w-8 h-8 text-white" />
+          </div>
           <h1 className={cn(
-            "text-3xl font-black tracking-tighter italic uppercase",
+            "text-3xl font-bold tracking-tight",
             isDarkMode ? "text-white" : "text-slate-900"
           )}>
             Zorvyn<span className="text-indigo-600">Track</span>
           </h1>
-          <p className="text-slate-400 text-[10px] mt-2 font-black uppercase tracking-[6px] opacity-70">Unified Assets Kernel</p>
+          <p className="text-slate-500 text-sm">Student Finance Dashboard</p>
         </div>
 
         <div className={cn(
-          "backdrop-blur-xl p-10 rounded-[2.5rem] border shadow-2xl relative overflow-hidden",
-          isDarkMode ? "bg-slate-900/50 border-slate-800/50" : "bg-white border-slate-100"
+          "p-8 rounded-2xl border shadow-sm",
+          isDarkMode ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200"
         )}>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2.5">
-              <Label className="text-[10px] font-black uppercase tracking-[2px] text-slate-400">Identity (Email)</Label>
-              <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Email Address</Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <Input 
                   type="email" 
-                  placeholder="corporate@zorvyn.com" 
-                  className={cn(
-                    "pl-12 focus:ring-indigo-600 h-12 text-sm font-bold tracking-tight rounded-xl transition-all",
-                    isDarkMode ? "bg-slate-950 border-slate-800 text-white" : "bg-slate-50 border-slate-200 text-slate-900"
-                  )}
+                  placeholder="name@example.com" 
+                  className="pl-10"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -141,99 +112,78 @@ export const LoginPage = () => {
               </div>
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="text-[10px] font-black uppercase tracking-[2px] text-slate-400">Secure Key</Label>
-                <button 
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="text-[10px] font-black uppercase tracking-[1px] text-indigo-500 hover:text-indigo-600 transition-colors flex items-center gap-1.5"
-                >
-                  {showPassword ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-                  {showPassword ? "Hide" : "Show"}
-                </button>
+                <Label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Password</Label>
               </div>
-              <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <Input 
                   type={showPassword ? "text" : "password"} 
                   placeholder="••••••••" 
-                  className={cn(
-                    "pl-12 focus:ring-indigo-600 h-12 font-bold rounded-xl transition-all",
-                    isDarkMode ? "bg-slate-950 border-slate-800 text-white" : "bg-slate-50 border-slate-200 text-slate-900"
-                  )}
+                  className="pl-10"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
             </div>
 
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase text-[11px] tracking-[3px] h-12 rounded-xl shadow-lg transition-all active:scale-[0.98]"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-6 rounded-xl transition-all"
             >
-              {isSubmitting ? "SYNCING..." : "SECURE ENTRY"}
-              {!isSubmitting && <ArrowRight className="w-4 h-4 ml-3" />}
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </Button>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+          <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800">
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
               <DialogTrigger asChild>
-                <button className="w-full flex items-center justify-center gap-2 text-[10px] font-black text-slate-400 hover:text-indigo-500 uppercase tracking-[2px] transition-colors">
-                  <Info className="w-3.5 h-3.5" /> Forgot Key or Need Demo?
-                </button>
+                <Button variant="link" className="w-full text-slate-400 text-xs font-medium">
+                  <Info className="w-3.5 h-3.5 mr-2" /> View Demo Credentials
+                </Button>
               </DialogTrigger>
-              <DialogContent className={cn(
-                "sm:max-w-[400px] border-none",
-                isDarkMode ? "bg-slate-900 text-white" : "bg-white text-slate-900"
-              )}>
+              <DialogContent className={isDarkMode ? "bg-slate-900 text-white" : "bg-white text-slate-900"}>
                 <DialogHeader>
-                  <DialogTitle className="text-xl font-black italic uppercase tracking-tight">Sector <span className="text-indigo-600">Manifest</span></DialogTitle>
-                  <DialogDescription className="text-xs text-slate-400">
-                    Use these official demo credentials to audit the system roles.
-                  </DialogDescription>
+                  <DialogTitle>Demo Accounts</DialogTitle>
+                  <DialogDescription>Use these accounts to test different roles.</DialogDescription>
                 </DialogHeader>
-                <ScrollArea className="h-[300px] pr-4 mt-4">
-                  <div className="space-y-3">
-                    {DEMO_ACCOUNTS.map((acc) => (
-                      <div 
-                        key={acc.email} 
-                        className={cn(
-                          "p-4 rounded-2xl border transition-all cursor-pointer group",
-                          isDarkMode 
-                            ? "bg-slate-950/50 border-slate-800 hover:border-indigo-500/50" 
-                            : "bg-slate-50 border-slate-100 hover:border-indigo-200 hover:bg-white"
-                        )}
-                        onClick={() => fillDemo(acc)}
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <div>
-                            <p className="text-xs font-black uppercase tracking-tight">{acc.name}</p>
-                            <p className="text-[10px] text-slate-400">{acc.email}</p>
-                          </div>
-                          <span className={cn(
-                            "px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest",
-                            acc.role === 'Admin' ? "bg-indigo-600 text-white" : "bg-slate-200 dark:bg-slate-800 text-slate-500"
-                          )}>
-                            {acc.role}
-                          </span>
+                <div className="space-y-3 mt-4">
+                  {DEMO_ACCOUNTS.map((acc) => (
+                    <div 
+                      key={acc.email} 
+                      className={cn(
+                        "p-4 rounded-xl border cursor-pointer transition-colors",
+                        isDarkMode ? "border-slate-800 hover:bg-slate-800" : "border-slate-100 hover:bg-slate-50"
+                      )}
+                      onClick={() => fillDemo(acc)}
+                    >
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="text-sm font-bold">{acc.name}</p>
+                          <p className="text-xs text-slate-500">{acc.email}</p>
                         </div>
-                        <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
-                          <span className="text-[10px] text-slate-400 font-bold">Key: <code className="text-indigo-500">{acc.password}</code></span>
-                          <span className="text-[9px] font-black uppercase text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity">Auto-fill →</span>
-                        </div>
+                        <span className="text-[10px] font-bold bg-indigo-100 text-indigo-600 px-2 py-1 rounded uppercase tracking-wider">
+                          {acc.role}
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                </ScrollArea>
+                    </div>
+                  ))}
+                </div>
               </DialogContent>
             </Dialog>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

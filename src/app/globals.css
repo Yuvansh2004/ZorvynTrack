@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 20% 98%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -23,7 +23,7 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 243 75% 59%;
-    --radius: 1rem;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -59,12 +59,8 @@
   }
 }
 
-/* Institutional Grade Typographic Contrast */
-.weight-thin { font-weight: 100; }
-.weight-black { font-weight: 900; }
-
 .card-shadow {
-  @apply shadow-xl shadow-slate-200/50 border border-slate-100 bg-white dark:bg-slate-900 dark:border-slate-800 dark:shadow-none transition-all duration-300;
+  @apply shadow-sm border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition-all duration-200;
 }
 
 @keyframes progress {
@@ -75,9 +71,3 @@
 .animate-progress {
   animation: progress 2s ease-in-out infinite;
 }
-
-/* Staggered reveals */
-.stagger-1 { animation-delay: 100ms; }
-.stagger-2 { animation-delay: 200ms; }
-.stagger-3 { animation-delay: 300ms; }
-.stagger-4 { animation-delay: 400ms; }
