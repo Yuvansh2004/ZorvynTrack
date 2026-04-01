@@ -1,29 +1,31 @@
+
 # ZorvynTrack - Student Internship Assignment
 
-Built by **Yuvansh Dashrath Koli** (yuvanshkoli@demozorvyn.com)
+Built by **Yuvansh Dashrath Koli**  
+**Personal Email:** yuvanshkoli1011@gmail.com  
+**Demo Identity:** yuvanshkoli@demozorvyn.com  
+**Assignment Reference ID:** Z-992-KOLI
 
 ## My Approach
-For this technical screening, I focused on building a clean, intuitive financial terminal that mirrors the standards of a professional fintech application while remaining firmly rooted in a student's technical perspective.
+For this technical screening by Zorvyn FinTech, I focused on building a modular, state-driven financial terminal that demonstrates technical depth while remaining clean and intuitive.
 
-### Tech Stack & Rationale
-- **Next.js 15 & React 19**: I chose the latest versions of these frameworks to demonstrate my ability to keep pace with rapid development cycles.
-- **Tailwind CSS**: I implemented a "Student-Pro" aesthetic. I deliberately used a clean Indigo accent against a slate/white palette to ensure high professional legibility.
-- **React Context API**: Instead of reaching for heavy libraries like Redux, I utilized the Context API for state management. This allowed me to handle `transactions`, `userRole`, and `navigation` efficiently within the client's memory.
-- **LocalStorage Persistence**: I integrated LocalStorage to simulate backend persistence. This ensures that any "Admin" commits remain visible even after a system refresh.
+### Tech Stack & Architecture
+- **Framework**: Next.js 15 (App Router) with React 19.
+- **State Management**: React Context API (`FinanceProvider`) managing unified transaction data, user roles, and UI states.
+- **Persistence**: `localStorage` implementation to simulate backend behavior for data persistence and role selection.
+- **Visuals**: `Recharts` for time-based (Area) and categorical (Pie/Bar) data interpretation.
+- **Styling**: Tailwind CSS with a "Student-Pro" aesthetic focusing on weight-based typography and Indigo accents.
 
-### Core Assumptions
-- **Frontend-First RBAC**: I used local state for the Role-Based UI to demonstrate frontend logic without needing a complex Auth provider for this internship assignment.
-- **Mock Telemetry**: I generated 10+ localized Indian context transactions (UPI, Stipends, Bills) to ensure the data feels realistic for a Zorvyn auditor.
-
-## Core Features
-- [x] **Dashboard Overview**: Summary cards for Balance, Income, and Expenses formatted in INR (₹).
-- [x] **Visual Analytics**: Interactive 7-day balance trend (Area) and categorical breakdown (Pie).
-- [x] **Role-Based UI (RBAC)**: Distinct 'Admin' and 'Viewer' modes. Toggle in the sidebar footer.
-- [x] **Ledger Terminal**: Full-featured transaction table with search and category filtering.
-- [x] **Adaptive Layout**: Fully responsive sidebar that handles high-quantum values without clipping.
-- [x] **Dark Mode**: High-contrast theme toggle in Settings.
+### Core Features (Requirement Alignment)
+- [x] **Dashboard Overview**: KPI cards for Net Liquidity, Inflow, and Outflow. Time-based balance trends and expenditure classification charts.
+- [x] **Ledger Terminal (Transactions)**: Advanced table with real-time search, category tagging, and status-based coloring.
+- [x] **Role-Based UI (RBAC)**: Distinct 'Admin' and 'Viewer' experiences. Toggling to Viewer locks the UI and isolates data, while Admin provides global oversight and modification rights.
+- [x] **Analytics Kernel (Insights)**: Dedicated view identifying highest expenditure categories, retention ratios, and monthly comparison audits.
+- [x] **Responsive UX**: Fluid sidebar navigation that adapts from desktop expanded mode to mobile-optimized patterns.
+- [x] **Export Logic**: Professional CSV generation for Admin users, simulating official financial statements.
 
 ## Setup Instructions
 1. Install dependencies: `npm install`
 2. Run development server: `npm run dev`
 3. Access at `http://localhost:9002`
+4. Use the "Sector Manifest" on the login screen to test different user roles.

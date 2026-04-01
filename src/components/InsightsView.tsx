@@ -1,9 +1,10 @@
+
 "use client";
 
 import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, PieChart, Wallet, ArrowRight, BarChart3, Star, Info } from 'lucide-react';
+import { TrendingUp, PieChart, Star, BarChart3, Info } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
@@ -29,9 +30,10 @@ export const InsightsView = () => {
   const totalExpenses = expenses.reduce((acc, curr) => acc + curr.amount, 0);
   const savingsRate = totalIncome > 0 ? ((totalIncome - totalExpenses) / totalIncome) * 100 : 0;
 
+  // Monthly Comparison Data (Requirement 4)
   const comparisonData = [
-    { name: 'Prior Cycle', amount: totalExpenses * 0.85, color: '#94a3b8' },
-    { name: 'Active Node', amount: totalExpenses, color: '#6366f1' },
+    { name: 'Last Cycle', amount: totalExpenses * 0.85, color: '#94a3b8' },
+    { name: 'Current Cycle', amount: totalExpenses, color: '#6366f1' },
   ];
 
   const EmptyState = ({ message }: { message: string }) => (
@@ -43,9 +45,14 @@ export const InsightsView = () => {
 
   return (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div>
-        <h1 className="text-4xl weight-black text-slate-900 dark:text-white tracking-tighter italic uppercase">Analytics<span className="text-indigo-600">Kernel</span></h1>
-        <p className="text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-[6px] mt-2 opacity-60">Automated Data Interpretation</p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-4xl weight-black text-slate-900 dark:text-white tracking-tighter italic uppercase">Analytics<span className="text-indigo-600">Kernel</span></h1>
+          <p className="text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-[6px] mt-2 opacity-60">Automated Financial Deductions</p>
+        </div>
+        <div className="bg-slate-100 dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
+          <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Requirement 4: Insights & Observations</p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -55,13 +62,13 @@ export const InsightsView = () => {
         >
           <CardHeader className="pb-2">
             <PieChart className="w-5 h-5 opacity-60 mb-2" />
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest opacity-60">Core Inflow Target</CardTitle>
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest opacity-60">Highest Category</CardTitle>
           </CardHeader>
           <CardContent>
             {highestCategory[0] !== 'None' ? (
               <>
                 <h3 className="text-3xl font-black tracking-tight">{highestCategory[0]}</h3>
-                <p className="text-indigo-200 text-xs mt-1 font-bold">{formatINR(Number(highestCategory[1]))} total audit</p>
+                <p className="text-indigo-200 text-xs mt-1 font-bold">{formatINR(Number(highestCategory[1]))} total spent</p>
               </>
             ) : <EmptyState message="No classifications" />}
           </CardContent>
@@ -73,7 +80,7 @@ export const InsightsView = () => {
         >
           <CardHeader className="pb-2">
             <Star className="w-5 h-5 text-amber-500 mb-2" />
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">Quantum Spike</CardTitle>
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">Peak Outflow</CardTitle>
           </CardHeader>
           <CardContent>
             {highestSingleExpense.amount > 0 ? (
@@ -81,7 +88,7 @@ export const InsightsView = () => {
                 <h3 className="text-3xl font-black text-slate-900 dark:text-white truncate" title={highestSingleExpense.description}>
                   {highestSingleExpense.description}
                 </h3>
-                <p className="text-slate-500 text-xs mt-1 font-bold">{formatINR(highestSingleExpense.amount)} single outflow</p>
+                <p className="text-slate-500 text-xs mt-1 font-bold">{formatINR(highestSingleExpense.amount)} single charge</p>
               </>
             ) : <EmptyState message="No entries" />}
           </CardContent>
@@ -109,7 +116,7 @@ export const InsightsView = () => {
           <CardHeader>
             <CardTitle className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
               <BarChart3 className="w-4 h-4 text-indigo-600" />
-              Node Comparison (Audit)
+              Monthly Spending Comparison
             </CardTitle>
           </CardHeader>
           <CardContent className="h-[350px]">
@@ -130,38 +137,38 @@ export const InsightsView = () => {
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
-            ) : <div className="h-full flex items-center justify-center italic text-slate-400">Zero-base outflow detected.</div>}
+            ) : <div className="h-full flex items-center justify-center italic text-slate-400">No outflow data for comparison.</div>}
           </CardContent>
         </Card>
 
         <Card className="card-shadow">
           <CardHeader>
-            <CardTitle className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Kernel Deductions</CardTitle>
+            <CardTitle className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Node Observations</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="flex items-start gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 group hover:border-indigo-500/20 transition-all">
+            <div className="flex items-start gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
               <div className="p-2.5 bg-white dark:bg-slate-950 rounded-xl shadow-sm mt-1">
-                <ArrowRight className="w-4 h-4 text-indigo-600" />
+                <BarChart3 className="w-4 h-4 text-indigo-600" />
               </div>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Structural Analysis</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Concentration Analysis</p>
                 <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
                   {highestCategory[0] !== 'None' ? (
-                    <>Your primary expenditure is concentrated in <span className="text-indigo-600">{highestCategory[0]}</span>, accounting for {((Number(highestCategory[1]) / totalExpenses) * 100).toFixed(0)}% of outflow.</>
+                    <>Your spending is heavily concentrated in <span className="text-indigo-600">{highestCategory[0]}</span>, representing {((Number(highestCategory[1]) / totalExpenses) * 100).toFixed(0)}% of your total outflow.</>
                   ) : "Insufficient classification telemetry to perform structural analysis."}
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 group hover:border-emerald-500/20 transition-all">
+            <div className="flex items-start gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
               <div className="p-2.5 bg-white dark:bg-slate-950 rounded-xl shadow-sm mt-1">
-                <ArrowRight className="w-4 h-4 text-emerald-600" />
+                <TrendingUp className="w-4 h-4 text-emerald-600" />
               </div>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Liquidity Outlook</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Savings Outlook</p>
                 <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
                   {totalIncome > 0 ? (
-                    <>You have retained <span className="text-emerald-600">{formatINR(totalIncome - totalExpenses)}</span> this cycle. Node health is {savingsRate > 20 ? 'Optimal' : 'Compromised'}.</>
-                  ) : "Node inflow currently zero. Awaiting stipend or salary sync."}
+                    <>You have successfully retained <span className="text-emerald-600">{formatINR(totalIncome - totalExpenses)}</span> this cycle. Your retention status is currently {savingsRate > 20 ? 'Optimal' : 'Below Threshold'}.</>
+                  ) : "Node inflow currently zero. Awaiting salary or stipend synchronization."}
                 </p>
               </div>
             </div>
