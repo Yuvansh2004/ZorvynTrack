@@ -60,7 +60,7 @@ export const AnalyticsCharts = () => {
         <h3 className="text-[10px] font-black mb-10 text-white uppercase tracking-[3px] italic opacity-80">Velocity Telemetry (7D)</h3>
         <div className="flex-1 w-full min-h-0">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={lineData} margin={{ left: -20, right: 10, bottom: 10 }}>
+            <LineChart data={lineData} margin={{ left: -10, right: 10, bottom: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} opacity={0.3} />
               <XAxis 
                 dataKey="name" 
@@ -112,9 +112,9 @@ export const AnalyticsCharts = () => {
                 data={pieData}
                 cx="50%"
                 cy="45%"
-                innerRadius={70}
-                outerRadius={95}
-                paddingAngle={6}
+                innerRadius={60}
+                outerRadius={80}
+                paddingAngle={8}
                 dataKey="value"
                 stroke="none"
               >
@@ -128,9 +128,21 @@ export const AnalyticsCharts = () => {
               />
               <Legend 
                 verticalAlign="bottom" 
-                height={50} 
+                height={70} 
                 iconType="circle"
-                wrapperStyle={{ fontSize: '9px', fontWeight: 'black', color: '#64748b', textTransform: 'uppercase', letterSpacing: '2px', paddingTop: '20px' }}
+                layout="horizontal"
+                wrapperStyle={{ 
+                  fontSize: '8px', 
+                  fontWeight: 'black', 
+                  color: '#64748b', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '1.5px', 
+                  paddingTop: '30px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                  gap: '8px'
+                }}
               />
             </PieChart>
           </ResponsiveContainer>

@@ -13,18 +13,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Target,
   Calendar as CalendarIcon,
-  User,
-  Bell,
   HardDrive,
-  Database,
-  Cpu,
-  Lock,
-  Zap,
   TrendingUp,
   Activity,
-  ArrowUpRight,
   ShieldCheck,
-  CircleDollarSign
+  CircleDollarSign,
+  BarChart3,
+  Globe
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -33,6 +28,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { useState } from 'react';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip as RechartsTooltip, CartesianGrid } from 'recharts';
+
+const exposureData = [
+  { name: 'Mon', value: 4200 },
+  { name: 'Tue', value: 4800 },
+  { name: 'Wed', value: 4100 },
+  { name: 'Thu', value: 5200 },
+  { name: 'Fri', value: 5900 },
+  { name: 'Sat', value: 5500 },
+  { name: 'Sun', value: 6200 },
+];
 
 const DashboardView = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -124,6 +130,7 @@ const InvestmentView = () => {
     { name: 'RELIANCE IND', ticker: 'RELIANCE', exchange: 'NSE', allocation: '20%', pnl: '+12.5%', trend: 'up' },
     { name: 'TATA MOTORS', ticker: 'TATAMOTORS', exchange: 'NSE', allocation: '10%', pnl: '+42.8%', trend: 'up' },
     { name: 'ZOMATO LTD', ticker: 'ZOMATO', exchange: 'NSE', allocation: '10%', pnl: '+65.2%', trend: 'up' },
+    { name: 'ITC LIMITED', ticker: 'ITC', exchange: 'NSE', allocation: '5%', pnl: '+4.2%', trend: 'up' },
   ];
 
   return (
@@ -141,65 +148,96 @@ const InvestmentView = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 space-y-6">
-          <div className="glass-card p-10 rounded-[2.5rem] border border-slate-800/50 overflow-hidden relative">
-             <div className="flex items-center justify-between mb-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6 min-w-0">
+          <div className="glass-card p-6 md:p-10 rounded-[2.5rem] border border-slate-800/50 overflow-hidden relative">
+             <div className="flex items-center justify-between mb-8">
                 <h3 className="text-[10px] font-black text-primary uppercase tracking-[4px] italic">Dynamic Exposure Graph</h3>
-                <TrendingUp className="w-5 h-5 text-primary" />
+                <BarChart3 className="w-5 h-5 text-primary" />
              </div>
-             <div className="h-64 w-full bg-slate-950/50 rounded-2xl border border-slate-800/50 flex items-center justify-center">
-                <p className="text-[10px] text-slate-700 font-black uppercase tracking-[5px] animate-pulse">Neural Market Feed Synchronizing...</p>
+             <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={exposureData}>
+                    <defs>
+                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} opacity={0.3} />
+                    <XAxis dataKey="name" stroke="#475569" fontSize={9} fontWeight="black" tickLine={false} axisLine={false} dy={10} />
+                    <YAxis stroke="#475569" fontSize={9} fontWeight="black" tickLine={false} axisLine={false} />
+                    <RechartsTooltip 
+                      contentStyle={{ backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '16px' }}
+                      itemStyle={{ color: '#3b82f6', fontSize: '10px', fontWeight: 'bold' }}
+                    />
+                    <Area type="monotone" dataKey="value" stroke="#3b82f6" fillOpacity={1} fill="url(#colorValue)" strokeWidth={3} />
+                  </AreaChart>
+                </ResponsiveContainer>
              </div>
           </div>
 
           <div className="glass-card rounded-[2.5rem] border border-slate-800/50 overflow-hidden">
-             <table className="w-full text-left">
-                <thead>
-                  <tr className="bg-slate-900/50 text-slate-500 text-[9px] font-black uppercase tracking-[3px]">
-                    <th className="px-8 py-6">Asset Class</th>
-                    <th className="px-8 py-6">Exchange</th>
-                    <th className="px-8 py-6">Allocation</th>
-                    <th className="px-8 py-6">P&L (α)</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-800/30">
-                  {assets.map((asset) => (
-                    <tr key={asset.ticker} className="hover:bg-slate-900/40 transition-all">
-                      <td className="px-8 py-6">
-                        <div>
-                          <p className="text-sm font-black text-white italic">{asset.name}</p>
-                          <p className="text-[9px] text-slate-600 font-black uppercase tracking-[2px] mt-1">{asset.ticker}</p>
-                        </div>
-                      </td>
-                      <td className="px-8 py-6 text-[10px] font-black text-slate-500 uppercase">{asset.exchange}</td>
-                      <td className="px-8 py-6 text-sm font-black text-white italic">{asset.allocation}</td>
-                      <td className={`px-8 py-6 text-sm font-black italic ${asset.trend === 'up' ? 'text-emerald-400' : 'text-rose-400'}`}>
-                        {asset.pnl}
-                      </td>
+             <div className="overflow-x-auto">
+               <table className="w-full text-left min-w-[600px]">
+                  <thead>
+                    <tr className="bg-slate-900/50 text-slate-500 text-[9px] font-black uppercase tracking-[3px]">
+                      <th className="px-8 py-6">Asset Class</th>
+                      <th className="px-8 py-6">Exchange</th>
+                      <th className="px-8 py-6">Allocation</th>
+                      <th className="px-8 py-6">P&L (α)</th>
                     </tr>
-                  ))}
-                </tbody>
-             </table>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800/30">
+                    {assets.map((asset) => (
+                      <tr key={asset.ticker} className="hover:bg-slate-900/40 transition-all">
+                        <td className="px-8 py-6">
+                          <div>
+                            <p className="text-sm font-black text-white italic truncate max-w-[150px]">{asset.name}</p>
+                            <p className="text-[9px] text-slate-600 font-black uppercase tracking-[2px] mt-1">{asset.ticker}</p>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6 text-[10px] font-black text-slate-500 uppercase">{asset.exchange}</td>
+                        <td className="px-8 py-6 text-sm font-black text-white italic">{asset.allocation}</td>
+                        <td className={`px-8 py-6 text-sm font-black italic ${asset.trend === 'up' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                          {asset.pnl}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+               </table>
+             </div>
           </div>
         </div>
 
         <div className="space-y-6">
-          <Card className="glass-card border-none p-10 rounded-[2.5rem] space-y-6">
-             <div className="flex items-center gap-4 text-primary">
-                <CircleDollarSign className="w-6 h-6" />
-                <h4 className="text-[10px] font-black uppercase tracking-[3px]">Margin Utility</h4>
+          <Card className="glass-card border-none p-8 md:p-10 rounded-[2.5rem] space-y-8 flex flex-col justify-between">
+             <div>
+               <div className="flex items-center gap-4 text-primary mb-8">
+                  <CircleDollarSign className="w-6 h-6" />
+                  <h4 className="text-[10px] font-black uppercase tracking-[3px]">Margin Utility</h4>
+               </div>
+               <div className="space-y-6">
+                  <div className="flex justify-between items-end">
+                     <p className="text-[9px] font-black text-slate-600 uppercase tracking-[2px]">Collateral</p>
+                     <p className="text-xl font-black text-white italic">₹8,42,000</p>
+                  </div>
+                  <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                     <div className="h-full bg-primary w-[65%] shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 pt-4">
+                    <div className="p-4 bg-slate-950/50 rounded-2xl border border-slate-800/50">
+                      <p className="text-[8px] text-slate-600 font-black uppercase tracking-[1px] mb-1">Leverage</p>
+                      <p className="text-sm font-black text-white italic">4.2x</p>
+                    </div>
+                    <div className="p-4 bg-slate-950/50 rounded-2xl border border-slate-800/50">
+                      <p className="text-[8px] text-slate-600 font-black uppercase tracking-[1px] mb-1">M-Call</p>
+                      <p className="text-sm font-black text-emerald-400 italic">Safe</p>
+                    </div>
+                  </div>
+               </div>
              </div>
-             <div className="space-y-4">
-                <div className="flex justify-between items-end">
-                   <p className="text-[9px] font-black text-slate-600 uppercase tracking-[2px]">Available Collateral</p>
-                   <p className="text-xl font-black text-white italic">₹8,42,000</p>
-                </div>
-                <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                   <div className="h-full bg-primary w-[65%] shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-                </div>
-             </div>
-             <Button className="w-full bg-slate-900 hover:bg-primary transition-all h-14 rounded-2xl font-black uppercase text-[10px] tracking-[4px] border border-slate-800">
+             <Button className="w-full bg-slate-900 hover:bg-primary transition-all h-14 rounded-2xl font-black uppercase text-[10px] tracking-[4px] border border-slate-800 mt-4">
                 Execute Rebalance
              </Button>
           </Card>
@@ -234,28 +272,28 @@ const SettingsView = () => {
       </div>
       
       <Tabs defaultValue="profile" className="w-full">
-        <TabsList className="bg-slate-900/50 border border-slate-800 p-1.5 h-14 rounded-2xl mb-8">
-          <TabsTrigger value="profile" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl px-10 font-black text-[10px] uppercase tracking-[2px] transition-all h-full">Identity</TabsTrigger>
-          <TabsTrigger value="security" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl px-10 font-black text-[10px] uppercase tracking-[2px] transition-all h-full">Security</TabsTrigger>
-          <TabsTrigger value="network" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl px-10 font-black text-[10px] uppercase tracking-[2px] transition-all h-full">Network</TabsTrigger>
+        <TabsList className="bg-slate-900/50 border border-slate-800 p-1.5 h-14 rounded-2xl mb-8 flex overflow-x-auto no-scrollbar">
+          <TabsTrigger value="profile" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl px-10 font-black text-[10px] uppercase tracking-[2px] transition-all h-full whitespace-nowrap">Identity</TabsTrigger>
+          <TabsTrigger value="security" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl px-10 font-black text-[10px] uppercase tracking-[2px] transition-all h-full whitespace-nowrap">Security</TabsTrigger>
+          <TabsTrigger value="network" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl px-10 font-black text-[10px] uppercase tracking-[2px] transition-all h-full whitespace-nowrap">Network</TabsTrigger>
         </TabsList>
         
         <TabsContent value="profile">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="glass-card p-10 rounded-[2.5rem] border border-slate-800/50 space-y-8">
               <div className="flex items-center gap-8">
-                <div className="w-24 h-24 bg-slate-900 rounded-[2rem] flex items-center justify-center border-2 border-primary shadow-[0_0_40px_rgba(59,130,246,0.3)]">
-                  <User className="w-12 h-12 text-primary" />
+                <div className="w-24 h-24 bg-slate-900 rounded-[2rem] flex items-center justify-center border-2 border-primary shadow-[0_0_40px_rgba(59,130,246,0.3)] shrink-0">
+                  <span className="text-3xl font-black text-primary">{user?.name?.[0]}</span>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-black text-white italic tracking-tight">{user?.name}</h3>
+                <div className="min-w-0">
+                  <h3 className="text-2xl font-black text-white italic tracking-tight truncate">{user?.name}</h3>
                   <p className="text-[10px] font-black text-primary uppercase tracking-[3px] mt-2 opacity-80">{user?.role} NODE ACTIVE</p>
                 </div>
               </div>
               <div className="space-y-6 pt-4">
                 <div className="space-y-2">
                   <p className="text-[9px] font-black text-slate-600 uppercase tracking-[3px]">Global ID</p>
-                  <p className="text-sm font-bold text-white bg-slate-950/50 p-4 rounded-2xl border border-slate-800/50">{user?.email}</p>
+                  <p className="text-sm font-bold text-white bg-slate-950/50 p-4 rounded-2xl border border-slate-800/50 truncate">{user?.email}</p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-[9px] font-black text-slate-600 uppercase tracking-[3px]">Deployment Zone</p>
@@ -269,7 +307,7 @@ const SettingsView = () => {
               <div className="glass-card p-8 rounded-[2rem] border border-slate-800/50 flex items-center justify-between group cursor-pointer hover:border-primary/30 transition-all">
                 <div className="flex items-center gap-5">
                   <div className="p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
-                    <Bell className="w-6 h-6 text-emerald-400" />
+                    <Activity className="w-6 h-6 text-emerald-400" />
                   </div>
                   <div>
                     <p className="text-sm font-black text-white uppercase tracking-tight">Neural Alerts</p>
@@ -281,7 +319,7 @@ const SettingsView = () => {
               <div className="glass-card p-8 rounded-[2rem] border border-slate-800/50 flex items-center justify-between group cursor-pointer hover:border-primary/30 transition-all">
                 <div className="flex items-center gap-5">
                   <div className="p-4 bg-amber-500/10 rounded-2xl border border-amber-500/20">
-                    <Database className="w-6 h-6 text-amber-400" />
+                    <Globe className="w-6 h-6 text-amber-400" />
                   </div>
                   <div>
                     <p className="text-sm font-black text-white uppercase tracking-tight">Auto-Sync Core</p>
@@ -289,30 +327,6 @@ const SettingsView = () => {
                   </div>
                 </div>
                 <div className="w-14 h-7 bg-primary rounded-full relative shadow-lg"><div className="absolute right-1 top-1 w-5 h-5 bg-white rounded-full"></div></div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="security">
-          <div className="glass-card p-10 rounded-[2.5rem] border border-slate-800/50 max-w-3xl space-y-8">
-            <h3 className="text-xl font-black text-white flex items-center gap-4 italic uppercase">
-              <Lock className="w-6 h-6 text-primary" /> Cryptographic Parameters
-            </h3>
-            <div className="space-y-6">
-              <div className="p-6 bg-slate-950/50 rounded-[2rem] border border-slate-800 flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-black text-white uppercase">Hardware Root of Trust</p>
-                  <p className="text-[10px] text-slate-600 font-black uppercase tracking-[1px] mt-1">AES-256-GCM ACTIVE</p>
-                </div>
-                <div className="text-[9px] font-black text-emerald-400 bg-emerald-400/10 px-4 py-1.5 rounded-full uppercase border border-emerald-400/20 tracking-[2px]">Secured</div>
-              </div>
-              <div className="p-6 bg-slate-950/50 rounded-[2rem] border border-slate-800 flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-black text-white uppercase">Physical Auth Node</p>
-                  <p className="text-[10px] text-slate-600 font-black uppercase tracking-[1px] mt-1">YUBINODE DISCOVERED</p>
-                </div>
-                <Button variant="outline" size="sm" className="h-10 text-[9px] border-slate-700 uppercase font-black tracking-[2px] px-6 rounded-xl hover:bg-primary hover:text-white transition-all">Configure</Button>
               </div>
             </div>
           </div>
@@ -338,7 +352,9 @@ const ViewSwitcher = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
            <InsightsCard />
            <div className="md:col-span-2 glass-card p-12 rounded-[2.5rem] border border-slate-800/50 flex flex-col justify-center items-center text-center">
-             <Cpu className="w-16 h-16 text-primary mb-6 animate-pulse" />
+             <div className="p-6 bg-primary/10 rounded-full mb-6 animate-pulse">
+                <HardDrive className="w-12 h-12 text-primary" />
+             </div>
              <h4 className="text-xl font-black text-white uppercase tracking-[4px] italic">Neural Engine Processing</h4>
              <p className="text-[10px] text-slate-600 mt-4 max-w-[400px] font-black uppercase tracking-[2px] leading-relaxed italic opacity-80">Scanning distributed ledger nodes to forecast Q4 liquidity event horizons and behavioral spending patterns.</p>
            </div>
@@ -355,28 +371,21 @@ const AuthenticatedApp = () => (
   <SidebarProvider>
     <div className="flex min-h-screen bg-[#020617] text-slate-100 font-body w-full overflow-hidden">
       <AppSidebar />
-      <SidebarInset className="flex-1 overflow-auto bg-[#020617] relative">
+      <SidebarInset className="flex-1 overflow-hidden bg-[#020617] relative flex flex-col">
         <Navbar />
-        <main className="max-w-7xl mx-auto px-6 md:px-10 py-12">
+        <main className="flex-1 overflow-y-auto max-w-7xl mx-auto w-full px-6 md:px-10 py-12 no-scrollbar">
           <AnimatePresence mode="wait">
             <ViewSwitcher />
           </AnimatePresence>
         </main>
-        <footer className="max-w-7xl mx-auto px-10 py-16 border-t border-slate-800/30 flex flex-col md:flex-row items-center justify-between text-slate-600 text-[10px] gap-10 font-black uppercase tracking-[4px]">
-          <div className="flex flex-col gap-2">
-            <p className="text-slate-400">© 2024 ZORVYN FINANCIAL SYSTEMS INC.</p>
-            <p className="opacity-40">DISTRIBUTED KERNEL CORE v9.2.4</p>
-          </div>
-          <div className="flex items-center gap-12">
-            <div className="flex items-center gap-3">
-              <HardDrive className="w-4 h-4 text-primary" />
-              <p className="text-slate-400">NODE STATUS: NOMINAL</p>
+        <footer className="max-w-7xl mx-auto w-full px-10 py-8 border-t border-slate-800/30 flex flex-col sm:flex-row items-center justify-between text-slate-600 text-[9px] gap-4 font-black uppercase tracking-[4px]">
+          <p className="text-slate-400">© 2024 ZORVYN FINANCIAL SYSTEMS INC.</p>
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+              <p className="text-slate-400">SYSTEM: NOMINAL</p>
             </div>
-            <div className="h-12 w-px bg-slate-900 hidden md:block opacity-50"></div>
-            <div className="flex flex-col gap-2 text-right">
-              <p className="text-slate-400">REGION: ASIA-SOUTH-1</p>
-              <p className="opacity-40">ENCRYPTION: AES-256-GCM</p>
-            </div>
+            <p className="text-slate-400 opacity-50">NODE v9.2.4</p>
           </div>
         </footer>
       </SidebarInset>
@@ -389,7 +398,7 @@ export default function Home() {
 
   if (isLoading) return (
     <div className="min-h-screen bg-[#020617] flex flex-col items-center justify-center text-white font-black tracking-[12px] animate-pulse uppercase">
-      <Zap className="w-16 h-16 text-primary mb-10 animate-bounce" />
+      <Activity className="w-16 h-16 text-primary mb-10 animate-bounce" />
       ZORVYN KERNEL v9.0 LOADING
     </div>
   );
