@@ -10,16 +10,18 @@ import {
   ChevronRight,
   Shield,
   LogOut,
-  Eye
+  Eye,
+  Zap
 } from 'lucide-react';
 import { useFinance, ViewType } from '@/context/FinanceContext';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
-const ZorvynLogo = ({ className }: { className?: string }) => (
+export const ZorvynLogo = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 20L80 20L20 80L80 80" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="50" cy="50" r="10" fill="currentColor" />
+    <rect x="20" y="20" width="60" height="60" rx="12" className="fill-indigo-600 shadow-xl" />
+    <path d="M40 35L60 35L40 65L60 65" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="50" cy="50" r="6" className="fill-white animate-pulse" />
   </svg>
 );
 
@@ -31,9 +33,9 @@ export function AppSidebar() {
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', view: 'Dashboard' as ViewType },
-    { icon: History, label: 'Transactions', view: 'Transactions' as ViewType },
-    { icon: Lightbulb, label: 'Insights', view: 'Insights' as ViewType },
-    { icon: Settings, label: 'Settings', view: 'Settings' as ViewType },
+    { icon: History, label: 'Ledger Terminal', view: 'Transactions' as ViewType },
+    { icon: Lightbulb, label: 'Analytics', view: 'Insights' as ViewType },
+    { icon: Settings, label: 'Preferences', view: 'Settings' as ViewType },
   ];
 
   const getInitials = (name: string) => {
@@ -48,8 +50,8 @@ export function AppSidebar() {
       <div className="p-6 flex items-center justify-between border-b border-slate-50 dark:border-slate-900">
         {!isCollapsed && (
           <div className="flex items-center gap-3">
-            <div className="bg-indigo-600 p-1.5 rounded-lg shadow-lg">
-              <ZorvynLogo className="w-5 h-5 text-white" />
+            <div className="p-1 rounded-lg">
+              <ZorvynLogo className="w-8 h-8" />
             </div>
             <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Zorvyn<span className="text-indigo-600">Track</span></span>
           </div>
@@ -81,7 +83,7 @@ export function AppSidebar() {
               activeView === item.view ? "text-indigo-600 dark:text-indigo-400" : "text-slate-400 dark:text-slate-500"
             )} />
             {!isCollapsed && (
-              <span className="text-sm font-semibold">{item.label}</span>
+              <span className="text-sm font-bold tracking-tight">{item.label}</span>
             )}
           </button>
         ))}
@@ -89,9 +91,9 @@ export function AppSidebar() {
 
       <div className="p-4 border-t border-slate-100 dark:border-slate-900 space-y-4">
         {!isCollapsed && (
-          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl">
+          <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Node Role</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Node Status</span>
               <div className="flex items-center gap-1.5">
                 {userRole === 'Admin' ? <Shield className="w-3 h-3 text-indigo-600" /> : <Eye className="w-3 h-3 text-slate-400" />}
                 <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300">{userRole}</span>
@@ -104,17 +106,17 @@ export function AppSidebar() {
           "flex items-center gap-3",
           isCollapsed ? "justify-center" : "px-2"
         )}>
-          <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xs font-bold">
+          <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xs font-black">
             {getInitials(currentUser.name)}
           </div>
           {!isCollapsed && (
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{currentUser.name}</p>
-              <p className="text-[10px] text-slate-500 truncate">{currentUser.email}</p>
+              <p className="text-xs font-black text-slate-900 dark:text-white truncate">{currentUser.name}</p>
+              <p className="text-[10px] text-slate-400 truncate">{currentUser.email}</p>
             </div>
           )}
           {!isCollapsed && (
-            <Button variant="ghost" size="icon" onClick={logout} className="text-slate-400 hover:text-rose-500">
+            <Button variant="ghost" size="icon" onClick={logout} className="text-slate-400 hover:text-rose-500 hover:bg-transparent">
               <LogOut className="w-4 h-4" />
             </Button>
           )}

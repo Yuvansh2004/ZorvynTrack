@@ -32,20 +32,23 @@ const INITIAL_DATA: Record<string, Transaction[]> = {
   'yuvanshkoli1011@gmail.com': [
     { id: 'y1', date: '2024-05-20', description: 'Corporate Stipend - Zorvyn', amount: 25000, category: 'Salary', type: 'Income' },
     { id: 'y2', date: '2024-05-19', description: 'MacBook Pro EMI', amount: 8500, category: 'Electronics', type: 'Expense' },
-    { id: 'y3', date: '2024-05-18', description: 'AWS Cloud Services', amount: 1200, category: 'Development', type: 'Expense' },
+    { id: 'y3', date: '2024-05-18', description: 'AWS Cloud Services', amount: 1200, category: 'Cloud', type: 'Expense' },
     { id: 'y4', date: '2024-05-15', description: 'Freelance UI Project', amount: 12000, category: 'Income', type: 'Income' },
+    { id: 'y5', date: '2024-05-14', description: 'Starlink Monthly', amount: 3500, category: 'Utilities', type: 'Expense' },
   ],
   'aditya.rao@zorvyn.com': [
-    { id: 'a1', date: '2024-05-20', description: 'College Canteen', amount: 120, category: 'Food', type: 'Expense' },
-    { id: 'a2', date: '2024-05-19', description: 'Monthly Bus Pass', amount: 600, category: 'Transport', type: 'Expense' },
-    { id: 'a3', date: '2024-05-18', description: 'Pocket Money from Dad', amount: 3000, category: 'Allowance', type: 'Income' },
-    { id: 'a4', date: '2024-05-17', description: 'Book Store - React Guide', amount: 450, category: 'Education', type: 'Expense' },
+    { id: 'a1', date: '2024-05-20', description: 'University Canteen Card', amount: 2500, category: 'Food', type: 'Expense' },
+    { id: 'a2', date: '2024-05-19', description: 'NPTEL Course Certification', amount: 1200, category: 'Education', type: 'Expense' },
+    { id: 'a3', date: '2024-05-18', description: 'Part-time Tutoring', amount: 5000, category: 'Allowance', type: 'Income' },
+    { id: 'a4', date: '2024-05-17', description: 'Kindle E-book Store', amount: 450, category: 'Education', type: 'Expense' },
+    { id: 'a5', date: '2024-05-16', description: 'Gym Membership', amount: 1500, category: 'Health', type: 'Expense' },
   ],
   'priya.sharma@zorvyn.com': [
-    { id: 'p1', date: '2024-05-20', description: 'Starbucks Coffee', amount: 350, category: 'Food', type: 'Expense' },
-    { id: 'p2', date: '2024-05-19', description: 'Client Payment - Logo Design', amount: 8000, category: 'Income', type: 'Income' },
+    { id: 'p1', date: '2024-05-20', description: 'Behance Portfolio Premium', amount: 1500, category: 'Subscription', type: 'Expense' },
+    { id: 'p2', date: '2024-05-19', description: 'Commission: NFT Artwork', amount: 18000, category: 'Freelance', type: 'Income' },
     { id: 'p3', date: '2024-05-18', description: 'Adobe Creative Cloud', amount: 2400, category: 'Subscription', type: 'Expense' },
-    { id: 'p4', date: '2024-05-16', description: 'Uber to Co-working', amount: 180, category: 'Transport', type: 'Expense' },
+    { id: 'p4', date: '2024-05-16', description: 'Uber Rides (Co-working)', amount: 1200, category: 'Transport', type: 'Expense' },
+    { id: 'p5', date: '2024-05-15', description: 'Wacom Pen Nibs', amount: 800, category: 'Supplies', type: 'Expense' },
   ]
 };
 

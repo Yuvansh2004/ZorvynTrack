@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, Lock } from 'lucide-react';
+import { Search, Plus, Trash2, Download, Lock, FileSpreadsheet } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -26,8 +26,8 @@ export const TransactionList = () => {
       `ACCOUNT HOLDER: ${currentUser?.name || 'N/A'}\n`,
       `ACCOUNT EMAIL: ${currentUser?.email || 'N/A'}\n`,
       `STATEMENT PERIOD: ${new Date().toLocaleDateString()}\n`,
-      `SYSTEM LOG: AES-256-INTERNAL\n\n`,
-      "TRANS_DATE,DESCRIPTION,CLASSIFICATION,AMOUNT(INR),TX_TYPE\n"
+      `SECURITY PROTOCOL: AES-256-INTERNAL-AUDIT\n\n`,
+      "TRANS_DATE,DESCRIPTION,CATEGORY,AMOUNT(INR),TX_TYPE\n"
     ];
     
     const rows = filtered.map(t => 
@@ -45,39 +45,46 @@ export const TransactionList = () => {
 
   return (
     <Card className="border-none shadow-sm bg-white dark:bg-slate-950">
-      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-7">
+      <CardHeader className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-7">
         <div className="space-y-1">
-          <CardTitle className="text-lg font-bold text-slate-900 dark:text-white">Recent Ledger Activity</CardTitle>
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-            {userRole === 'Admin' ? 'Mode: Full Audit Access' : 'Mode: Read-Only Ledger'}
+          <CardTitle className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Ledger Repository</CardTitle>
+          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
+            {userRole === 'Admin' ? (
+              <><span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" /> Full Read/Write Authority</>
+            ) : (
+              <><span className="w-1.5 h-1.5 rounded-full bg-slate-300" /> Standard Account Node</>
+            )}
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+        <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
           <div className="relative flex-1 sm:flex-none">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
-              placeholder="Filter statement..." 
-              className="pl-9 w-full sm:w-[250px] bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800"
+              placeholder="Search statements..." 
+              className="pl-9 w-full sm:w-[250px] bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-xl"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           
-          <Button variant="outline" size="sm" onClick={exportCSV} className="text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={exportCSV} 
+            className="text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900"
+          >
             <Download className="w-4 h-4 mr-2" />
             Export Statement
           </Button>
 
-          {userRole === 'Admin' && (
-            <Button 
-              size="sm" 
-              onClick={() => setIsModalOpen(true)} 
-              className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              New Entry
-            </Button>
-          )}
+          <Button 
+            size="sm" 
+            onClick={() => setIsModalOpen(true)} 
+            className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg rounded-xl px-5"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            New Entry
+          </Button>
         </div>
       </CardHeader>
       <CardContent>
@@ -86,10 +93,10 @@ export const TransactionList = () => {
             <thead>
               <tr className="text-slate-400 text-[10px] font-black uppercase tracking-widest border-b border-slate-50 dark:border-slate-900">
                 <th className="pb-4">TX_DATE</th>
-                <th className="pb-4">ENTITY_DESCRIPTION</th>
+                <th className="pb-4">TX_DESCRIPTION</th>
                 <th className="pb-4">CLASSIFICATION</th>
                 <th className="pb-4">QUANTUM_AMOUNT</th>
-                <th className="pb-4 text-right">ACTION</th>
+                <th className="pb-4 text-right">PROTOCOL</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50 dark:divide-slate-900">
@@ -97,15 +104,15 @@ export const TransactionList = () => {
                 {filtered.map((t) => (
                   <motion.tr 
                     key={t.id} 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
                     className="text-sm group hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors"
                   >
-                    <td className="py-4 text-slate-500">{t.date}</td>
+                    <td className="py-4 text-slate-500 font-mono text-[12px]">{t.date}</td>
                     <td className="py-4 font-bold text-slate-900 dark:text-slate-200">{t.description}</td>
                     <td className="py-4">
-                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight">
+                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-tight">
                         {t.category}
                       </span>
                     </td>
@@ -118,12 +125,15 @@ export const TransactionList = () => {
                           variant="ghost" 
                           size="sm" 
                           onClick={() => deleteTransaction(t.id)}
-                          className="text-slate-300 hover:text-rose-500"
+                          className="text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       ) : (
-                        <Lock className="w-4 h-4 text-slate-200 ml-auto" />
+                        <div className="flex items-center justify-end gap-2 text-slate-300 dark:text-slate-700">
+                          <Lock className="w-3.5 h-3.5" />
+                          <span className="text-[10px] font-bold uppercase tracking-tighter">Locked</span>
+                        </div>
                       )}
                     </td>
                   </motion.tr>
@@ -131,8 +141,12 @@ export const TransactionList = () => {
               </AnimatePresence>
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-16 text-center text-slate-400 text-sm font-bold">
-                    No matching statement entries found.
+                  <td colSpan={5} className="py-20 text-center">
+                    <div className="flex flex-col items-center gap-2">
+                      <FileSpreadsheet className="w-10 h-10 text-slate-200" />
+                      <p className="text-slate-400 text-sm font-bold">No statement entries detected.</p>
+                      <p className="text-slate-300 text-[10px] uppercase tracking-widest">Adjust filters or add a new entry.</p>
+                    </div>
                   </td>
                 </tr>
               )}
