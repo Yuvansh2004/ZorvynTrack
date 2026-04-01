@@ -38,7 +38,7 @@ export const AnalyticsCharts = () => {
     <>
       <div className="lg:col-span-2 space-y-6">
         <Card 
-          className="card-shadow overflow-hidden cursor-pointer hover:border-indigo-200 transition-colors group"
+          className="card-shadow overflow-hidden cursor-pointer hover:border-indigo-200 transition-all group"
           onClick={() => setActiveView('Transactions')}
         >
           <CardHeader className="flex flex-row items-center justify-between pb-4">
@@ -99,21 +99,21 @@ export const AnalyticsCharts = () => {
       </div>
 
       <Card 
-        className="card-shadow overflow-hidden h-fit cursor-pointer hover:border-indigo-200 transition-colors group"
+        className="card-shadow overflow-hidden cursor-pointer hover:border-indigo-200 transition-all group"
         onClick={() => setActiveView('Transactions')}
       >
         <CardHeader className="pb-2 flex flex-row items-center justify-between">
           <CardTitle className="text-[11px] weight-black uppercase tracking-[0.25em] text-slate-400 group-hover:text-indigo-600 transition-colors">Expenditure Classification</CardTitle>
           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">View Details →</span>
         </CardHeader>
-        <CardContent className="h-[350px] pt-4">
+        <CardContent className="h-[350px] pt-4 w-full flex items-center justify-center">
           {pieData.length > 0 ? (
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" minWidth={200}>
               <PieChart>
                 <Pie
                   data={pieData}
-                  innerRadius={80}
-                  outerRadius={110}
+                  innerRadius="65%"
+                  outerRadius="85%"
                   paddingAngle={8}
                   dataKey="value"
                   stroke="none"
@@ -131,7 +131,7 @@ export const AnalyticsCharts = () => {
                   verticalAlign="bottom" 
                   height={60} 
                   iconType="circle"
-                  wrapperStyle={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}
+                  wrapperStyle={{ fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', paddingTop: '10px' }}
                 />
               </PieChart>
             </ResponsiveContainer>
