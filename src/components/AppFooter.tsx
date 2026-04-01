@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -17,7 +18,7 @@ export const AppFooter = () => {
             <span className="text-xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase">Zorvyn<span className="text-indigo-600">Track</span></span>
           </div>
           <p className="text-sm text-slate-500 font-medium leading-relaxed max-w-xs">
-            An institutional-grade finance dashboard built for the Zorvyn FinTech assessment. Focused on real-time data visualization, RBAC security, and intuitive student financial management.
+            ZorvynTrack System Security Technology: An institutional-grade finance terminal built for the Zorvyn FinTech assessment.
           </p>
           <div className="flex items-center gap-3">
             <a href="mailto:yuvanshkoli1011@gmail.com" className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all">

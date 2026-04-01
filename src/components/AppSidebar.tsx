@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -35,32 +36,34 @@ export function AppSidebar() {
       "bg-white dark:bg-slate-950 border-r border-slate-100 dark:border-slate-900 transition-all duration-500 flex flex-col h-screen sticky top-0 z-50 overflow-hidden",
       isOpen ? "w-72" : "w-24"
     )}>
-      <div className={cn(
-        "h-20 flex items-center px-4 border-b border-slate-50 dark:border-slate-900 transition-all",
-        !isOpen ? "justify-center gap-2" : "justify-between"
-      )}>
-        <div className="flex items-center gap-3 min-w-0 overflow-hidden">
-          <div className="bg-indigo-600 p-2 rounded-xl shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none rotate-3">
-            <ZorvynLogo className="w-5 h-5 text-white" />
+      <div className="h-24 flex items-center px-4 border-b border-slate-50 dark:border-slate-900">
+        <div className={cn(
+          "flex items-center w-full",
+          isOpen ? "justify-between" : "justify-center gap-2"
+        )}>
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="bg-indigo-600 p-2 rounded-xl shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none rotate-3">
+              <ZorvynLogo className="w-5 h-5 text-white" />
+            </div>
+            {isOpen && (
+              <span className="text-xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300">
+                Zorvyn<span className="text-indigo-600">Track</span>
+              </span>
+            )}
           </div>
-          {isOpen && (
-            <span className="text-xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap overflow-hidden animate-in fade-in slide-in-from-left-2 duration-300">
-              Zorvyn<span className="text-indigo-600">Track</span>
-            </span>
-          )}
-        </div>
 
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={toggleSidebar} 
-          className={cn(
-            "shrink-0 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
-            isOpen ? "h-9 w-9" : "h-7 w-7"
-          )}
-        >
-          {isOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-4 h-4" />}
-        </Button>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={toggleSidebar} 
+            className={cn(
+              "shrink-0 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
+              isOpen ? "h-9 w-9" : "h-7 w-7"
+            )}
+          >
+            {isOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-4 h-4" />}
+          </Button>
+        </div>
       </div>
 
       <nav className="flex-1 p-2 space-y-2 mt-4">
