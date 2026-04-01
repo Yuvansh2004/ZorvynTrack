@@ -21,13 +21,13 @@ export default function Home() {
   if (isLoading || isTransitioning) {
     return (
       <div className={`min-h-screen ${isDarkMode ? 'bg-slate-950' : 'bg-white'} flex items-center justify-center transition-colors duration-500 p-6`}>
-        <div className="text-center space-y-10 w-full max-w-sm">
+        <div className="text-center space-y-12 w-full max-w-sm">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-2"
           >
-            <p className="text-3xl md:text-4xl font-black italic uppercase tracking-[0.15em] text-slate-900 dark:text-white">
+            <p className="text-4xl md:text-5xl font-black italic uppercase tracking-[0.15em] text-slate-900 dark:text-white">
               Zorvyn<span className="text-indigo-600">Track</span>
             </p>
           </motion.div>
@@ -35,7 +35,7 @@ export default function Home() {
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ 
-              scale: [1, 1.05, 1],
+              scale: [1, 1.1, 1],
               opacity: 1,
             }}
             transition={{ 
@@ -43,13 +43,13 @@ export default function Home() {
               repeat: Infinity,
               ease: "easeInOut" 
             }}
-            className="inline-flex p-8 md:p-10 bg-indigo-600 rounded-[2.5rem] shadow-2xl relative"
+            className="inline-flex p-10 md:p-12 bg-indigo-600 rounded-[3rem] shadow-2xl relative"
           >
-            <ZorvynLogo className="w-12 h-12 md:w-16 md:h-16 text-white" />
+            <ZorvynLogo className="w-16 h-16 md:w-20 md:h-20 text-white" />
           </motion.div>
 
-          <div className="space-y-6">
-            <div className="w-32 md:w-48 h-1 bg-slate-100 dark:bg-slate-900 mx-auto rounded-full overflow-hidden">
+          <div className="space-y-8">
+            <div className="w-48 md:w-64 h-1.5 bg-slate-100 dark:bg-slate-900 mx-auto rounded-full overflow-hidden">
               <motion.div 
                 className="h-full bg-indigo-600"
                 initial={{ x: "-100%" }}
@@ -58,15 +58,15 @@ export default function Home() {
               />
             </div>
             
-            <div className="space-y-2">
+            <div className="space-y-3">
               <motion.p 
                 animate={{ opacity: [0.4, 1, 0.4] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
-                className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-600"
+                className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-600"
               >
                 System Synchronization Active
               </motion.p>
-              <p className="text-[7px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-slate-600">
+              <p className="text-[8px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-600">
                 ZorvynTrack System Security Technology
               </p>
             </div>

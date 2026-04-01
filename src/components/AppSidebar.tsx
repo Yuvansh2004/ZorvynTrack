@@ -37,10 +37,10 @@ export function AppSidebar() {
 
   const SidebarContentNode = () => (
     <div className="flex flex-col h-full bg-white dark:bg-slate-950">
-      <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4 md:px-6">
+      <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4">
         <div className={cn(
           "flex w-full items-center",
-          isMobile || isOpen ? "justify-between" : "justify-center gap-2"
+          isMobile || isOpen ? "justify-between" : "justify-center gap-1.5"
         )}>
           <div className="flex items-center gap-3 overflow-hidden">
             <div className="bg-indigo-600 rounded-xl p-2 shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
@@ -60,10 +60,10 @@ export function AppSidebar() {
               onClick={toggleSidebar} 
               className={cn(
                 "shrink-0 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
-                isOpen ? "h-9 w-9" : "h-8 w-8"
+                isOpen ? "h-9 w-9" : "h-7 w-7"
               )}
             >
-              {isOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+              {isOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-3.5 h-3.5" />}
             </Button>
           )}
         </div>
@@ -75,7 +75,6 @@ export function AppSidebar() {
             key={item.label}
             onClick={() => {
               setActiveView(item.view);
-              // On mobile, the sheet will likely close if handled by parent or by logic here
             }}
             className={cn(
               "w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group",
