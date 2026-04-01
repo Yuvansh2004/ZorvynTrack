@@ -45,15 +45,8 @@ export const SettingsView = () => {
                 
                 <div className="p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
                   <p className="text-[10px] font-black uppercase text-slate-400 mb-1 flex items-center gap-1.5"><Mail className="w-3 h-3"/> System Identity</p>
-                  <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 truncate">{currentUser.email}</p>
+                  <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
                 </div>
-
-                {currentUser.personalEmail && (
-                  <div className="p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
-                    <p className="text-[10px] font-black uppercase text-slate-400 mb-1 flex items-center gap-1.5"><Mail className="w-3 h-3"/> Personal Email</p>
-                    <p className="text-sm font-bold text-slate-900 dark:text-white">{currentUser.personalEmail}</p>
-                  </div>
-                )}
 
                 <div className="p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
                   <p className="text-[10px] font-black uppercase text-slate-400 mb-1 flex items-center gap-1"><Shield className="w-3 h-3"/> Active Session Node</p>
