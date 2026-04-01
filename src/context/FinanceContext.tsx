@@ -24,7 +24,7 @@ export interface User {
 }
 
 export const DEMO_ACCOUNTS: User[] = [
-  { email: 'yuvanshkoli@zorvyn.com', name: 'Yuvansh Dashrath Koli', role: 'Admin' },
+  { email: 'yuvanshkoli1011@gmail.com', name: 'Yuvansh Dashrath Koli', role: 'Admin' },
   { email: 'priya.sharma@zorvyn.com', name: 'Priya Sharma', role: 'Admin' },
   { email: 'arjun.mehta@zorvyn.com', name: 'Arjun Mehta', role: 'Admin' },
   { email: 'ananya.iyer@zorvyn.com', name: 'Ananya Iyer', role: 'Admin' },
@@ -90,8 +90,8 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const savedTransactions = localStorage.getItem('zorvyn_ledger_global_v5');
-    const savedAuth = localStorage.getItem('zorvyn_session_v5');
+    const savedTransactions = localStorage.getItem('zorvyn_ledger_global_v6');
+    const savedAuth = localStorage.getItem('zorvyn_session_v6');
     
     if (savedTransactions) {
       setTransactions(JSON.parse(savedTransactions));
@@ -111,11 +111,11 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!isLoading) {
-      localStorage.setItem('zorvyn_ledger_global_v5', JSON.stringify(transactions));
+      localStorage.setItem('zorvyn_ledger_global_v6', JSON.stringify(transactions));
       if (isLoggedIn && user) {
-        localStorage.setItem('zorvyn_session_v5', JSON.stringify(user));
+        localStorage.setItem('zorvyn_session_v6', JSON.stringify(user));
       } else {
-        localStorage.removeItem('zorvyn_session_v5');
+        localStorage.removeItem('zorvyn_session_v6');
       }
     }
   }, [transactions, isLoggedIn, user, isLoading]);

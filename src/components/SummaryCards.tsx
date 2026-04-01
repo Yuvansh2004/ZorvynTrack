@@ -22,7 +22,7 @@ export const SummaryCards = () => {
 
   const cardData = [
     {
-      title: 'Global Liquidity',
+      title: 'Total Balance',
       amount: balance,
       icon: Activity,
       color: 'text-primary',
@@ -32,7 +32,7 @@ export const SummaryCards = () => {
       isPositive: true,
     },
     {
-      title: 'Net Inflow',
+      title: 'Total Income',
       amount: income,
       icon: TrendingUp,
       color: 'text-emerald-400',
@@ -42,7 +42,7 @@ export const SummaryCards = () => {
       isPositive: true,
     },
     {
-      title: 'System Cost',
+      title: 'Total Expenses',
       amount: expenses,
       icon: TrendingDown,
       color: 'text-rose-400',

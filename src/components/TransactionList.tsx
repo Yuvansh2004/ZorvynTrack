@@ -75,7 +75,7 @@ export const TransactionList = () => {
             Ledger Terminal
           </h3>
           <p className="text-[9px] text-slate-500 font-black uppercase tracking-[3px] mt-2 opacity-70">
-            {filteredTransactions.length} Verified Data Nodes Found
+            {filteredTransactions.length} Transactions Found
           </p>
         </div>
         
@@ -83,7 +83,7 @@ export const TransactionList = () => {
           <div className="relative min-w-[280px]">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
             <Input 
-              placeholder="Query TX Identifier..." 
+              placeholder="Search transactions..." 
               className="pl-12 bg-slate-900/50 border-slate-800 focus:ring-primary h-12 text-[10px] font-black uppercase tracking-[1px] rounded-xl"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -95,7 +95,7 @@ export const TransactionList = () => {
               <SelectValue placeholder="Category" />
             </SelectTrigger>
             <SelectContent className="bg-slate-950 border-slate-800 text-white">
-              <SelectItem value="all" className="text-[10px] font-black uppercase">All Sectors</SelectItem>
+              <SelectItem value="all" className="text-[10px] font-black uppercase">All Categories</SelectItem>
               {categories.map(cat => (
                 <SelectItem key={cat} value={cat} className="text-[10px] font-black uppercase">{cat}</SelectItem>
               ))}
@@ -115,7 +115,7 @@ export const TransactionList = () => {
           {userRole === 'Admin' && (
             <Button size="sm" onClick={() => setIsAddModalOpen(true)} className="h-12 bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[2px] px-8 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.3)]">
               <Plus className="w-4 h-4 mr-2" />
-              New Node
+              Add Transaction
             </Button>
           )}
         </div>
@@ -125,11 +125,11 @@ export const TransactionList = () => {
         <table className="w-full text-left border-collapse min-w-[1000px]">
           <thead>
             <tr className="bg-slate-900/50 text-slate-500 text-[10px] uppercase tracking-[3px] font-black italic">
-              <th className="px-8 py-6">Temporal Stamp</th>
-              <th className="px-8 py-6">Data Identifier</th>
-              <th className="px-8 py-6">Sector Class</th>
-              <th className="px-8 py-6">Quantum Value</th>
-              <th className="px-8 py-6 text-center">Protocol Actions</th>
+              <th className="px-8 py-6">Date</th>
+              <th className="px-8 py-6">Description</th>
+              <th className="px-8 py-6">Category</th>
+              <th className="px-8 py-6">Amount</th>
+              <th className="px-8 py-6 text-center">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-800/30">
@@ -188,7 +188,7 @@ export const TransactionList = () => {
                   <td colSpan={5} className="px-8 py-24 text-center">
                     <div className="flex flex-col items-center gap-4">
                       <Search className="w-12 h-12 text-slate-800 animate-pulse" />
-                      <p className="text-[10px] text-slate-600 font-black uppercase tracking-[4px] italic">Zero telemetry nodes found in current buffer.</p>
+                      <p className="text-[10px] text-slate-600 font-black uppercase tracking-[4px] italic">No transactions found.</p>
                     </div>
                   </td>
                 </tr>
