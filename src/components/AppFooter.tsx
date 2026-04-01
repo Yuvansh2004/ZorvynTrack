@@ -12,6 +12,14 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
+// Unified Z Logo for Footer Branding
+const ZorvynLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 20L80 20L20 80L80 80" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="50" cy="50" r="10" fill="currentColor" />
+  </svg>
+);
+
 export const AppFooter = () => {
   const currentYear = new Date().getFullYear();
   
@@ -21,7 +29,7 @@ export const AppFooter = () => {
         <div className="space-y-5">
           <div className="flex items-center gap-2">
             <div className="bg-indigo-600 p-1.5 rounded-lg shadow-lg shadow-indigo-500/20">
-              <Shield className="w-4 h-4 text-white" />
+              <ZorvynLogo className="w-4 h-4 text-white" />
             </div>
             <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Zorvyn<span className="text-indigo-600">Track</span></span>
           </div>
