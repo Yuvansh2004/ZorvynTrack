@@ -22,6 +22,7 @@ export default function Home() {
     return (
       <div className={`min-h-screen ${isDarkMode ? 'bg-slate-950' : 'bg-white'} flex items-center justify-center transition-colors duration-500 p-6`}>
         <div className="text-center space-y-12 w-full max-w-sm">
+          {/* Brand-first hierarchy: Name -> Logo -> Loading */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}

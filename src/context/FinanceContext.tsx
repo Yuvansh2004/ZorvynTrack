@@ -70,6 +70,7 @@ const generateRandomData = () => {
   const baseTime = 1767225600000; // Jan 1st, 2026
 
   DEMO_ACCOUNTS.forEach((user) => {
+    // Generate 50-100 randomized transactions per client as requested
     const count = Math.floor(Math.random() * 51) + 50; 
     
     allTransactions.push({
@@ -219,7 +220,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerTransition = (callback: () => void) => {
     setIsTransitioning(true);
-    const duration = Math.floor(Math.random() * 4000) + 1000; 
+    const duration = Math.floor(Math.random() * 4000) + 1000; // Random 1-5s
     setTimeout(() => {
       callback();
       setIsTransitioning(false);
@@ -232,6 +233,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       triggerTransition(() => {
         setCurrentUser(user);
         setUserRole(user.role);
+        // Onboarding logic: greeting triggers on every login
         if (hasSeenTutorial) {
           setShowGreeting(true);
         }
