@@ -25,10 +25,8 @@ export const TransactionList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   
-  // Initialize with null to avoid hydration mismatch
   const [now, setNow] = useState<number | null>(null);
 
-  // High-frequency timer to manage the 30-second edit window
   useEffect(() => {
     setNow(Date.now());
     const timer = setInterval(() => setNow(Date.now()), 1000);
@@ -70,13 +68,8 @@ export const TransactionList = () => {
   };
 
   const canEdit = (t: Transaction) => {
-    // Admin always has full override authority
     if (userRole === 'Admin') return true;
-    
-    // Don't allow edits until client-side 'now' state is initialized
     if (now === null) return false;
-    
-    // Non-admin users have a 30-second grace period for errors
     const isOwner = currentUser && t.ownerEmail === currentUser.email;
     const isWithinWindow = (now - t.createdAt) < 30000;
     return !!(isOwner && isWithinWindow);
@@ -102,10 +95,12 @@ export const TransactionList = () => {
                 Export
               </Button>
             )}
-            <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight rounded-xl">
-              <Plus className="w-4 h-4 mr-2" />
-              New Entry
-            </Button>
+            {userRole === 'Admin' && (
+              <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight rounded-xl">
+                <Plus className="w-4 h-4 mr-2" />
+                New Entry
+              </Button>
+            )}
           </div>
         </div>
 
@@ -171,21 +166,6 @@ export const TransactionList = () => {
                 <SelectItem value="50">Top 50</SelectItem>
               </SelectContent>
             </Select>
-            {(startDate || endDate || searchTerm || typeFilter !== 'All') && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => {
-                  setStartDate('');
-                  setEndDate('');
-                  setSearchTerm('');
-                  setTypeFilter('All');
-                }}
-                className="h-10 w-10 text-slate-400 hover:text-rose-500 shrink-0"
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            )}
           </div>
         </div>
       </CardHeader>

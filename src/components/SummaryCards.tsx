@@ -23,21 +23,21 @@ export const SummaryCards = () => {
 
   const summaryData = [
     { 
-      title: 'Current Balance', 
+      title: 'Total Balance', 
       amount: balance, 
       icon: Wallet, 
       color: 'text-indigo-600', 
       bg: 'bg-indigo-50 dark:bg-indigo-950/30',
     },
     { 
-      title: 'Monthly Income', 
+      title: 'Total Income', 
       amount: income, 
       icon: ArrowUpCircle, 
       color: 'text-emerald-600', 
       bg: 'bg-emerald-50 dark:bg-emerald-950/30',
     },
     { 
-      title: 'Monthly Expenses', 
+      title: 'Total Expenses', 
       amount: expenses, 
       icon: ArrowDownCircle, 
       color: 'text-rose-600', 
@@ -65,8 +65,8 @@ export const SummaryCards = () => {
                   <h3 className={cn(
                     "font-black text-slate-900 dark:text-white mt-2 lg:mt-3 tracking-tighter tabular-nums italic truncate transition-all duration-300",
                     isSidebarOpen 
-                      ? "text-lg md:text-xl lg:text-2xl xl:text-3xl" 
-                      : "text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                      ? "text-lg md:text-xl lg:text-2xl" 
+                      : "text-xl md:text-2xl lg:text-3xl"
                   )} title={formatINR(item.amount)}>
                     {formatINR(item.amount)}
                   </h3>
