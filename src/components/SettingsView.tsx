@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
   Moon, Shield, UserCircle, Mail, User, ShieldCheck, 
-  Trash2, Database, AlertCircle, Pencil, Save, X 
+  Trash2, Database, AlertCircle, Pencil, Save, X, Github, Linkedin, ExternalLink 
 } from 'lucide-react';
 import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
 import { useToast } from '@/hooks/use-toast';
@@ -21,17 +21,33 @@ export const SettingsView = () => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState(currentUser?.name || '');
 
+  const [isEditingSocials, setIsEditingSocials] = useState(false);
+  const [socials, setSocials] = useState({
+    personalEmail: currentUser?.personalEmail || '',
+    github: currentUser?.github || '',
+    linkedin: currentUser?.linkedin || ''
+  });
+
   if (!currentUser) return null;
 
   const handleSaveName = () => {
     if (tempName.trim()) {
-      updateProfile(tempName.trim());
+      updateProfile({ name: tempName.trim() });
       setIsEditingName(false);
       toast({
         title: "Profile Updated",
         description: "Your name has been successfully updated in the system.",
       });
     }
+  };
+
+  const handleSaveSocials = () => {
+    updateProfile(socials);
+    setIsEditingSocials(false);
+    toast({
+      title: "Social Nodes Updated",
+      description: "Your external institutional links have been synchronized.",
+    });
   };
 
   const handleCancelName = () => {
@@ -44,12 +60,12 @@ export const SettingsView = () => {
       <div className="flex justify-between items-end border-b border-slate-100 dark:border-slate-900 pb-6">
         <div>
           <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
-            User<span className="text-indigo-600">Profile</span>
+            Admin<span className="text-indigo-600">Manager</span>
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Reference ID: {ASSIGNMENT_REF_ID}</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Institutional Node Terminal: {ASSIGNMENT_REF_ID}</p>
         </div>
         <div className="bg-indigo-600/10 px-4 py-2 rounded-xl border border-indigo-500/20">
-          <p className="text-[10px] font-black uppercase tracking-widest text-indigo-600">Zorvyn Assessment Mode</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-indigo-600">Secure Profile Control</p>
         </div>
       </div>
 
@@ -119,9 +135,9 @@ export const SettingsView = () => {
                 </div>
                 
                 <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
-                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5"/> System Identity</p>
+                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5"/> System Handle</p>
                   <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
-                  <p className="text-[9px] font-bold text-slate-400 uppercase mt-1">Read-Only Secure Handle</p>
+                  <p className="text-[9px] font-bold text-slate-400 uppercase mt-1">Institutional Node Email</p>
                 </div>
 
                 <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
@@ -137,6 +153,73 @@ export const SettingsView = () => {
             </CardContent>
           </Card>
 
+          <Card className="border-none shadow-sm bg-white dark:bg-slate-900">
+            <CardHeader className="border-b border-slate-50 dark:border-slate-800 flex flex-row items-center justify-between">
+              <CardTitle className="text-lg font-black italic uppercase tracking-tight flex items-center gap-2 text-slate-800 dark:text-white">
+                <ExternalLink className="w-5 h-5 text-indigo-600" /> External Nodes
+              </CardTitle>
+              {!isEditingSocials ? (
+                <Button variant="ghost" size="sm" onClick={() => setIsEditingSocials(true)} className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-600">
+                  Modify Links
+                </Button>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Button variant="ghost" size="sm" onClick={handleSaveSocials} className="text-emerald-600">
+                    <Save className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => setIsEditingSocials(false)} className="text-rose-600">
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
+              )}
+            </CardHeader>
+            <CardContent className="pt-6 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-1.5"><Mail className="w-3 h-3"/> Personal Email</Label>
+                  {isEditingSocials ? (
+                    <Input 
+                      value={socials.personalEmail}
+                      onChange={(e) => setSocials(p => ({ ...p, personalEmail: e.target.value }))}
+                      placeholder="e.g. personal@example.com"
+                      className="rounded-xl h-10 font-bold"
+                    />
+                  ) : (
+                    <p className="text-sm font-bold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800">{currentUser.personalEmail || 'Not Configured'}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-1.5"><Github className="w-3 h-3"/> GitHub Handle</Label>
+                  {isEditingSocials ? (
+                    <Input 
+                      value={socials.github}
+                      onChange={(e) => setSocials(p => ({ ...p, github: e.target.value }))}
+                      placeholder="https://github.com/..."
+                      className="rounded-xl h-10 font-bold"
+                    />
+                  ) : (
+                    <p className="text-sm font-bold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800 truncate" title={currentUser.github}>{currentUser.github || 'Not Configured'}</p>
+                  )}
+                </div>
+                <div className="space-y-2 md:col-span-2">
+                  <Label className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-1.5"><Linkedin className="w-3 h-3"/> LinkedIn Node</Label>
+                  {isEditingSocials ? (
+                    <Input 
+                      value={socials.linkedin}
+                      onChange={(e) => setSocials(p => ({ ...p, linkedin: e.target.value }))}
+                      placeholder="https://linkedin.com/in/..."
+                      className="rounded-xl h-10 font-bold"
+                    />
+                  ) : (
+                    <p className="text-sm font-bold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/30 p-3 rounded-xl border border-slate-100 dark:border-slate-800 truncate" title={currentUser.linkedin}>{currentUser.linkedin || 'Not Configured'}</p>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-8">
           <Card className="border-none shadow-sm bg-white dark:bg-slate-900">
             <CardHeader className="border-b border-slate-50 dark:border-slate-800">
               <CardTitle className="text-lg font-black italic uppercase tracking-tight flex items-center gap-2 text-slate-800 dark:text-white">
@@ -156,9 +239,7 @@ export const SettingsView = () => {
               </div>
             </CardContent>
           </Card>
-        </div>
 
-        <div className="space-y-8">
           <Card className="border-none shadow-sm bg-white dark:bg-slate-900">
             <CardHeader>
               <CardTitle className="text-lg font-bold flex items-center gap-2">

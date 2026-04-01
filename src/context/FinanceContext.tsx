@@ -13,13 +13,23 @@ export interface User {
   role: UserRole;
   password?: string;
   personalEmail?: string;
+  github?: string;
+  linkedin?: string;
   avatar?: string;
 }
 
 export const ASSIGNMENT_REF_ID = "TE85LMG1";
 
 export const DEMO_ACCOUNTS: User[] = [
-  { name: 'Yuvansh Dashrath Koli', email: 'yuvanshkoli@demozorvyn.com', password: 'admin_zorvyn', role: 'Admin' },
+  { 
+    name: 'Yuvansh Dashrath Koli', 
+    email: 'yuvanshkoli@demozorvyn.com', 
+    password: 'admin_zorvyn', 
+    role: 'Admin',
+    personalEmail: 'yuvanshkoli1011@gmail.com',
+    github: 'https://github.com/yuvanshkoli',
+    linkedin: 'https://linkedin.com/in/yuvanshkoli'
+  },
   { name: 'Aditya Rao', email: 'aditya.rao@zorvyn.com', password: 'viewer_rao', role: 'Viewer' },
   { name: 'Priya Sharma', email: 'priya.sharma@zorvyn.com', password: 'viewer_sharma', role: 'Viewer' },
   { name: 'Rohan Mehta', email: 'rohan.mehta@zorvyn.com', password: 'viewer_mehta', role: 'Viewer' },
@@ -118,7 +128,7 @@ interface FinanceContextType {
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => void;
   currentUser: User | null;
-  updateProfile: (name: string) => void;
+  updateProfile: (updates: Partial<User>) => void;
   login: (email: string, password?: string) => boolean;
   logout: () => void;
   hasSeenTutorial: boolean;
@@ -246,9 +256,9 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const updateProfile = (name: string) => {
+  const updateProfile = (updates: Partial<User>) => {
     if (!currentUser) return;
-    setCurrentUser({ ...currentUser, name });
+    setCurrentUser({ ...currentUser, ...updates });
   };
 
   const addTransaction = (transaction: Omit<Transaction, 'id' | 'ownerEmail' | 'createdAt'>) => {

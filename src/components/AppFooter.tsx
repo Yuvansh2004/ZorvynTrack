@@ -9,14 +9,22 @@ import { PrivacyProtocol } from './PrivacyProtocol';
 import { SystemAudit } from './SystemAudit';
 
 export const AppFooter = () => {
-  const { setShowPrivacy, setShowAudit } = useFinance();
+  const { setShowPrivacy, setShowAudit, currentUser, setActiveView } = useFinance();
+
+  // Redirect company logo to AdminManager (Settings)
+  const handleLogoClick = () => {
+    setActiveView('Settings');
+  };
 
   return (
     <footer className="mt-20 border-t border-slate-100 dark:border-slate-900 pt-12 pb-16">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
         <div className="space-y-6">
-          <div className="flex items-center gap-3">
-            <div className="bg-indigo-600 p-2 rounded-xl shadow-lg shadow-indigo-100 dark:shadow-none">
+          <div 
+            className="flex items-center gap-3 cursor-pointer group"
+            onClick={handleLogoClick}
+          >
+            <div className="bg-indigo-600 p-2 rounded-xl shadow-lg shadow-indigo-100 dark:shadow-none group-hover:scale-110 transition-transform">
               <ZorvynLogo className="w-4 h-4 text-white" />
             </div>
             <span className="text-xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase">Zorvyn<span className="text-indigo-600">Track</span></span>
@@ -25,15 +33,30 @@ export const AppFooter = () => {
             ZorvynTrack System Security Technology: An institutional-grade finance terminal built for the Zorvyn FinTech assessment.
           </p>
           <div className="flex items-center gap-3">
-            <a href="mailto:yuvanshkoli1011@gmail.com" className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all">
+            <a 
+              href={currentUser?.personalEmail ? `mailto:${currentUser.personalEmail}` : '#'} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
+            >
               <Mail className="w-4 h-4" />
             </a>
-            <button className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all">
+            <a 
+              href={currentUser?.github || '#'} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
+            >
               <Github className="w-4 h-4" />
-            </button>
-            <button className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all">
+            </a>
+            <a 
+              href={currentUser?.linkedin || '#'} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
+            >
               <Linkedin className="w-4 h-4" />
-            </button>
+            </a>
           </div>
         </div>
 
@@ -49,14 +72,14 @@ export const AppFooter = () => {
         <div className="space-y-6">
           <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Developer Node</h4>
           <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm">
-            <p className="text-sm font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Yuvansh Dashrath Koli</p>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Internship Applicant</p>
+            <p className="text-sm font-black text-slate-900 dark:text-white uppercase italic tracking-tight">{currentUser?.name || 'Yuvansh Dashrath Koli'}</p>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Institutional Node Lead</p>
             <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 space-y-2">
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                Personal: <span className="text-indigo-600 font-black tracking-tighter">yuvanshkoli1011@gmail.com</span>
+                Email: <span className="text-indigo-600 font-black tracking-tighter">{currentUser?.personalEmail || 'yuvanshkoli1011@gmail.com'}</span>
               </p>
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                College: <span className="text-indigo-600 font-black tracking-tighter">yuvanshkoli2324@ternaengg.ac.in</span>
+                Handle: <span className="text-indigo-600 font-black tracking-tighter">@zorvyn_admin</span>
               </p>
             </div>
           </div>

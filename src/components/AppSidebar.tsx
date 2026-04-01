@@ -34,15 +34,22 @@ export function AppSidebar() {
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
+  const handleLogoClick = () => {
+    setActiveView('Settings');
+  };
+
   const SidebarContentNode = () => (
     <div className="flex flex-col h-full bg-white dark:bg-slate-950">
       <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4">
         <div className={cn(
           "flex w-full items-center",
-          isSidebarOpen ? "justify-between" : "justify-center gap-2"
+          isSidebarOpen ? "justify-between" : "justify-center gap-3"
         )}>
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="bg-indigo-600 rounded-xl p-2 shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
+          <div 
+            className="flex items-center gap-3 shrink-0 cursor-pointer group"
+            onClick={handleLogoClick}
+          >
+            <div className="bg-indigo-600 rounded-xl p-2 shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none group-hover:scale-110 transition-transform">
               <ZorvynLogo className="w-4 h-4 text-white" />
             </div>
             {(isMobile || isSidebarOpen) && (
@@ -59,7 +66,7 @@ export function AppSidebar() {
               onClick={toggleSidebar} 
               className={cn(
                 "shrink-0 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
-                isSidebarOpen ? "h-9 w-9" : "h-7 w-7"
+                isSidebarOpen ? "h-9 w-9" : "h-8 w-8"
               )}
             >
               {isSidebarOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-3.5 h-3.5" />}
@@ -98,7 +105,10 @@ export function AppSidebar() {
           "flex items-center gap-3 p-4 rounded-2xl transition-all",
           isMobile || isSidebarOpen ? "bg-slate-50 dark:bg-slate-900" : "justify-center"
         )}>
-          <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-sm font-black shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
+          <div 
+            className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-sm font-black shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none cursor-pointer hover:scale-105 transition-transform"
+            onClick={handleLogoClick}
+          >
             {currentUser.name[0]}
           </div>
           {(isMobile || isSidebarOpen) && (
@@ -120,7 +130,10 @@ export function AppSidebar() {
   if (isMobile) {
     return (
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 flex items-center justify-between px-6 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-900 z-40">
-        <div className="flex items-center gap-2">
+        <div 
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={handleLogoClick}
+        >
           <ZorvynLogo className="w-5 h-5 text-indigo-600" />
           <span className="text-[12px] font-black italic tracking-tighter text-slate-900 dark:text-white uppercase">
             Zorvyn<span className="text-indigo-600">Track</span>
