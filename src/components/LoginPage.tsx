@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useFinance, DEMO_ACCOUNTS } from '@/context/FinanceContext';
-import { Shield, Mail, Lock, Eye, EyeOff, Info, Sun, Moon } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Info, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,15 +15,8 @@ import {
   DialogDescription,
   DialogTrigger 
 } from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-
-const ZorvynLogo = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 20L80 20L20 80L80 80" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="50" cy="50" r="10" fill="currentColor" />
-  </svg>
-);
+import { ZorvynLogo } from '@/components/ZorvynLogo';
 
 export const LoginPage = () => {
   const { login, isDarkMode, setIsDarkMode } = useFinance();
@@ -42,14 +35,14 @@ export const LoginPage = () => {
       const success = login(email, password);
       if (success) {
         toast({
-          title: "Login Successful",
-          description: "Welcome to ZorvynTrack.",
+          title: "Access Verified",
+          description: "System kernel synchronized.",
         });
       } else {
         toast({
           variant: "destructive",
-          title: "Login Failed",
-          description: "Invalid email or password.",
+          title: "Verification Failed",
+          description: "Invalid institutional credentials.",
         });
         setIsSubmitting(false);
       }
@@ -64,47 +57,47 @@ export const LoginPage = () => {
 
   return (
     <div className={cn(
-      "min-h-screen flex items-center justify-center p-6 relative font-body transition-colors duration-300",
+      "min-h-screen flex items-center justify-center p-6 relative font-body transition-all duration-700",
       isDarkMode ? "bg-slate-950" : "bg-slate-50"
     )}>
-      <div className="absolute top-6 right-6 z-20">
+      <div className="absolute top-8 right-8 z-20">
         <Button 
-          variant="ghost" 
+          variant="outline" 
           size="icon" 
           onClick={() => setIsDarkMode(!isDarkMode)}
-          className="rounded-full"
+          className="rounded-2xl w-12 h-12 bg-white dark:bg-slate-900 shadow-xl shadow-slate-200 dark:shadow-none border-none"
         >
-          {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          {isDarkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-indigo-600" />}
         </Button>
       </div>
 
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center p-3 bg-indigo-600 rounded-2xl shadow-lg mb-4">
-            <ZorvynLogo className="w-8 h-8 text-white" />
+      <div className="w-full max-w-md space-y-10">
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center justify-center p-5 bg-indigo-600 rounded-[2.5rem] shadow-2xl shadow-indigo-200 dark:shadow-none mb-6 rotate-3">
+            <ZorvynLogo className="w-10 h-10 text-white" />
           </div>
           <h1 className={cn(
-            "text-3xl font-bold tracking-tight",
+            "text-5xl font-black italic tracking-tighter uppercase",
             isDarkMode ? "text-white" : "text-slate-900"
           )}>
             Zorvyn<span className="text-indigo-600">Track</span>
           </h1>
-          <p className="text-slate-500 text-sm">Student Finance Dashboard</p>
+          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em]">Institutional Finance Kernel</p>
         </div>
 
         <div className={cn(
-          "p-8 rounded-2xl border shadow-sm",
-          isDarkMode ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200"
+          "p-10 rounded-[3rem] border shadow-2xl",
+          isDarkMode ? "bg-slate-900 border-slate-800" : "bg-white border-slate-100"
         )}>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Email Address</Label>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-3">
+              <Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Identity Handle</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
                 <Input 
                   type="email" 
-                  placeholder="name@example.com" 
-                  className="pl-10"
+                  placeholder="name@zorvyn.com" 
+                  className="pl-12 h-14 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none font-bold text-sm"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -112,16 +105,14 @@ export const LoginPage = () => {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Password</Label>
-              </div>
+            <div className="space-y-3">
+              <Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Security Key</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
                 <Input 
                   type={showPassword ? "text" : "password"} 
                   placeholder="••••••••" 
-                  className="pl-10"
+                  className="pl-12 h-14 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none font-bold text-sm"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -129,7 +120,7 @@ export const LoginPage = () => {
                 <button 
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-indigo-600 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -139,40 +130,40 @@ export const LoginPage = () => {
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-6 rounded-xl transition-all"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase text-xs tracking-[0.3em] h-16 rounded-[1.5rem] transition-all shadow-xl shadow-indigo-100 dark:shadow-none hover:scale-[1.02] active:scale-95"
             >
-              {isSubmitting ? "Signing in..." : "Sign In"}
+              {isSubmitting ? "Verifying..." : "Initialize Session"}
             </Button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800">
+          <div className="mt-10 pt-8 border-t border-slate-50 dark:border-slate-800">
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
               <DialogTrigger asChild>
-                <Button variant="link" className="w-full text-slate-400 text-xs font-medium">
-                  <Info className="w-3.5 h-3.5 mr-2" /> View Demo Credentials
+                <Button variant="ghost" className="w-full text-slate-400 text-[10px] font-black uppercase tracking-widest hover:text-indigo-600 hover:bg-transparent">
+                  <Info className="w-3.5 h-3.5 mr-2" /> Sector Credentials
                 </Button>
               </DialogTrigger>
-              <DialogContent className={isDarkMode ? "bg-slate-900 text-white" : "bg-white text-slate-900"}>
+              <DialogContent className={cn("rounded-[2rem] border-none", isDarkMode ? "bg-slate-900 text-white" : "bg-white text-slate-900")}>
                 <DialogHeader>
-                  <DialogTitle>Demo Accounts</DialogTitle>
-                  <DialogDescription>Use these accounts to test different roles.</DialogDescription>
+                  <DialogTitle className="text-2xl font-black italic uppercase tracking-tighter">Demo <span className="text-indigo-600">Sectors</span></DialogTitle>
+                  <DialogDescription className="font-bold text-xs">Synchronize terminal with evaluated nodes.</DialogDescription>
                 </DialogHeader>
-                <div className="space-y-3 mt-4">
+                <div className="space-y-3 mt-6">
                   {DEMO_ACCOUNTS.map((acc) => (
                     <div 
                       key={acc.email} 
                       className={cn(
-                        "p-4 rounded-xl border cursor-pointer transition-colors",
-                        isDarkMode ? "border-slate-800 hover:bg-slate-800" : "border-slate-100 hover:bg-slate-50"
+                        "p-5 rounded-3xl border transition-all cursor-pointer group",
+                        isDarkMode ? "border-slate-800 hover:bg-slate-800" : "border-slate-100 hover:bg-slate-50 hover:border-indigo-200"
                       )}
                       onClick={() => fillDemo(acc)}
                     >
                       <div className="flex justify-between items-center">
                         <div>
-                          <p className="text-sm font-bold">{acc.name}</p>
-                          <p className="text-xs text-slate-500">{acc.email}</p>
+                          <p className="text-sm font-black uppercase italic tracking-tight group-hover:text-indigo-600 transition-colors">{acc.name}</p>
+                          <p className="text-[10px] text-slate-400 font-bold">{acc.email}</p>
                         </div>
-                        <span className="text-[10px] font-bold bg-indigo-100 text-indigo-600 px-2 py-1 rounded uppercase tracking-wider">
+                        <span className="text-[9px] font-black bg-indigo-600 text-white px-3 py-1.5 rounded-xl uppercase tracking-widest shadow-lg shadow-indigo-100 dark:shadow-none">
                           {acc.role}
                         </span>
                       </div>

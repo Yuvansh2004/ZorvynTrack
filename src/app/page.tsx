@@ -10,25 +10,19 @@ import { SettingsView } from '@/components/SettingsView';
 import { LoginPage } from '@/components/LoginPage';
 import { AppFooter } from '@/components/AppFooter';
 import { Tutorial } from '@/components/Tutorial';
-
-const ZorvynLogo = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 20L80 20L20 80L80 80" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="50" cy="50" r="10" fill="currentColor" />
-  </svg>
-);
+import { ZorvynLogo } from '@/components/ZorvynLogo';
 
 export default function Home() {
   const { isLoading, activeView, currentUser } = useFinance();
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="inline-flex p-4 bg-indigo-600 rounded-2xl shadow-lg">
+          <div className="inline-flex p-4 bg-indigo-600 rounded-2xl shadow-lg animate-pulse">
             <ZorvynLogo className="w-10 h-10 text-white" />
           </div>
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Loading System...</p>
+          <p className="text-xs font-black uppercase tracking-[0.3em] text-slate-400">Synchronizing Kernel...</p>
         </div>
       </div>
     );

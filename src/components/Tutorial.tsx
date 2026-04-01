@@ -14,13 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Shield, BarChart3, History } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-
-const ZorvynLogo = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 20L80 20L20 80L80 80" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="50" cy="50" r="10" fill="currentColor" />
-  </svg>
-);
+import { ZorvynLogo } from '@/components/ZorvynLogo';
 
 const steps = [
   {
@@ -100,7 +94,7 @@ export const Tutorial = () => {
             <DialogTitle className="text-3xl font-black italic uppercase tracking-tighter text-center text-slate-900 dark:text-white">
               {step.title.split(' ')[0]} <span className="text-indigo-600">{step.title.split(' ').slice(1).join(' ')}</span>
             </DialogTitle>
-            <DialogDescription className="text-base font-medium text-slate-500 dark:text-slate-400 leading-relaxed text-center pt-4">
+            <DialogDescription className="text-base font-bold text-slate-500 dark:text-slate-400 leading-relaxed text-center pt-4">
               {step.description}
             </DialogDescription>
           </DialogHeader>
