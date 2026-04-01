@@ -4,6 +4,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type TransactionType = 'Income' | 'Expense';
+export type ViewType = 'Dashboard' | 'Transactions' | 'Analytics' | 'Cards' | 'Investments' | 'Settings';
 
 export interface Transaction {
   id: string;
@@ -19,9 +20,11 @@ export type UserRole = 'Admin' | 'Viewer';
 interface FinanceContextType {
   transactions: Transaction[];
   userRole: UserRole;
+  activeView: ViewType;
   addTransaction: (transaction: Omit<Transaction, 'id'>) => void;
   deleteTransaction: (id: string) => void;
   setUserRole: (role: UserRole) => void;
+  setActiveView: (view: ViewType) => void;
   isLoading: boolean;
 }
 
@@ -53,6 +56,7 @@ const INITIAL_TRANSACTIONS: Transaction[] = [
 export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [userRole, setUserRole] = useState<UserRole>('Admin');
+  const [activeView, setActiveView] = useState<ViewType>('Dashboard');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -92,7 +96,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <FinanceContext.Provider value={{ transactions, userRole, addTransaction, deleteTransaction, setUserRole, isLoading }}>
+    <FinanceContext.Provider value={{ transactions, userRole, activeView, addTransaction, deleteTransaction, setUserRole, setActiveView, isLoading }}>
       {children}
     </FinanceContext.Provider>
   );

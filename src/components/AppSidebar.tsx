@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -21,20 +22,23 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
 } from '@/components/ui/sidebar';
+import { useFinance, ViewType } from '@/context/FinanceContext';
 
 const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', active: true },
-  { icon: History, label: 'Transactions' },
-  { icon: PieChart, label: 'Analytics' },
-  { icon: CreditCard, label: 'Cards' },
-  { icon: TrendingUp, label: 'Investments' },
+  { icon: LayoutDashboard, label: 'Dashboard', view: 'Dashboard' as ViewType },
+  { icon: History, label: 'Transactions', view: 'Transactions' as ViewType },
+  { icon: PieChart, label: 'Analytics', view: 'Analytics' as ViewType },
+  { icon: CreditCard, label: 'Cards', view: 'Cards' as ViewType },
+  { icon: TrendingUp, label: 'Investments', view: 'Investments' as ViewType },
 ];
 
 const settingsItems = [
-  { icon: Settings, label: 'Settings' },
+  { icon: Settings, label: 'Settings', view: 'Settings' as ViewType },
 ];
 
 export function AppSidebar() {
+  const { activeView, setActiveView } = useFinance();
+
   return (
     <Sidebar className="border-r border-slate-800/50">
       <SidebarHeader className="p-6">
@@ -57,7 +61,8 @@ export function AppSidebar() {
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
                   <SidebarMenuButton 
-                    isActive={item.active}
+                    isActive={activeView === item.view}
+                    onClick={() => setActiveView(item.view)}
                     className="hover:bg-slate-800/50 transition-colors"
                   >
                     <item.icon className="w-4 h-4" />
@@ -75,7 +80,11 @@ export function AppSidebar() {
             <SidebarMenu>
               {settingsItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton className="hover:bg-slate-800/50 transition-colors">
+                  <SidebarMenuButton 
+                    isActive={activeView === item.view}
+                    onClick={() => setActiveView(item.view)}
+                    className="hover:bg-slate-800/50 transition-colors"
+                  >
                     <item.icon className="w-4 h-4" />
                     <span className="font-medium">{item.label}</span>
                   </SidebarMenuButton>
