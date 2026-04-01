@@ -83,7 +83,7 @@ export const LoginPage = () => {
                 <Input 
                   type="email" 
                   placeholder="corporate@zorvyn.com" 
-                  className="bg-slate-900/40 border-slate-800 pl-12 focus:ring-indigo-500 h-14 text-sm font-bold tracking-tight rounded-xl transition-all"
+                  className="bg-slate-900/40 border-slate-800 pl-12 focus:ring-indigo-500 h-14 text-sm font-bold tracking-tight rounded-xl transition-all text-white placeholder:text-slate-600"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -98,7 +98,7 @@ export const LoginPage = () => {
                 <Input 
                   type="password" 
                   placeholder="••••••••" 
-                  className="bg-slate-900/40 border-slate-800 pl-12 focus:ring-indigo-500 h-14 font-bold rounded-xl transition-all"
+                  className="bg-slate-900/40 border-slate-800 pl-12 focus:ring-indigo-500 h-14 font-bold rounded-xl transition-all text-white placeholder:text-slate-600"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required

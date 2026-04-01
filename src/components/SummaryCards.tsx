@@ -11,7 +11,6 @@ import { motion } from 'framer-motion';
 export const SummaryCards = () => {
   const { transactions, setActiveView } = useFinance();
 
-  // Real-time calculation from global state
   const income = transactions
     .filter(t => t.type === 'Income')
     .reduce((acc, curr) => acc + curr.amount, 0);
@@ -58,7 +57,7 @@ export const SummaryCards = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1, duration: 0.5 }}
           onClick={() => setActiveView('Transactions')}
-          className="cursor-pointer group"
+          className="cursor-pointer group min-w-0"
         >
           <Card className="border-none shadow-sm hover:shadow-xl transition-all duration-300 group-hover:-translate-y-2 bg-white overflow-hidden relative">
             <div className={`absolute top-0 left-0 w-1 h-full ${item.color.replace('text-', 'bg-')}`}></div>
@@ -67,14 +66,14 @@ export const SummaryCards = () => {
                 <div className={`p-3 rounded-2xl ${item.bg} transition-colors group-hover:bg-white border border-transparent group-hover:border-slate-100`}>
                   <item.icon className={`w-6 h-6 ${item.color}`} />
                 </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-50 border border-slate-100">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-50 border border-slate-100 shrink-0">
                   <TrendingUp className="w-3 h-3 text-slate-400" />
                   <span className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Live Node</span>
                 </div>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 min-w-0">
                 <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">{item.label}</p>
-                <h3 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter break-words">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tighter truncate md:whitespace-normal" title={formatINR(item.amount)}>
                   {formatINR(item.amount)}
                 </h3>
               </div>
