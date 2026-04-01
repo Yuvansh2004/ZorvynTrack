@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -45,7 +46,7 @@ export const SummaryCards = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-8">
       {summaryData.map((item, index) => (
         <motion.div
           key={item.title}
@@ -53,15 +54,15 @@ export const SummaryCards = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.15, duration: 0.5 }}
         >
-          <Card className="card-shadow overflow-hidden group hover:border-indigo-400 hover:scale-[1.02] transition-all">
-            <CardContent className="p-10">
-              <div className="flex items-center gap-8">
-                <div className={`p-5 rounded-[2rem] ${item.bg} group-hover:rotate-6 transition-transform`}>
-                  <item.icon className={`w-10 h-10 ${item.color}`} />
+          <Card className="card-shadow overflow-hidden group hover:border-indigo-400 hover:scale-[1.01] transition-all h-full">
+            <CardContent className="p-6 lg:p-10 flex flex-col justify-center h-full">
+              <div className="flex items-center gap-4 lg:gap-8">
+                <div className={`p-4 lg:p-5 rounded-[1.5rem] lg:rounded-[2rem] ${item.bg} group-hover:rotate-6 transition-transform shrink-0`}>
+                  <item.icon className={`w-6 h-6 lg:w-10 lg:h-10 ${item.color}`} />
                 </div>
-                <div>
-                  <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">{item.title}</p>
-                  <h3 className="text-4xl font-black text-slate-900 dark:text-white mt-3 tracking-tighter tabular-nums italic">
+                <div className="min-w-0 flex-1">
+                  <p className="text-[9px] lg:text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] truncate">{item.title}</p>
+                  <h3 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-slate-900 dark:text-white mt-2 lg:mt-3 tracking-tighter tabular-nums italic truncate" title={formatINR(item.amount)}>
                     {formatINR(item.amount)}
                   </h3>
                 </div>
