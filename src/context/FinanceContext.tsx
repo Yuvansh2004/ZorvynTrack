@@ -6,6 +6,13 @@ export type TransactionType = 'Income' | 'Expense';
 export type UserRole = 'Admin' | 'Viewer';
 export type ViewType = 'Dashboard' | 'Transactions' | 'Insights' | 'Settings';
 
+export interface User {
+  name: string;
+  email: string;
+  role: UserRole;
+  avatar?: string;
+}
+
 export interface Transaction {
   id: string;
   date: string;
@@ -14,6 +21,12 @@ export interface Transaction {
   category: string;
   type: TransactionType;
 }
+
+export const DEMO_ACCOUNTS: User[] = [
+  { name: 'Yuvansh Dashrath Koli', email: 'yuvanshkoli1011@gmail.com', role: 'Admin' },
+  { name: 'Aditya Rao', email: 'aditya.rao@zorvyn.com', role: 'Viewer' },
+  { name: 'Priya Sharma', email: 'priya.sharma@zorvyn.com', role: 'Viewer' },
+];
 
 interface FinanceContextType {
   transactions: Transaction[];
@@ -26,7 +39,8 @@ interface FinanceContextType {
   isLoading: boolean;
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => void;
-  currentUser: { name: string; email: string };
+  currentUser: User | null;
+  login: (email: string, password?: string) => boolean;
   logout: () => void;
 }
 
@@ -51,14 +65,11 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [activeView, setActiveView] = useState<ViewType>('Dashboard');
   const [isLoading, setIsLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const currentUser = { 
-    name: 'Yuvansh Dashrath Koli', 
-    email: 'yuvanshkoli1011@gmail.com' 
-  };
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
     const savedTransactions = localStorage.getItem('zorvyn_transactions');
-    const savedRole = localStorage.getItem('zorvyn_role');
+    const savedUser = localStorage.getItem('zorvyn_current_user');
     const savedTheme = localStorage.getItem('zorvyn_theme');
     
     if (savedTransactions) {
@@ -67,8 +78,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setTransactions(INITIAL_TRANSACTIONS);
     }
 
-    if (savedRole) {
-      setUserRole(savedRole as UserRole);
+    if (savedUser) {
+      const user = JSON.parse(savedUser);
+      setCurrentUser(user);
+      setUserRole(user.role);
     }
 
     if (savedTheme) {
@@ -81,16 +94,39 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!isLoading) {
       localStorage.setItem('zorvyn_transactions', JSON.stringify(transactions));
-      localStorage.setItem('zorvyn_role', userRole);
       localStorage.setItem('zorvyn_theme', isDarkMode ? 'dark' : 'light');
       
+      if (currentUser) {
+        localStorage.setItem('zorvyn_current_user', JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem('zorvyn_current_user');
+      }
+
       if (isDarkMode) {
         document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');
       }
     }
-  }, [transactions, userRole, isLoading, isDarkMode]);
+  }, [transactions, currentUser, isLoading, isDarkMode]);
+
+  const login = (email: string, password?: string) => {
+    // For student assignment, we simulate auth with a master key or demo account match
+    const user = DEMO_ACCOUNTS.find(acc => acc.email === email);
+    if (user || password === 'zorvyn2024') {
+      const sessionUser = user || { name: 'External Auditor', email, role: 'Viewer' as UserRole };
+      setCurrentUser(sessionUser);
+      setUserRole(sessionUser.role);
+      return true;
+    }
+    return false;
+  };
+
+  const logout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem('zorvyn_current_user');
+    setActiveView('Dashboard');
+  };
 
   const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
     const newTransaction = {
@@ -103,10 +139,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const deleteTransaction = (id: string) => {
     if (userRole !== 'Admin') return;
     setTransactions(prev => prev.filter(t => t.id !== id));
-  };
-
-  const logout = () => {
-    window.location.reload();
   };
 
   return (
@@ -122,6 +154,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       isDarkMode,
       setIsDarkMode,
       currentUser,
+      login,
       logout
     }}>
       {children}

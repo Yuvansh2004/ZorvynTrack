@@ -11,10 +11,9 @@ import {
   Shield,
   Zap,
   LogOut,
-  User,
   Eye
 } from 'lucide-react';
-import { useFinance, ViewType, UserRole } from '@/context/FinanceContext';
+import { useFinance, ViewType } from '@/context/FinanceContext';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -24,12 +23,18 @@ export function AppSidebar() {
   const { activeView, setActiveView, userRole, setUserRole, currentUser, logout } = useFinance();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
 
+  if (!currentUser) return null;
+
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', view: 'Dashboard' as ViewType },
     { icon: History, label: 'Transactions', view: 'Transactions' as ViewType },
     { icon: Lightbulb, label: 'Insights', view: 'Insights' as ViewType },
     { icon: Settings, label: 'Settings', view: 'Settings' as ViewType },
   ];
+
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+  };
 
   return (
     <aside className={cn(
@@ -91,7 +96,7 @@ export function AppSidebar() {
               </div>
             </div>
             <div className="flex items-center justify-between pt-1">
-              <p className="text-[10px] text-slate-400 italic">Toggle for RBAC</p>
+              <p className="text-[10px] text-slate-400 italic">Toggle for Demo RBAC</p>
               <Switch 
                 checked={userRole === 'Admin'} 
                 onCheckedChange={(checked) => setUserRole(checked ? 'Admin' : 'Viewer')}
@@ -106,7 +111,7 @@ export function AppSidebar() {
           isCollapsed ? "justify-center" : "px-2"
         )}>
           <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xs font-bold">
-            YK
+            {getInitials(currentUser.name)}
           </div>
           {!isCollapsed && (
             <div className="min-w-0 flex-1">

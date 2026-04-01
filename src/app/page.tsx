@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -8,10 +7,11 @@ import { DashboardView } from '@/components/DashboardView';
 import { TransactionsView } from '@/components/TransactionsView';
 import { InsightsView } from '@/components/InsightsView';
 import { SettingsView } from '@/components/SettingsView';
+import { LoginPage } from '@/components/LoginPage';
 import { Zap } from 'lucide-react';
 
 export default function Home() {
-  const { isLoading, activeView } = useFinance();
+  const { isLoading, activeView, currentUser } = useFinance();
 
   if (isLoading) {
     return (
@@ -31,6 +31,10 @@ export default function Home() {
         </div>
       </div>
     );
+  }
+
+  if (!currentUser) {
+    return <LoginPage />;
   }
 
   return (
