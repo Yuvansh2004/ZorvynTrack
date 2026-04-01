@@ -1,4 +1,5 @@
-# ZorvynDash - Finance Dashboard Submission
+
+# ZorvynTrack - Student Finance Dashboard
 
 Built by **Yuvansh Dashrath Koli**  
 **Personal Email:** yuvanshkoli1011@gmail.com  
@@ -9,12 +10,12 @@ Built by **Yuvansh Dashrath Koli**
 This dashboard is a clean, interactive frontend application built for the Zorvyn internship assessment. It focuses on intuitive data visualization, component modularity, and a simulated role-based user interface.
 
 ### Features
-- **Dashboard Summary**: Real-time KPI cards for Balance, Income, and Expenses.
-- **Data Visualizations**: Time-based balance trends and categorical spending breakdowns using Recharts.
-- **Transaction Ledger**: Searchable and filterable table with isolated data views for different users.
-- **Simulated RBAC**: Distinct behaviors for 'Admin' and 'Viewer' roles. Admins have full CRUD access, while Viewers are restricted to read-only views of their own data.
-- **Insights Kernel**: Automated logic to identify spending patterns and monthly comparisons.
-- **Persistence**: Utilization of `localStorage` to maintain data across browser refreshes.
+- **Dashboard Summary**: KPI cards for Balance, Income, and Expenses.
+- **Data Visualizations**: Time-based balance trends and categorical spending breakdowns.
+- **Transaction Ledger**: Searchable and filterable table with isolated data views.
+- **Simulated RBAC**: Distinct behaviors for 'Admin' (full access) and 'Viewer' (read-only) roles.
+- **Financial Insights**: Automated logic to identify highest spending categories and savings rates.
+- **Persistence**: Utilization of `localStorage` to maintain data across refreshes.
 
 ### Tech Stack
 - **Framework**: Next.js 15 (App Router)
