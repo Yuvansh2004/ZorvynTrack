@@ -4,7 +4,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type TransactionType = 'Income' | 'Expense';
-export type UserRole = 'Admin' | 'Viewer';
+export type UserRole = 'Admin' | 'User';
 export type ViewType = 'Dashboard' | 'Transactions' | 'Insights' | 'Settings';
 
 export interface Transaction {
@@ -27,9 +27,12 @@ interface FinanceContextType {
   isLoading: boolean;
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => void;
+  currentUser: { name: string; email: string } | null;
+  login: (email: string, pass: string) => boolean;
+  logout: () => void;
 }
 
-const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
+const FINANCE_VERSION = "2.0";
 
 const INITIAL_TRANSACTIONS: Transaction[] = [
   { id: '1', date: '2024-05-20', description: 'UPI to Ramesh (Lunch)', amount: 450, category: 'Food', type: 'Expense' },
@@ -44,17 +47,27 @@ const INITIAL_TRANSACTIONS: Transaction[] = [
   { id: '10', date: '2024-05-11', description: 'Zomato Dinner', amount: 890, category: 'Food', type: 'Expense' },
 ];
 
+export const DEMO_ACCOUNTS = [
+  { name: 'Yuvansh Dashrath Koli', email: 'yuvanshkoli@zorvyn.com', role: 'Admin' as UserRole },
+  { name: 'Aditya Rao', email: 'aditya@zorvyn.com', role: 'User' as UserRole },
+  { name: 'Priya Sharma', email: 'priya@zorvyn.com', role: 'User' as UserRole },
+  { name: 'Rahul Verma', email: 'rahul@zorvyn.com', role: 'User' as UserRole },
+  { name: 'Sneha Patil', email: 'sneha@zorvyn.com', role: 'User' as UserRole },
+];
+
+const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
+
 export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [userRole, setUserRole] = useState<UserRole>('Admin');
   const [activeView, setActiveView] = useState<ViewType>('Dashboard');
   const [isLoading, setIsLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [currentUser, setCurrentUser] = useState<{ name: string; email: string } | null>(null);
 
   useEffect(() => {
-    // Load persisted state from LocalStorage
-    const savedTransactions = localStorage.getItem('zorvyn_transactions');
-    const savedRole = localStorage.getItem('zorvyn_role');
+    const savedTransactions = localStorage.getItem('zorvyn_transactions_v2');
+    const savedUser = localStorage.getItem('zorvyn_user');
     const savedTheme = localStorage.getItem('zorvyn_theme');
     
     if (savedTransactions) {
@@ -63,8 +76,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setTransactions(INITIAL_TRANSACTIONS);
     }
 
-    if (savedRole) {
-      setUserRole(savedRole as UserRole);
+    if (savedUser) {
+      const user = JSON.parse(savedUser);
+      setCurrentUser(user);
+      setUserRole(user.role);
     }
 
     if (savedTheme) {
@@ -76,8 +91,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!isLoading) {
-      localStorage.setItem('zorvyn_transactions', JSON.stringify(transactions));
-      localStorage.setItem('zorvyn_role', userRole);
+      localStorage.setItem('zorvyn_transactions_v2', JSON.stringify(transactions));
       localStorage.setItem('zorvyn_theme', isDarkMode ? 'dark' : 'light');
       
       if (isDarkMode) {
@@ -86,7 +100,26 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
         document.documentElement.classList.remove('dark');
       }
     }
-  }, [transactions, userRole, isLoading, isDarkMode]);
+  }, [transactions, isLoading, isDarkMode]);
+
+  const login = (email: string, pass: string) => {
+    if (pass !== 'zorvyn2024') return false;
+    const account = DEMO_ACCOUNTS.find(a => a.email === email);
+    if (account) {
+      const userData = { name: account.name, email: account.email, role: account.role };
+      setCurrentUser(userData);
+      setUserRole(account.role);
+      localStorage.setItem('zorvyn_user', JSON.stringify(userData));
+      return true;
+    }
+    return false;
+  };
+
+  const logout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem('zorvyn_user');
+    window.location.reload();
+  };
 
   const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
     const newTransaction = {
@@ -97,6 +130,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const deleteTransaction = (id: string) => {
+    if (userRole !== 'Admin') return;
     setTransactions(prev => prev.filter(t => t.id !== id));
   };
 
@@ -111,7 +145,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       deleteTransaction, 
       isLoading,
       isDarkMode,
-      setIsDarkMode
+      setIsDarkMode,
+      currentUser,
+      login,
+      logout
     }}>
       {children}
     </FinanceContext.Provider>
