@@ -23,9 +23,9 @@ interface User {
   avatar?: string;
 }
 
-// 15 Enterprise Accounts with Indian Identities
+// 15 Enterprise Accounts with Indian Identities & Corporate Domain
 export const DEMO_ACCOUNTS: User[] = [
-  { email: 'yuvanshkoli1011@gmail.com', name: 'Yuvansh Dashrath Koli', role: 'Admin' },
+  { email: 'yuvanshkoli@zorvyn.com', name: 'Yuvansh Dashrath Koli', role: 'Admin' },
   { email: 'priya.sharma@zorvyn.com', name: 'Priya Sharma', role: 'Admin' },
   { email: 'arjun.mehta@zorvyn.com', name: 'Arjun Mehta', role: 'Admin' },
   { email: 'ananya.iyer@zorvyn.com', name: 'Ananya Iyer', role: 'Admin' },
@@ -64,17 +64,17 @@ const INITIAL_TRANSACTIONS: Transaction[] = [
   { id: '2', date: '2024-05-14', description: 'Internship Stipend Pool', amount: 125000, category: 'Payroll', type: 'Income' },
   { id: '3', date: '2024-05-13', description: 'Jio Business Link', amount: 6660, category: 'Bills', type: 'Expense' },
   { id: '4', date: '2024-05-12', description: 'Airtel Postpaid Office', amount: 1200, category: 'Bills', type: 'Expense' },
-  { id: '5', date: '2024-05-11', description: 'Swiggy Biryani Bulk', amount: 3500, category: 'Catering', type: 'Expense' },
+  { id: '5', date: '2024-05-11', description: 'Swiggy Biryani Bulk', amount: 3500, category: 'Food', type: 'Expense' },
   { id: '6', date: '2024-05-10', description: 'Amazon AWS Cloud Node', amount: 15000, category: 'Technology', type: 'Expense' },
   { id: '7', date: '2024-05-09', description: 'Dividends (NIFTY 50)', amount: 85000, category: 'Investments', type: 'Income' },
   { id: '8', date: '2024-05-08', description: 'Zomato Team Lunch', amount: 4200, category: 'Food', type: 'Expense' },
   { id: '9', date: '2024-05-07', description: 'Tata Power Electricity', amount: 22000, category: 'Bills', type: 'Expense' },
-  { id: '10', date: '2024-05-06', description: 'Consulting Fee (Client X)', amount: 300000, category: 'Software', type: 'Income' },
+  { id: '10', date: '2024-05-06', description: 'Consulting Fee (Client X)', amount: 300000, category: 'Payroll', type: 'Income' },
   { id: '11', date: '2024-05-05', description: 'HDFC Home Loan EMI', amount: 45000, category: 'Housing', type: 'Expense' },
   { id: '12', date: '2024-05-04', description: 'Uber Work Commute', amount: 850, category: 'Transport', type: 'Expense' },
-  { id: '13', date: '2024-05-03', description: 'Reliance Retail Supply', amount: 55000, category: 'Inventory', type: 'Expense' },
+  { id: '13', date: '2024-05-03', description: 'Reliance Retail Supply', amount: 55000, category: 'Bills', type: 'Expense' },
   { id: '14', date: '2024-05-02', description: 'Fixed Deposit Interest', amount: 12500, category: 'Savings', type: 'Income' },
-  { id: '15', date: '2024-05-01', description: 'Office Stationary (Vikas)', amount: 2500, category: 'Operations', type: 'Expense' },
+  { id: '15', date: '2024-05-01', description: 'Office Stationary (Vikas)', amount: 2500, category: 'Bills', type: 'Expense' },
 ];
 
 export const FinanceProvider = ({ children }: { children: ReactNode }) => {
@@ -118,7 +118,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const login = (email: string, password: string) => {
     const foundUser = DEMO_ACCOUNTS.find(acc => acc.email === email.toLowerCase());
-    // Fixed password for assessment convenience
     if (foundUser && password === 'zorvyn2024') {
       setIsLoggedIn(true);
       setUser(foundUser);

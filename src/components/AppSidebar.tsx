@@ -8,9 +8,9 @@ import {
   Settings, 
   CreditCard, 
   TrendingUp,
-  Zap,
   PieChart,
-  ShieldCheck
+  Shield,
+  Zap
 } from 'lucide-react';
 import {
   Sidebar,
@@ -44,8 +44,13 @@ export function AppSidebar() {
     <Sidebar className="border-r border-slate-800/50 bg-[#020617]">
       <SidebarHeader className="p-6">
         <div className="flex items-center gap-3 group cursor-pointer" onClick={() => setActiveView('Dashboard')}>
-          <div className="p-2.5 bg-primary/20 rounded-2xl group-hover:bg-primary/30 transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] border border-primary/20">
-            <Zap className="w-6 h-6 text-primary fill-primary/20" />
+          <div className="relative">
+            <div className="p-2.5 bg-primary/20 rounded-2xl group-hover:bg-primary/30 transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] border border-primary/20">
+              <Zap className="w-6 h-6 text-primary fill-primary/20" />
+            </div>
+            <div className="absolute -top-1 -right-1 bg-slate-950 rounded-full p-0.5 border border-primary/50">
+              <Shield className="w-2.5 h-2.5 text-primary" />
+            </div>
           </div>
           <div>
             <h1 className="text-xl font-black tracking-tighter text-white uppercase italic leading-none">Zorvyn</h1>
@@ -75,7 +80,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup className="mt-auto">
+        <SidebarGroup className="mt-auto pb-6">
           <SidebarGroupLabel className="px-6 text-[10px] font-black text-slate-600 uppercase tracking-[2px] mb-2">Kernel</SidebarGroupLabel>
           <SidebarGroupContent className="px-3">
             <SidebarMenu>

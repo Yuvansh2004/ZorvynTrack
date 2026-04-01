@@ -94,9 +94,9 @@ export const AnalyticsCharts = () => {
               data={pieData}
               cx="50%"
               cy="40%"
-              innerRadius={70}
-              outerRadius={85}
-              paddingAngle={4}
+              innerRadius={60}
+              outerRadius={75}
+              paddingAngle={5}
               dataKey="value"
             >
               {pieData.map((entry, index) => (

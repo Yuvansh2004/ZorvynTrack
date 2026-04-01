@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { useFinance, DEMO_ACCOUNTS } from '@/context/FinanceContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, ArrowRight, Mail, Lock, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { Shield, ArrowRight, Mail, Lock, Info, ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -52,11 +52,14 @@ export const LoginPage = () => {
         className="w-full max-w-[440px] z-10 space-y-6"
       >
         <div className="flex flex-col items-center mb-4">
-          <div className="p-4 bg-primary/20 rounded-2xl mb-4 border border-primary/20 shadow-[0_0_30px_rgba(59,130,246,0.3)]">
-            <Shield className="w-10 h-10 text-primary" />
+          <div className="relative">
+            <div className="p-5 bg-primary/20 rounded-3xl mb-6 border border-primary/20 shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+              <Zap className="w-12 h-12 text-primary" />
+            </div>
+            <Shield className="absolute -bottom-1 -right-1 w-6 h-6 text-primary bg-[#020617] rounded-full p-1" />
           </div>
-          <h1 className="text-3xl font-bold text-white tracking-tighter">ZORVYN FINANCIAL</h1>
-          <p className="text-slate-500 text-[10px] mt-2 font-bold uppercase tracking-[4px]">Enterprise Asset Management</p>
+          <h1 className="text-3xl font-black text-white tracking-tighter italic">ZORVYN PRO</h1>
+          <p className="text-slate-500 text-[10px] mt-2 font-bold uppercase tracking-[4px]">Enterprise Asset Terminal</p>
         </div>
 
         <div className="glass-card p-8 rounded-3xl border border-slate-800/50 shadow-2xl relative">
@@ -96,7 +99,7 @@ export const LoginPage = () => {
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 rounded-xl group transition-all"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase text-[11px] tracking-widest h-12 rounded-xl group transition-all"
             >
               {isSubmitting ? "ESTABLISHING SESSION..." : "SECURE LOGIN"}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
