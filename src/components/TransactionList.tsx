@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, FileSpreadsheet } from 'lucide-react';
+import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -17,6 +17,7 @@ export const TransactionList = () => {
   const { transactions, userRole, deleteTransaction } = useFinance();
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('All');
+  const [dateFilter, setDateFilter] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filtered = transactions.filter(t => {
@@ -27,8 +28,9 @@ export const TransactionList = () => {
       t.amount.toString().includes(term);
     
     const matchesType = typeFilter === 'All' || t.type === typeFilter;
+    const matchesDate = !dateFilter || t.date === dateFilter;
     
-    return matchesSearch && matchesType;
+    return matchesSearch && matchesType && matchesDate;
   });
 
   const exportCSV = () => {
@@ -46,15 +48,16 @@ export const TransactionList = () => {
 
   return (
     <Card className="border-slate-100 dark:border-slate-800 shadow-sm">
-      <CardHeader className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+      <CardHeader className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
         <div>
           <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Transaction Ledger</CardTitle>
           <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-bold">
             {userRole === 'Admin' ? 'Management Mode (Full Access)' : 'Audit Mode (Read Only)'}
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
-          <div className="relative flex-1 sm:flex-none">
+        <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+          {/* Search Input */}
+          <div className="relative flex-1 min-w-[200px] sm:flex-none">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
               placeholder="Search amount, category..." 
@@ -64,6 +67,26 @@ export const TransactionList = () => {
             />
           </div>
           
+          {/* Date Filter */}
+          <div className="relative flex items-center">
+            <CalendarIcon className="absolute left-3 w-4 h-4 text-slate-400 pointer-events-none" />
+            <Input 
+              type="date"
+              className="h-9 pl-9 pr-8 w-[160px] text-xs font-medium appearance-none"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            />
+            {dateFilter && (
+              <button 
+                onClick={() => setDateFilter('')}
+                className="absolute right-2 text-slate-400 hover:text-indigo-600 transition-colors"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+
+          {/* Type Filter */}
           <Select value={typeFilter} onValueChange={setTypeFilter}>
             <SelectTrigger className="w-[120px] h-9 text-xs font-medium">
               <SelectValue placeholder="All Types" />
@@ -145,6 +168,20 @@ export const TransactionList = () => {
             <div className="py-20 text-center flex flex-col items-center gap-3 opacity-40">
               <FileSpreadsheet className="w-10 h-10" />
               <p className="text-xs font-black uppercase tracking-widest">No matching records found</p>
+              { (searchTerm || typeFilter !== 'All' || dateFilter) && (
+                <Button 
+                  variant="link" 
+                  size="sm" 
+                  onClick={() => {
+                    setSearchTerm('');
+                    setTypeFilter('All');
+                    setDateFilter('');
+                  }}
+                  className="text-indigo-600 text-[10px] font-black uppercase tracking-widest"
+                >
+                  Clear all filters
+                </Button>
+              )}
             </div>
           )}
         </div>
