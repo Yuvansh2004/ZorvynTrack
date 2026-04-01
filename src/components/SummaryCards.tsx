@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -28,7 +27,7 @@ export const SummaryCards = () => {
       icon: Wallet, 
       color: 'text-indigo-600', 
       bg: 'bg-indigo-50/50',
-      label: 'Current Balance'
+      label: 'Portfolio Value'
     },
     { 
       title: 'Inflow Total', 
@@ -36,7 +35,7 @@ export const SummaryCards = () => {
       icon: ArrowUpCircle, 
       color: 'text-emerald-600', 
       bg: 'bg-emerald-50/50',
-      label: 'Gross Income'
+      label: 'Gross Inflow'
     },
     { 
       title: 'Outflow Total', 
@@ -44,42 +43,42 @@ export const SummaryCards = () => {
       icon: ArrowDownCircle, 
       color: 'text-rose-600', 
       bg: 'bg-rose-50/50',
-      label: 'Total Expenses'
+      label: 'Gross Outflow'
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {summaryData.map((item, index) => (
         <motion.div
           key={item.title}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1, duration: 0.5 }}
+          transition={{ delay: index * 0.15, duration: 0.8, ease: "circOut" }}
           onClick={() => setActiveView('Transactions')}
-          className="cursor-pointer group min-w-0"
+          className="cursor-pointer group"
         >
-          <Card className="border-none shadow-sm hover:shadow-xl transition-all duration-300 group-hover:-translate-y-2 bg-white overflow-hidden relative">
-            <div className={`absolute top-0 left-0 w-1 h-full ${item.color.replace('text-', 'bg-')}`}></div>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div className={`p-3 rounded-2xl ${item.bg} transition-colors group-hover:bg-white border border-transparent group-hover:border-slate-100`}>
-                  <item.icon className={`w-6 h-6 ${item.color}`} />
+          <Card className="card-shadow hover:shadow-2xl hover:-translate-y-3 relative overflow-hidden">
+            <div className={`absolute top-0 left-0 w-1.5 h-full ${item.color.replace('text-', 'bg-')}`}></div>
+            <CardContent className="p-8">
+              <div className="flex items-center justify-between mb-8">
+                <div className={`p-4 rounded-[1.25rem] ${item.bg} transition-colors group-hover:bg-white border border-transparent group-hover:border-slate-100`}>
+                  <item.icon className={`w-7 h-7 ${item.color}`} />
                 </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-50 border border-slate-100 shrink-0">
-                  <TrendingUp className="w-3 h-3 text-slate-400" />
-                  <span className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Live Node</span>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100">
+                  <TrendingUp className="w-3.5 h-3.5 text-slate-400" />
+                  <span className="text-slate-400 text-[10px] weight-black uppercase tracking-[0.2em]">Node V1</span>
                 </div>
               </div>
-              <div className="space-y-1 min-w-0">
-                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">{item.label}</p>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tighter truncate md:whitespace-normal" title={formatINR(item.amount)}>
+              <div className="space-y-2">
+                <p className="text-slate-400 text-[11px] weight-black uppercase tracking-[0.3em] opacity-60">{item.label}</p>
+                <h3 className="text-3xl lg:text-4xl weight-black text-slate-900 dark:text-white tracking-[-0.04em] leading-none truncate" title={formatINR(item.amount)}>
                   {formatINR(item.amount)}
                 </h3>
               </div>
-              <div className="mt-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">Audit Ledger</span>
-                <div className="flex-1 h-px bg-indigo-100"></div>
+              <div className="mt-8 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                <span className="text-[10px] weight-black text-indigo-600 uppercase tracking-widest">Audit Terminal</span>
+                <div className="flex-1 h-[2px] bg-indigo-50"></div>
               </div>
             </CardContent>
           </Card>
