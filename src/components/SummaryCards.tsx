@@ -1,10 +1,9 @@
-
 "use client";
 
 import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Wallet, TrendingUp, TrendingDown } from 'lucide-react';
+import { Wallet, TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const SummaryCards = () => {
@@ -27,7 +26,9 @@ export const SummaryCards = () => {
       icon: Wallet,
       color: 'text-primary',
       bg: 'bg-primary/10',
-      border: 'border-primary/20'
+      border: 'border-primary/20',
+      trend: '+12.5%',
+      isPositive: true
     },
     {
       title: 'Total Income',
@@ -35,7 +36,9 @@ export const SummaryCards = () => {
       icon: TrendingUp,
       color: 'text-emerald-400',
       bg: 'bg-emerald-400/10',
-      border: 'border-emerald-400/20'
+      border: 'border-emerald-400/20',
+      trend: '+8.2%',
+      isPositive: true
     },
     {
       title: 'Total Expenses',
@@ -43,7 +46,9 @@ export const SummaryCards = () => {
       icon: TrendingDown,
       color: 'text-rose-400',
       bg: 'bg-rose-400/10',
-      border: 'border-rose-400/20'
+      border: 'border-rose-400/20',
+      trend: '+2.4%',
+      isPositive: false
     }
   ];
 
@@ -55,15 +60,21 @@ export const SummaryCards = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
-          className={`glass-card p-6 rounded-2xl border ${card.border}`}
+          className={`glass-card p-6 rounded-2xl border ${card.border} group`}
         >
-          <div className="flex items-center justify-between mb-4">
-            <div className={`p-3 ${card.bg} rounded-xl`}>
+          <div className="flex items-center justify-between mb-6">
+            <div className={`p-3 ${card.bg} rounded-xl group-hover:scale-110 transition-transform`}>
               <card.icon className={`w-6 h-6 ${card.color}`} />
             </div>
+            <div className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full ${card.isPositive ? 'bg-emerald-400/10 text-emerald-400' : 'bg-rose-400/10 text-rose-400'}`}>
+              {card.isPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+              {card.trend}
+            </div>
           </div>
-          <p className="text-sm font-medium text-slate-400 mb-1">{card.title}</p>
-          <h3 className="text-2xl font-bold text-white">{formatINR(card.amount)}</h3>
+          <div>
+            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">{card.title}</p>
+            <h3 className="text-3xl font-bold text-white tracking-tight">{formatINR(card.amount)}</h3>
+          </div>
         </motion.div>
       ))}
     </div>
