@@ -50,15 +50,15 @@ export const InsightsView = () => {
           <p className="text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-[6px] mt-2 opacity-60">Data Patterns & Observations</p>
         </div>
         <div className="bg-slate-100 dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
-          <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">ID: {ASSIGNMENT_REF_ID}</p>
+          <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Reference ID: TE85LMG1</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Highest Spending Card - Refined visibility */}
+        {/* Highest Spending - Unified Indigo Theme */}
         <div 
           onClick={() => setActiveView('Transactions')}
-          className="bg-indigo-600 dark:bg-indigo-600 rounded-2xl p-6 text-white shadow-xl shadow-indigo-200 dark:shadow-none cursor-pointer hover:scale-[1.02] transition-transform flex flex-col justify-between min-h-[160px]"
+          className="bg-indigo-600 rounded-2xl p-6 text-white shadow-xl shadow-indigo-200 dark:shadow-none cursor-pointer hover:scale-[1.02] transition-all flex flex-col justify-between min-h-[160px]"
         >
           <div>
             <PieChart className="w-6 h-6 opacity-60 mb-4" />
@@ -74,41 +74,43 @@ export const InsightsView = () => {
           </div>
         </div>
 
-        <Card 
+        {/* Largest Expense - Unified Indigo Theme */}
+        <div 
           onClick={() => setActiveView('Transactions')}
-          className="card-shadow cursor-pointer hover:scale-[1.02] transition-transform"
+          className="bg-indigo-600 rounded-2xl p-6 text-white shadow-xl shadow-indigo-200 dark:shadow-none cursor-pointer hover:scale-[1.02] transition-all flex flex-col justify-between min-h-[160px]"
         >
-          <CardHeader className="pb-2">
-            <Star className="w-5 h-5 text-amber-500 mb-2" />
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">Largest Expense</CardTitle>
-          </CardHeader>
-          <CardContent>
+          <div>
+            <Star className="w-6 h-6 opacity-60 mb-4" />
+            <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Largest Expense</p>
+          </div>
+          <div>
             {highestSingleExpense.amount > 0 ? (
               <>
-                <h3 className="text-3xl font-black text-slate-900 dark:text-white truncate" title={highestSingleExpense.description}>
+                <h3 className="text-3xl font-black tracking-tight truncate" title={highestSingleExpense.description}>
                   {highestSingleExpense.description}
                 </h3>
-                <p className="text-slate-500 text-xs mt-1 font-bold">{formatINR(highestSingleExpense.amount)} single charge</p>
+                <p className="text-indigo-200 text-xs mt-1 font-bold">{formatINR(highestSingleExpense.amount)} single charge</p>
               </>
-            ) : <EmptyState message="No entries" />}
-          </CardContent>
-        </Card>
+            ) : <p className="text-xs font-bold opacity-40 uppercase">No Entries</p>}
+          </div>
+        </div>
 
-        <Card 
+        {/* Savings Rate - Unified Indigo Theme */}
+        <div 
           onClick={() => setActiveView('Dashboard')}
-          className="card-shadow cursor-pointer hover:scale-[1.02] transition-transform"
+          className="bg-indigo-600 rounded-2xl p-6 text-white shadow-xl shadow-indigo-200 dark:shadow-none cursor-pointer hover:scale-[1.02] transition-all flex flex-col justify-between min-h-[160px]"
         >
-          <CardHeader className="pb-2">
-            <TrendingUp className="w-5 h-5 text-emerald-500 mb-2" />
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">Savings Rate</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <h3 className="text-3xl font-black text-slate-900 dark:text-white">{Math.max(0, savingsRate).toFixed(1)}%</h3>
-            <p className={`text-xs mt-1 font-black uppercase tracking-tighter ${savingsRate > 20 ? 'text-emerald-500' : 'text-rose-500'}`}>
+          <div>
+            <TrendingUp className="w-6 h-6 opacity-60 mb-4" />
+            <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Savings Rate</p>
+          </div>
+          <div>
+            <h3 className="text-3xl font-black tracking-tight">{Math.max(0, savingsRate).toFixed(1)}%</h3>
+            <p className={`text-[10px] mt-1 font-black uppercase tracking-widest ${savingsRate > 20 ? 'text-emerald-300' : 'text-rose-300'}`}>
               STATUS: {savingsRate > 20 ? 'STABLE' : 'ATTENTION'}
             </p>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
