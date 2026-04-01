@@ -24,25 +24,25 @@ export default function Home() {
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ 
-              scale: [1, 1.05, 1],
+              scale: [1, 1.1, 1],
               opacity: 1,
             }}
             transition={{ 
-              duration: 3, 
+              duration: 2.5, 
               repeat: Infinity,
               ease: "easeInOut" 
             }}
-            className="inline-flex p-12 bg-indigo-600 rounded-[3.5rem] shadow-2xl relative"
+            className="inline-flex p-16 bg-indigo-600 rounded-[4rem] shadow-2xl relative"
           >
-            <ZorvynLogo className="w-24 h-24 text-white" />
+            <ZorvynLogo className="w-28 h-28 text-white" />
           </motion.div>
 
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <p className="text-sm font-black uppercase tracking-[0.8em] text-slate-900 dark:text-white">
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <p className="text-xl font-black italic uppercase tracking-[0.2em] text-slate-900 dark:text-white">
                 Zorvyn<span className="text-indigo-600">Track</span>
               </p>
-              <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 dark:text-slate-500">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-500">
                 System Security Technology
               </p>
             </div>
@@ -52,16 +52,16 @@ export default function Home() {
                 className="h-full bg-indigo-600"
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
               />
             </div>
             
             <motion.p 
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="text-[8px] font-black uppercase tracking-widest text-indigo-600"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="text-[9px] font-black uppercase tracking-[0.3em] text-indigo-600"
             >
-              Identity Verification Active
+              System Initialization Active
             </motion.p>
           </div>
         </div>

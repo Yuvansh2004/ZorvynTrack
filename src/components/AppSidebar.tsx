@@ -36,17 +36,23 @@ export function AppSidebar() {
       "bg-white dark:bg-slate-950 border-r border-slate-100 dark:border-slate-900 transition-all duration-500 flex flex-col h-screen sticky top-0 z-50 overflow-hidden",
       isOpen ? "w-72" : "w-20"
     )}>
-      <div className="h-24 flex items-center px-4 border-b border-slate-50 dark:border-slate-900">
+      <div className={cn(
+        "h-24 flex items-center border-b border-slate-50 dark:border-slate-900 transition-all",
+        isOpen ? "px-4" : "px-1.5"
+      )}>
         <div className={cn(
           "flex w-full items-center",
-          isOpen ? "flex-row justify-between" : "flex-row justify-center gap-2"
+          isOpen ? "justify-between" : "justify-center gap-1"
         )}>
-          <div className="flex items-center gap-3 overflow-hidden">
-            <div className="bg-indigo-600 p-2 rounded-xl shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
-              <ZorvynLogo className="w-5 h-5 text-white" />
+          <div className="flex items-center gap-2 overflow-hidden">
+            <div className={cn(
+              "bg-indigo-600 rounded-xl shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none transition-all",
+              isOpen ? "p-2" : "p-1.5"
+            )}>
+              <ZorvynLogo className={cn("text-white transition-all", isOpen ? "w-5 h-5" : "w-4 h-4")} />
             </div>
             {isOpen && (
-              <span className="text-xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300">
+              <span className="text-lg font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300">
                 Zorvyn<span className="text-indigo-600">Track</span>
               </span>
             )}
@@ -58,10 +64,10 @@ export function AppSidebar() {
             onClick={toggleSidebar} 
             className={cn(
               "shrink-0 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
-              isOpen ? "h-9 w-9" : "h-8 w-8"
+              isOpen ? "h-9 w-9" : "h-7 w-7"
             )}
           >
-            {isOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+            {isOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-4 h-4" />}
           </Button>
         </div>
       </div>
