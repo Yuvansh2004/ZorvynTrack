@@ -15,44 +15,51 @@ import { ZorvynLogo } from '@/components/ZorvynLogo';
 import { motion } from 'framer-motion';
 
 export default function Home() {
-  const { isLoading, activeView, currentUser } = useFinance();
+  const { isLoading, activeView, currentUser, isDarkMode } = useFinance();
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center transition-colors duration-500">
-        <div className="text-center space-y-12">
+      <div className={`min-h-screen ${isDarkMode ? 'bg-slate-950' : 'bg-white'} flex items-center justify-center transition-colors duration-500`}>
+        <div className="text-center space-y-16">
+          {/* 1. Name of the company */}
+          <div className="space-y-2">
+            <motion.p 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-2xl font-black italic uppercase tracking-[0.25em] text-slate-900 dark:text-white"
+            >
+              Zorvyn<span className="text-indigo-600">Track</span>
+            </motion.p>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-500">
+              System Security Technology
+            </p>
+          </div>
+
+          {/* 2. Logo of the company */}
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ 
-              scale: [1, 1.1, 1],
+              scale: [1, 1.05, 1],
               opacity: 1,
             }}
             transition={{ 
-              duration: 2.5, 
+              duration: 2, 
               repeat: Infinity,
               ease: "easeInOut" 
             }}
-            className="inline-flex p-16 bg-indigo-600 rounded-[4rem] shadow-2xl relative"
+            className="inline-flex p-12 bg-indigo-600 rounded-[3rem] shadow-2xl relative"
           >
-            <ZorvynLogo className="w-28 h-28 text-white" />
+            <ZorvynLogo className="w-20 h-20 text-white" />
           </motion.div>
 
+          {/* 3. Loading effect */}
           <div className="space-y-8">
-            <div className="space-y-3">
-              <p className="text-xl font-black italic uppercase tracking-[0.2em] text-slate-900 dark:text-white">
-                Zorvyn<span className="text-indigo-600">Track</span>
-              </p>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-500">
-                System Security Technology
-              </p>
-            </div>
-
-            <div className="w-64 h-1.5 bg-slate-100 dark:bg-slate-900 mx-auto rounded-full overflow-hidden">
+            <div className="w-48 h-1 bg-slate-100 dark:bg-slate-900 mx-auto rounded-full overflow-hidden">
               <motion.div 
                 className="h-full bg-indigo-600"
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
               />
             </div>
             
