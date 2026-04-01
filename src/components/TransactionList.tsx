@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useFinance, Transaction } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, X, Pencil } from 'lucide-react';
+import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, X, Pencil, ArrowRight, ListFilter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -18,7 +18,9 @@ export const TransactionList = () => {
   const { transactions, userRole, deleteTransaction } = useFinance();
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('All');
-  const [dateFilter, setDateFilter] = useState<string>('');
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
+  const [rowsLimit, setRowsLimit] = useState<string>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
@@ -32,10 +34,16 @@ export const TransactionList = () => {
       t.ownerEmail.toLowerCase().includes(term);
     
     const matchesType = typeFilter === 'All' || t.type === typeFilter;
-    const matchesDate = !dateFilter || t.date === dateFilter;
     
-    return matchesSearch && matchesType && matchesDate;
+    const itemTime = new Date(t.date).getTime();
+    const startTime = startDate ? new Date(startDate).getTime() : -Infinity;
+    const endTime = endDate ? new Date(endDate).getTime() : Infinity;
+    const matchesDateRange = itemTime >= startTime && itemTime <= endTime;
+    
+    return matchesSearch && matchesType && matchesDateRange;
   });
+
+  const displayData = rowsLimit === 'All' ? filtered : filtered.slice(0, parseInt(rowsLimit));
 
   const exportCSV = () => {
     const headers = ["DATE,DESCRIPTION,CATEGORY,AMOUNT,TYPE,OWNER_NODE\n"];
@@ -51,45 +59,71 @@ export const TransactionList = () => {
   };
 
   return (
-    <Card className="border-slate-100 dark:border-slate-800 shadow-sm">
-      <CardHeader className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-        <div>
-          <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Transaction Ledger</CardTitle>
-          <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-bold">
-            {userRole === 'Admin' ? 'Management Mode (Full Access)' : 'Audit Mode (Read Only)'}
-          </p>
+    <Card className="border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden">
+      <CardHeader className="space-y-6">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+          <div>
+            <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Transaction Ledger</CardTitle>
+            <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-bold">
+              {userRole === 'Admin' ? 'Management Mode (Full Access)' : 'Audit Mode (Read Only)'}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            {userRole === 'Admin' && (
+              <>
+                <Button variant="outline" size="sm" onClick={exportCSV} className="h-9 text-xs font-bold uppercase tracking-tight rounded-xl">
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
+                <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight rounded-xl">
+                  <Plus className="w-4 h-4 mr-2" />
+                  New Entry
+                </Button>
+              </>
+            )}
+          </div>
         </div>
-        <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-          <div className="relative flex-1 min-w-[200px] sm:flex-none">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3 w-full">
+          {/* Search */}
+          <div className="relative col-span-1 md:col-span-2 xl:col-span-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
-              placeholder="Search amount, category, user..." 
-              className="pl-9 h-9 w-full sm:w-[240px] text-xs font-medium"
+              placeholder="Search data..." 
+              className="pl-9 h-10 w-full text-xs font-bold rounded-xl"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           
-          <div className="relative flex items-center">
-            <CalendarIcon className="absolute left-3 w-4 h-4 text-slate-400 pointer-events-none" />
-            <Input 
-              type="date"
-              className="h-9 pl-9 pr-8 w-[190px] text-[11px] font-bold"
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
-            />
-            {dateFilter && (
-              <button 
-                onClick={() => setDateFilter('')}
-                className="absolute right-2 text-slate-400 hover:text-indigo-600 transition-colors"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
+          {/* Date Range */}
+          <div className="flex items-center gap-2 col-span-1 md:col-span-2 xl:col-span-2">
+            <div className="relative flex-1">
+              <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <Input 
+                type="date"
+                className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                placeholder="Start"
+              />
+            </div>
+            <ArrowRight className="w-4 h-4 text-slate-300 shrink-0" />
+            <div className="relative flex-1">
+              <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <Input 
+                type="date"
+                className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                placeholder="End"
+              />
+            </div>
           </div>
 
+          {/* Type Filter */}
           <Select value={typeFilter} onValueChange={setTypeFilter}>
-            <SelectTrigger className="w-[120px] h-9 text-xs font-medium">
+            <SelectTrigger className="h-10 text-xs font-bold rounded-xl">
               <SelectValue placeholder="All Types" />
             </SelectTrigger>
             <SelectContent>
@@ -99,18 +133,39 @@ export const TransactionList = () => {
             </SelectContent>
           </Select>
 
-          {userRole === 'Admin' && (
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={exportCSV} className="h-9 text-xs font-bold uppercase tracking-tight">
-                <Download className="w-4 h-4 mr-2" />
-                Export
+          {/* Row Limit */}
+          <div className="flex items-center gap-2">
+            <Select value={rowsLimit} onValueChange={setRowsLimit}>
+              <SelectTrigger className="h-10 text-xs font-bold rounded-xl">
+                <div className="flex items-center gap-2">
+                  <ListFilter className="w-3.5 h-3.5" />
+                  <span>Rows: {rowsLimit}</span>
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All Rows</SelectItem>
+                <SelectItem value="5">Top 5</SelectItem>
+                <SelectItem value="10">Top 10</SelectItem>
+                <SelectItem value="25">Top 25</SelectItem>
+                <SelectItem value="50">Top 50</SelectItem>
+              </SelectContent>
+            </Select>
+            {(startDate || endDate || searchTerm || typeFilter !== 'All') && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => {
+                  setStartDate('');
+                  setEndDate('');
+                  setSearchTerm('');
+                  setTypeFilter('All');
+                }}
+                className="h-10 w-10 text-slate-400 hover:text-rose-500 shrink-0"
+              >
+                <X className="w-4 h-4" />
               </Button>
-              <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight">
-                <Plus className="w-4 h-4 mr-2" />
-                New Entry
-              </Button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </CardHeader>
       <CardContent>
@@ -130,7 +185,7 @@ export const TransactionList = () => {
             </thead>
             <tbody className="divide-y divide-slate-50 dark:divide-slate-900">
               <AnimatePresence mode="popLayout">
-                {filtered.map((t) => (
+                {displayData.map((t) => (
                   <motion.tr 
                     key={t.id} 
                     initial={{ opacity: 0 }}
@@ -138,7 +193,7 @@ export const TransactionList = () => {
                     exit={{ opacity: 0 }}
                     className="group hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors"
                   >
-                    <td className="py-4 text-slate-500 font-medium tabular-nums">{t.date}</td>
+                    <td className="py-4 text-slate-500 font-bold tabular-nums">{t.date}</td>
                     <td className="py-4 font-bold text-slate-800 dark:text-slate-200">{t.description}</td>
                     <td className="py-4">
                       <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">
@@ -182,7 +237,7 @@ export const TransactionList = () => {
               </AnimatePresence>
             </tbody>
           </table>
-          {filtered.length === 0 && (
+          {displayData.length === 0 && (
             <div className="py-20 text-center flex flex-col items-center gap-3 opacity-40">
               <FileSpreadsheet className="w-10 h-10" />
               <p className="text-xs font-black uppercase tracking-widest">No matching records found</p>
