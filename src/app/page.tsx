@@ -19,7 +19,12 @@ import {
   Database,
   Cpu,
   Lock,
-  Zap
+  Zap,
+  TrendingUp,
+  Activity,
+  ArrowUpRight,
+  ShieldCheck,
+  CircleDollarSign
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -108,6 +113,108 @@ const DashboardView = () => {
       </div>
       
       <TransactionList />
+    </motion.div>
+  );
+};
+
+const InvestmentView = () => {
+  const assets = [
+    { name: 'NIFTY 50 ETF', ticker: 'NIFTYBEES', exchange: 'NSE', allocation: '35%', pnl: '+18.4%', trend: 'up' },
+    { name: 'HDFC BANK', ticker: 'HDFCBANK', exchange: 'BSE', allocation: '25%', pnl: '-2.1%', trend: 'down' },
+    { name: 'RELIANCE IND', ticker: 'RELIANCE', exchange: 'NSE', allocation: '20%', pnl: '+12.5%', trend: 'up' },
+    { name: 'TATA MOTORS', ticker: 'TATAMOTORS', exchange: 'NSE', allocation: '10%', pnl: '+42.8%', trend: 'up' },
+    { name: 'ZOMATO LTD', ticker: 'ZOMATO', exchange: 'NSE', allocation: '10%', pnl: '+65.2%', trend: 'up' },
+  ];
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <h2 className="text-4xl font-black tracking-tighter text-white italic uppercase">Alpha Portfolios</h2>
+          <p className="text-slate-500 text-[10px] font-black tracking-[6px] mt-1.5 opacity-70">INDIAN EQUITY & DERIVATIVE PARAMETERS</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl flex items-center gap-3">
+             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,1)]"></div>
+             <span className="text-[9px] font-black text-white uppercase tracking-[2px]">NSE/BSE LIVE</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2 space-y-6">
+          <div className="glass-card p-10 rounded-[2.5rem] border border-slate-800/50 overflow-hidden relative">
+             <div className="flex items-center justify-between mb-10">
+                <h3 className="text-[10px] font-black text-primary uppercase tracking-[4px] italic">Dynamic Exposure Graph</h3>
+                <TrendingUp className="w-5 h-5 text-primary" />
+             </div>
+             <div className="h-64 w-full bg-slate-950/50 rounded-2xl border border-slate-800/50 flex items-center justify-center">
+                <p className="text-[10px] text-slate-700 font-black uppercase tracking-[5px] animate-pulse">Neural Market Feed Synchronizing...</p>
+             </div>
+          </div>
+
+          <div className="glass-card rounded-[2.5rem] border border-slate-800/50 overflow-hidden">
+             <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-slate-900/50 text-slate-500 text-[9px] font-black uppercase tracking-[3px]">
+                    <th className="px-8 py-6">Asset Class</th>
+                    <th className="px-8 py-6">Exchange</th>
+                    <th className="px-8 py-6">Allocation</th>
+                    <th className="px-8 py-6">P&L (α)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/30">
+                  {assets.map((asset) => (
+                    <tr key={asset.ticker} className="hover:bg-slate-900/40 transition-all">
+                      <td className="px-8 py-6">
+                        <div>
+                          <p className="text-sm font-black text-white italic">{asset.name}</p>
+                          <p className="text-[9px] text-slate-600 font-black uppercase tracking-[2px] mt-1">{asset.ticker}</p>
+                        </div>
+                      </td>
+                      <td className="px-8 py-6 text-[10px] font-black text-slate-500 uppercase">{asset.exchange}</td>
+                      <td className="px-8 py-6 text-sm font-black text-white italic">{asset.allocation}</td>
+                      <td className={`px-8 py-6 text-sm font-black italic ${asset.trend === 'up' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                        {asset.pnl}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+             </table>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <Card className="glass-card border-none p-10 rounded-[2.5rem] space-y-6">
+             <div className="flex items-center gap-4 text-primary">
+                <CircleDollarSign className="w-6 h-6" />
+                <h4 className="text-[10px] font-black uppercase tracking-[3px]">Margin Utility</h4>
+             </div>
+             <div className="space-y-4">
+                <div className="flex justify-between items-end">
+                   <p className="text-[9px] font-black text-slate-600 uppercase tracking-[2px]">Available Collateral</p>
+                   <p className="text-xl font-black text-white italic">₹8,42,000</p>
+                </div>
+                <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                   <div className="h-full bg-primary w-[65%] shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                </div>
+             </div>
+             <Button className="w-full bg-slate-900 hover:bg-primary transition-all h-14 rounded-2xl font-black uppercase text-[10px] tracking-[4px] border border-slate-800">
+                Execute Rebalance
+             </Button>
+          </Card>
+
+          <Card className="glass-card border-none p-10 rounded-[2.5rem] bg-gradient-to-br from-slate-900 to-primary/10">
+             <div className="flex items-center gap-4 text-white mb-6">
+                <ShieldCheck className="w-6 h-6 text-emerald-400" />
+                <h4 className="text-[10px] font-black uppercase tracking-[3px]">Risk Mitigation</h4>
+             </div>
+             <p className="text-[10px] text-slate-500 font-black uppercase tracking-[1px] leading-relaxed">
+                HEDGE-NODE Q10 ACTIVE. PROTECTION LEVEL: <span className="text-emerald-400">OPTIMAL</span>. NO LIQUIDITY THREATS DETECTED ON NSE/BSE EXCHANGES.
+             </p>
+          </Card>
+        </div>
+      </div>
     </motion.div>
   );
 };
@@ -238,6 +345,7 @@ const ViewSwitcher = () => {
         </div>
       </motion.div>
     );
+    case 'Investments': return <InvestmentView />;
     case 'Settings': return <SettingsView />;
     default: return <DashboardView />;
   }
