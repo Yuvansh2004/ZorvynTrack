@@ -56,11 +56,11 @@ const steps = [
 ];
 
 export const Tutorial = () => {
-  const { hasSeenTutorial, completeTutorial, currentUser, isTransitioning } = useFinance();
+  const { hasSeenTutorial, completeTutorial, currentUser, isTransitioning, showGreeting } = useFinance();
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Show tutorial ONLY if hasSeenTutorial is false and we aren't currently loading
-  if (hasSeenTutorial || !currentUser || isTransitioning) return null;
+  // Show tutorial ONLY if hasSeenTutorial is false, user is logged in, no transitions are active, and the greeting is closed
+  if (hasSeenTutorial || !currentUser || isTransitioning || showGreeting) return null;
 
   const step = steps[currentStep];
 

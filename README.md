@@ -1,3 +1,4 @@
+
 # ZorvynTrack - Institutional Student Finance Dashboard
 
 Built by **Yuvansh Dashrath Koli**  
@@ -7,39 +8,44 @@ Built by **Yuvansh Dashrath Koli**
 ## Project Overview
 ZorvynTrack is a high-impact, institutional-grade financial terminal built for the Zorvyn internship assessment. The platform focuses on student financial literacy through intuitive data visualization, secure role-based access modulation (RBAC), and precise ledger management.
 
-### Core Institutional Features
-- **Unified Assets System**: KPI cards for Balance, Income Velocity, and Expenditure classification.
-- **Dynamic Ledger Authority**: 
-  - **Viewer Mode**: 30-second grace period for new entries to correct errors. After 30 seconds, entries become permanent.
-  - **Admin Mode**: Full override authority (Edit/Delete) at any time.
-- **Brand Identity**: Custom "Z" logo integration across loading screens, headers, and the global footer.
-- **Institutional Footer**: Professional "Developer Node" with contact details, Privacy Protocols, and System Audit logs.
-- **Onboarding System**: First-time tutorial terminal to guide users through the institutional interface.
-- **Data Persistence**: Local session encryption (via `localStorage`) to maintain ledger integrity across refreshes.
-- **ZorvynTrack System Security Technology**: Advanced branding and terminology throughout the terminal.
+### Key Functional Approaches
+1. **Centralized Node State**: Utilized React Context API (`FinanceContext.tsx`) to manage a master ledger of ~800 transactions across 10 demo accounts. This ensures absolute consistency across the Dashboard, Ledger, and Insights views.
+2. **Institutional Security Logic**: Implemented a "Grace Period" protocol where Viewer roles have a 30-second window to correct entries. After 30 seconds, data becomes "Permanent," simulating real-world financial auditing.
+3. **Adaptive Telemetry UI**: Created a dynamic scaling system for Summary Cards. Financial values automatically resize based on the sidebar's toggle state to ensure 100% legibility on laptop and mobile viewports.
+4. **Data-Rich Telemetry**: Built a generation engine that initializes the platform with professional, future-dated transactions starting from **January 1st, 2026**.
 
-### Functional Requirements Alignment
-- **Requirement 1 (Dashboard)**: Real-time summary cards and Recharts-powered velocity/expenditure classifications.
-- **Requirement 2 (Ledger)**: Multi-filter searchable table (Date, Type, Category) with CSV export for Admins.
-- **Requirement 3 (RBAC)**: Distinct behaviors for 'Admin' (Yuvansh) and 'Viewer' (Aditya/Priya) roles.
-- **Requirement 4 (Insights)**: High-spending category detection and savings rate telemetry.
-- **Requirement 5 (State)**: React Context API managing master ledger state and user sessions.
-- **Requirement 6 (UI/UX)**: Fully responsive, theme-modulated (Dark/Light) design using Shadcn UI.
+## Requirements Alignment Matrix
+| Requirement | Implementation Detail | Status |
+|:--- |:--- |:---:|
+| **1. Dashboard Overview** | Real-time Summary Cards, Transaction Velocity (AreaChart), and Expenditure Breakdown (PieChart). | ✅ |
+| **2. Transactions Ledger** | High-performance table with Search, Date Filtering, Sorting, and CSV Export. | ✅ |
+| **3. RBAC (Admin/Viewer)** | Distinct authority levels. Admins can override; Viewers have corrected grace-period windows. | ✅ |
+| **4. Insights Section** | Concentration analysis, Savings Rate health detection, and Telemetry Comparison bars. | ✅ |
+| **5. State Management** | Robust React Context managing ledger persistence and session authorization. | ✅ |
+| **6. UI/UX Excellence** | Fully responsive, Dark/Light theme modulated, and framer-motion transitions. | ✅ |
 
-### Tech Stack
-- **Core Framework**: Next.js 15 (App Router)
+## Setup & Installation Instructions
+1. **Environment Setup**: Ensure Node.js (v18+) is installed.
+2. **Clone & Install**:
+   ```bash
+   git clone [repository-url]
+   cd ZorvynTrack
+   npm install
+   ```
+3. **Synchronization**:
+   ```bash
+   npm run dev
+   ```
+4. **Access Terminal**: Open `http://localhost:9002` in your browser.
+5. **Sector Credentials**: Use the "Sector Credentials" button on the login screen to switch between Admin (Yuvansh) and Viewer accounts.
+
+## Tech Stack
+- **Framework**: Next.js 15 (App Router)
 - **Library**: React 19
 - **Styling**: Tailwind CSS & Shadcn UI
-- **Motion**: Framer Motion (for staggered reveals and loading transitions)
-- **Charts**: Recharts (Area & Pie classification)
+- **Visualization**: Recharts
+- **Animations**: Framer Motion
 - **Icons**: Lucide React
 
-## Setup Instructions
-1. Clone the repository.
-2. Run `npm install` to synchronize dependencies.
-3. Start the development server with `npm run dev`.
-4. Access the application at `http://localhost:9002`.
-5. **Sector Manifest**: Use the login dialog manifest to switch between 'Admin' and 'Viewer' accounts.
-
-## Evaluator Notes
-This platform has been built to exceed the standard assessment requirements, implementing advanced security logic (30s edit window) and institutional branding to demonstrate readiness for the Zorvyn FinTech environment.
+## Developer Note
+This terminal was built to exceed the assessment standards by implementing cultural onboarding ("Namaste" greeting), a point-to-point tutorial system, and institutional branding to demonstrate readiness for the Zorvyn FinTech environment.
