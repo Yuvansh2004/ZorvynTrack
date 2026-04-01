@@ -91,6 +91,7 @@ interface FinanceContextType {
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => void;
   currentUser: User | null;
+  updateProfile: (name: string) => void;
   login: (email: string, password?: string) => boolean;
   logout: () => void;
   hasSeenTutorial: boolean;
@@ -180,6 +181,11 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     setActiveView('Dashboard');
   };
 
+  const updateProfile = (name: string) => {
+    if (!currentUser) return;
+    setCurrentUser({ ...currentUser, name });
+  };
+
   const addTransaction = (transaction: Omit<Transaction, 'id' | 'ownerEmail'>) => {
     if (!currentUser) return;
     const newTransaction: Transaction = {
@@ -223,6 +229,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       isDarkMode,
       setIsDarkMode,
       currentUser,
+      updateProfile,
       login,
       logout,
       hasSeenTutorial,

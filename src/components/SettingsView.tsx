@@ -1,21 +1,43 @@
 
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { 
   Moon, Shield, UserCircle, Mail, User, ShieldCheck, 
-  Trash2, Database, AlertCircle 
+  Trash2, Database, AlertCircle, Pencil, Save, X 
 } from 'lucide-react';
 import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
+import { useToast } from '@/hooks/use-toast';
 
 export const SettingsView = () => {
-  const { currentUser, isDarkMode, setIsDarkMode, userRole, resetLedger } = useFinance();
+  const { currentUser, isDarkMode, setIsDarkMode, userRole, resetLedger, updateProfile } = useFinance();
+  const { toast } = useToast();
+  
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [tempName, setTempName] = useState(currentUser?.name || '');
 
   if (!currentUser) return null;
+
+  const handleSaveName = () => {
+    if (tempName.trim()) {
+      updateProfile(tempName.trim());
+      setIsEditingName(false);
+      toast({
+        title: "Profile Updated",
+        description: "Your name has been successfully updated in the system.",
+      });
+    }
+  };
+
+  const handleCancelName = () => {
+    setTempName(currentUser.name);
+    setIsEditingName(false);
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
@@ -31,7 +53,6 @@ export const SettingsView = () => {
         </div>
       </div>
 
-      {/* Mock Data Disclaimer Banner */}
       <div className="bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-start gap-4">
           <div className="p-3 bg-white dark:bg-slate-950 rounded-xl shadow-sm">
@@ -56,7 +77,6 @@ export const SettingsView = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
-          {/* 1. Identity Records */}
           <Card className="border-none shadow-sm bg-white dark:bg-slate-900 overflow-hidden">
             <CardHeader className="border-b border-slate-50 dark:border-slate-800">
               <CardTitle className="text-lg font-black italic uppercase tracking-tight flex items-center gap-2 text-slate-800 dark:text-white">
@@ -65,14 +85,43 @@ export const SettingsView = () => {
             </CardHeader>
             <CardContent className="pt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
+                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 group relative">
                   <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><User className="w-3.5 h-3.5"/> Full Name</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">{currentUser.name}</p>
+                  
+                  {isEditingName ? (
+                    <div className="flex items-center gap-2">
+                      <Input 
+                        value={tempName}
+                        onChange={(e) => setTempName(e.target.value)}
+                        className="h-8 font-bold text-sm rounded-lg"
+                        autoFocus
+                      />
+                      <Button size="icon" variant="ghost" className="h-8 w-8 text-emerald-600" onClick={handleSaveName}>
+                        <Save className="w-4 h-4" />
+                      </Button>
+                      <Button size="icon" variant="ghost" className="h-8 w-8 text-rose-600" onClick={handleCancelName}>
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-bold text-slate-900 dark:text-white">{currentUser.name}</p>
+                      <Button 
+                        size="icon" 
+                        variant="ghost" 
+                        className="h-7 w-7 text-slate-400 hover:text-indigo-600 hover:bg-transparent"
+                        onClick={() => setIsEditingName(true)}
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
                   <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5"/> System Identity</p>
                   <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
+                  <p className="text-[9px] font-bold text-slate-400 uppercase mt-1">Read-Only Secure Handle</p>
                 </div>
 
                 <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
@@ -88,7 +137,6 @@ export const SettingsView = () => {
             </CardContent>
           </Card>
 
-          {/* 2. Preferences */}
           <Card className="border-none shadow-sm bg-white dark:bg-slate-900">
             <CardHeader className="border-b border-slate-50 dark:border-slate-800">
               <CardTitle className="text-lg font-black italic uppercase tracking-tight flex items-center gap-2 text-slate-800 dark:text-white">
