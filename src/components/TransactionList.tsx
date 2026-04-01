@@ -84,7 +84,7 @@ export const TransactionList = () => {
           <div>
             <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Transaction Ledger</CardTitle>
             <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-bold flex items-center gap-2">
-              {userRole === 'Admin' ? 'Management Mode (Full Access)' : 'Audit Mode (Read Only)'}
+              {userRole === 'Admin' ? 'Management Mode (Full Authority)' : 'Audit Mode (Restricted Access)'}
               {userRole !== 'Admin' && <Clock className="w-3 h-3 text-amber-500" />}
             </p>
           </div>
@@ -95,12 +95,11 @@ export const TransactionList = () => {
                 Export
               </Button>
             )}
-            {userRole === 'Admin' && (
-              <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight rounded-xl">
-                <Plus className="w-4 h-4 mr-2" />
-                New Entry
-              </Button>
-            )}
+            {/* Common people (Viewers) can also add data now */}
+            <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight rounded-xl">
+              <Plus className="w-4 h-4 mr-2" />
+              New Entry
+            </Button>
           </div>
         </div>
 

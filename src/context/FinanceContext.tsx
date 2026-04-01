@@ -219,7 +219,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerTransition = (callback: () => void) => {
     setIsTransitioning(true);
-    const duration = Math.floor(Math.random() * 4000) + 1000;
+    const duration = Math.floor(Math.random() * 2000) + 1000;
     setTimeout(() => {
       callback();
       setIsTransitioning(false);
@@ -277,6 +277,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     const isOwner = currentUser && transaction.ownerEmail === currentUser.email;
     const isWithinWindow = (Date.now() - transaction.createdAt) < 30000;
 
+    // Both Admins and Owners can edit, but owners only in grace period
     if (userRole === 'Admin' || (isOwner && isWithinWindow)) {
       setMasterLedger(prev => prev.map(t => t.id === id ? { ...t, ...updates } : t));
     }

@@ -41,6 +41,7 @@ export function AppSidebar() {
   const SidebarContentNode = () => (
     <div className="flex flex-col h-full bg-white dark:bg-slate-950">
       <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4">
+        {/* Dynamic header: Row-based side-by-side layout for logo and arrow */}
         <div className={cn(
           "flex w-full items-center",
           isSidebarOpen ? "justify-between" : "justify-center gap-3"

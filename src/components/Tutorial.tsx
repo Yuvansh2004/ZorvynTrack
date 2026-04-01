@@ -44,7 +44,7 @@ const steps = [
     description: "The Transactions view is your secure record. Filter, search, and manage financial entries with precision.",
     icon: History,
     color: "text-indigo-600",
-    detail: "Viewers have a 30-second window to correct errors before entries become permanent."
+    detail: "Common nodes have a 30-second window to correct errors before entries become permanent."
   },
   {
     title: "Protocol Complete",
