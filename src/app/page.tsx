@@ -27,7 +27,7 @@ import { LoginPage } from '@/components/LoginPage';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip as RechartsTooltip, CartesianGrid } from 'recharts';
 
 const exposureData = [
@@ -42,6 +42,15 @@ const exposureData = [
 
 const DashboardView = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const [currentTime, setCurrentTime] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCurrentTime(new Date().toLocaleTimeString('en-US', { hour12: false }));
+    const timer = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString('en-US', { hour12: false }));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <motion.div
@@ -58,9 +67,16 @@ const DashboardView = () => {
         <div className="flex items-center gap-4">
           <Popover>
             <PopoverTrigger asChild>
-              <button className="flex items-center gap-3 bg-slate-900/80 border border-slate-800 px-5 py-3 rounded-2xl text-[10px] font-black text-primary tracking-[2px] uppercase hover:bg-slate-800 transition-all shadow-xl group">
-                <CalendarIcon className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
-                {date ? date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase() : 'SELECT EPOCH'}
+              <button className="flex items-center gap-4 bg-slate-900/80 border border-slate-800 px-6 py-3 rounded-2xl text-[10px] font-black text-primary tracking-[2px] uppercase hover:bg-slate-800 transition-all shadow-xl group text-left min-w-[220px]">
+                <CalendarIcon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+                <div className="flex flex-col">
+                  <span className="text-primary truncate">
+                    {date ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase() : 'SELECT EPOCH'}
+                  </span>
+                  <span className="text-[8px] text-slate-500 font-mono tracking-[1px] opacity-60">
+                    T-MARK: {currentTime || '--:--:--'}
+                  </span>
+                </div>
               </button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 bg-slate-950 border-slate-800 shadow-2xl" align="end">
