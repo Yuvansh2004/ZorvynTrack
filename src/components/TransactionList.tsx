@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -23,10 +24,13 @@ export const TransactionList = () => {
   const [rowsLimit, setRowsLimit] = useState<string>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
-  const [now, setNow] = useState(Date.now());
+  
+  // Initialize with null to avoid hydration mismatch
+  const [now, setNow] = useState<number | null>(null);
 
   // High-frequency timer to manage the 30-second edit window
   useEffect(() => {
+    setNow(Date.now());
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
   }, []);
@@ -68,6 +72,9 @@ export const TransactionList = () => {
   const canEdit = (t: Transaction) => {
     // Admin always has full override authority
     if (userRole === 'Admin') return true;
+    
+    // Don't allow edits until client-side 'now' state is initialized
+    if (now === null) return false;
     
     // Non-admin users have a 30-second grace period for errors
     const isOwner = currentUser && t.ownerEmail === currentUser.email;
