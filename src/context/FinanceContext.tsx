@@ -51,31 +51,30 @@ export interface Transaction {
   createdAt: number;
 }
 
-// Fixed base timestamp for March 1st, 2026 to prevent hydration mismatches
-const BASE_TIME = 1772409600000; 
+// Fixed base timestamp for January 1st, 2026
+const BASE_TIME = 1767225600000; 
 
 const INITIAL_DATA: Transaction[] = [
-  // 20 Unique Indian-Context Transactions for 2026
-  { id: '1', date: '2026-03-01', description: 'Internship Stipend', amount: 35000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: '2', date: '2026-03-02', description: 'UPI to Ramesh (Canteen)', amount: 120, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: '3', date: '2026-03-03', description: 'Swiggy Biryani Order', amount: 450, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: '4', date: '2026-03-04', description: 'Jio 5G Recharge', amount: 749, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
-  { id: '5', date: '2026-03-05', description: 'Airtel Broadband Bill', amount: 999, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
-  { id: '6', date: '2026-03-06', description: 'Laptop Monthly Installment', amount: 8500, category: 'Electronics', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: '7', date: '2026-03-07', description: 'Zomato Dinner with Friends', amount: 1200, category: 'Food', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
-  { id: '8', date: '2026-03-08', description: 'Amazon Coding Books', amount: 2400, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
-  { id: '9', date: '2026-03-10', description: 'Freelance UI Design Project', amount: 15000, category: 'Income', type: 'Income', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
-  { id: '10', date: '2026-03-12', description: 'Cult.fit Gym Membership', amount: 3000, category: 'Health', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
-  { id: '11', date: '2026-03-14', description: 'Netflix Premium Plan', amount: 649, category: 'Entertainment', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
-  { id: '12', date: '2026-03-15', description: 'Uber to University', amount: 350, category: 'Transport', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: '13', date: '2026-03-16', description: 'Monthly Bus Pass (BEST)', amount: 600, category: 'Transport', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: '14', date: '2026-03-17', description: 'Engineering Graphics Supplies', amount: 850, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
-  { id: '15', date: '2026-03-20', description: 'Quarterly Performance Bonus', amount: 10000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: '16', date: '2026-03-22', description: 'Starbucks Coffee (Meeting)', amount: 550, category: 'Food', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
-  { id: '17', date: '2026-03-23', description: 'Electricity Bill', amount: 1800, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
-  { id: '18', date: '2026-03-24', description: 'Google One Cloud Storage', amount: 130, category: 'Tech', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
-  { id: '19', date: '2026-03-25', description: 'Mutual Fund Dividends', amount: 1200, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: '20', date: '2026-03-28', description: 'Lonavala Weekend Trip', amount: 5000, category: 'Travel', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
+  { id: '1', date: '2026-01-01', description: 'Joining Stipend Bonus', amount: 10000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
+  { id: '2', date: '2026-01-02', description: 'Metro Card Auto-Topup', amount: 500, category: 'Transport', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
+  { id: '3', date: '2026-01-04', description: 'Cafe Coffee Day (Study Session)', amount: 350, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
+  { id: '4', date: '2026-01-05', description: 'Amazon Prime Yearly', amount: 1499, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
+  { id: '5', date: '2026-01-08', description: 'Primary Monthly Stipend', amount: 25000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
+  { id: '6', date: '2026-01-10', description: 'BookMyShow - Interstellar Re-run', amount: 800, category: 'Entertainment', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
+  { id: '7', date: '2026-01-12', description: 'Zomato Office Dinner', amount: 650, category: 'Food', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
+  { id: '8', date: '2026-01-15', description: 'Electricity Bill Payment', amount: 1200, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
+  { id: '9', date: '2026-01-18', description: 'Freelance Logo Design', amount: 5000, category: 'Income', type: 'Income', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
+  { id: '10', date: '2026-01-20', description: 'Postpaid Mobile Bill', amount: 599, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
+  { id: '11', date: '2026-01-22', description: 'Uber Premier to Client', amount: 250, category: 'Transport', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
+  { id: '12', date: '2026-01-24', description: 'Cult.fit Membership Renewal', amount: 2000, category: 'Health', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
+  { id: '13', date: '2026-01-26', description: 'Republic Day Celebration', amount: 1500, category: 'Leisure', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
+  { id: '14', date: '2026-01-28', description: 'BigBasket Grocery Load', amount: 3000, category: 'Food', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
+  { id: '15', date: '2026-01-30', description: 'Investment Dividend', amount: 2000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
+  { id: '16', date: '2026-02-01', description: 'February Monthly Stipend', amount: 25000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
+  { id: '17', date: '2026-02-02', description: 'Laptop Upgrade EMI', amount: 5000, category: 'Electronics', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
+  { id: '18', date: '2026-02-04', description: 'Swiggy Gourmet Lunch', amount: 450, category: 'Food', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
+  { id: '19', date: '2026-02-06', description: 'Fiber Internet Bill', amount: 799, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
+  { id: '20', date: '2026-02-08', description: 'Pharmacy - Vitamins', amount: 450, category: 'Health', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
 ];
 
 interface FinanceContextType {

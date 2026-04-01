@@ -39,7 +39,7 @@ export function AppSidebar() {
       <div className="h-24 flex items-center px-4 border-b border-slate-50 dark:border-slate-900">
         <div className={cn(
           "flex w-full items-center",
-          isOpen ? "flex-row justify-between" : "flex-col justify-center gap-3"
+          isOpen ? "flex-row justify-between" : "flex-row justify-center gap-2"
         )}>
           <div className="flex items-center gap-3 overflow-hidden">
             <div className="bg-indigo-600 p-2 rounded-xl shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
