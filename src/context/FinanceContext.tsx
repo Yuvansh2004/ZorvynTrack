@@ -97,6 +97,8 @@ interface FinanceContextType {
   logout: () => void;
   hasSeenTutorial: boolean;
   completeTutorial: () => void;
+  showGreeting: boolean;
+  closeGreeting: () => void;
 }
 
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
@@ -110,6 +112,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [hasSeenTutorial, setHasSeenTutorial] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('zorvyn_current_user');
@@ -186,6 +189,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       triggerTransition(() => {
         setCurrentUser(sessionUser);
         setUserRole(sessionUser.role);
+        setShowGreeting(true);
       });
       return true;
     }
@@ -196,6 +200,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     triggerTransition(() => {
       setCurrentUser(null);
       setActiveView('Dashboard');
+      setShowGreeting(false);
     });
   };
 
@@ -254,6 +259,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     setHasSeenTutorial(true);
   };
 
+  const closeGreeting = () => {
+    setShowGreeting(false);
+  };
+
   return (
     <FinanceContext.Provider value={{ 
       transactions, 
@@ -274,7 +283,9 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       login,
       logout,
       hasSeenTutorial,
-      completeTutorial
+      completeTutorial,
+      showGreeting,
+      closeGreeting
     }}>
       {children}
     </FinanceContext.Provider>

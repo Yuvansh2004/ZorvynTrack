@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from 'react';
@@ -11,57 +12,57 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Shield, BarChart3, History, Menu, Home, CheckCircle2 } from 'lucide-react';
+import { History, Menu, Home, CheckCircle2, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { ZorvynLogo } from '@/components/ZorvynLogo';
 
 const steps = [
   {
-    title: "Namaste!",
-    description: "Welcome to your ZorvynTrack Institutional Terminal. We've initialized a secure environment for your financial journey.",
+    title: "System Protocol",
+    description: "Welcome to ZorvynTrack. This tutorial will guide you through the point-to-point interface of your financial terminal.",
     icon: ZorvynLogo,
     color: "text-indigo-600",
-    detail: "This terminal is built with System Security Technology to ensure your data remains protected and accurate."
+    detail: "Initialization complete. Let's explore the core navigation nodes."
   },
   {
-    title: "Sidebar Terminal",
-    description: "Use the navigation terminal on the left to switch between modules. You can collapse it to save space.",
+    title: "Sidebar Navigation",
+    description: "The sidebar on the left is your command handle. Use the 'Z' logo for identity and the Arrow beside it to open or close the terminal.",
     icon: Menu,
     color: "text-indigo-600",
-    detail: "The Z logo and toggle arrow are positioned side-by-side for quick access even in compact mode."
+    detail: "The Arrow beside the logo allows for compact or expanded view toggling."
   },
   {
-    title: "Dashboard Hub",
-    description: "This is your primary command center. Monitor your Balance, Income Velocity, and Expenditure trends here.",
+    title: "Dashboard Command",
+    description: "Your Homepage Hub. Monitor your Balance, Income Velocity, and Expenditure classification cards here.",
     icon: Home,
     color: "text-indigo-600",
-    detail: "View real-time telemetry and AI-driven insights generated specifically for your account."
+    detail: "Telemetry is updated in real-time as you switch between institutional views."
   },
   {
-    title: "Secure Ledger",
-    description: "The Transactions view allows you to audit every record. Add new entries or filter history with ease.",
+    title: "Audit Ledger",
+    description: "The Transactions view is your secure ledger. Filter, search, and manage records with institutional precision.",
     icon: History,
     color: "text-indigo-600",
-    detail: "Remember: Viewers have a 30-second window to correct errors before entries become permanent."
+    detail: "Viewers have a 30-second window to correct errors before entries become permanent."
   },
   {
-    title: "System Ready",
-    description: "Initialization complete. You are now ready to manage your student finances with institutional precision.",
+    title: "Ready to Manage",
+    description: "Tutorial complete. You are now fully authorized to manage your student finances with ZorvynTrack precision.",
     icon: CheckCircle2,
     color: "text-emerald-600",
-    detail: "Your session is encrypted and synchronized with the ZorvynTrack secure node."
+    detail: "Your session node is active and synchronized."
   }
 ];
 
 export const Tutorial = () => {
-  const { hasSeenTutorial, completeTutorial, currentUser } = useFinance();
+  const { hasSeenTutorial, completeTutorial, currentUser, showGreeting } = useFinance();
   const [currentStep, setCurrentStep] = useState(0);
 
-  if (hasSeenTutorial || !currentUser) return null;
+  // Show tutorial ONLY if hasSeenTutorial is false AND the Greeting is NOT showing
+  if (hasSeenTutorial || !currentUser || showGreeting) return null;
 
   const step = steps[currentStep];
-  const userName = currentUser.name.split(' ')[0];
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
@@ -110,7 +111,7 @@ export const Tutorial = () => {
         <div className="p-10 space-y-6">
           <DialogHeader>
             <DialogTitle className="text-3xl font-black italic uppercase tracking-tighter text-center text-slate-900 dark:text-white">
-              {currentStep === 0 ? `Namaste, ${userName}!` : step.title}
+              {step.title}
             </DialogTitle>
             <DialogDescription className="text-sm font-bold text-slate-500 dark:text-slate-400 leading-relaxed text-center pt-2">
               {step.description}
@@ -118,7 +119,7 @@ export const Tutorial = () => {
           </DialogHeader>
 
           <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800">
-            <p className="text-[11px] font-black uppercase tracking-widest text-indigo-600 mb-2">System Instruction</p>
+            <p className="text-[11px] font-black uppercase tracking-widest text-indigo-600 mb-2">Protocol Detail</p>
             <p className="text-xs text-slate-600 dark:text-slate-400 font-medium leading-relaxed italic">
               "{step.detail}"
             </p>
@@ -138,7 +139,7 @@ export const Tutorial = () => {
               onClick={handleNext} 
               className="flex-[2] bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase text-[10px] tracking-[3px] h-14 rounded-2xl transition-all shadow-xl shadow-indigo-100 dark:shadow-none hover:scale-[1.02] active:scale-95"
             >
-              {currentStep === steps.length - 1 ? "INITIALIZE TERMINAL" : "NEXT PROTOCOL"}
+              {currentStep === steps.length - 1 ? "FINALIZE AUDIT" : "NEXT NODE"}
             </Button>
           </DialogFooter>
           <p className="text-[8px] font-black uppercase tracking-[0.4em] text-slate-400 text-center">

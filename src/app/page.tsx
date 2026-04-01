@@ -11,6 +11,7 @@ import { SettingsView } from '@/components/SettingsView';
 import { LoginPage } from '@/components/LoginPage';
 import { AppFooter } from '@/components/AppFooter';
 import { Tutorial } from '@/components/Tutorial';
+import { GreetingPopup } from '@/components/GreetingPopup';
 import { ZorvynLogo } from '@/components/ZorvynLogo';
 import { motion } from 'framer-motion';
 
@@ -94,6 +95,7 @@ export default function Home() {
           <AppFooter />
         </div>
       </main>
+      <GreetingPopup />
       <Tutorial />
     </div>
   );
