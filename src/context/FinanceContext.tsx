@@ -70,7 +70,6 @@ const generateRandomData = () => {
   const baseTime = 1767225600000; // Jan 1 2026
 
   DEMO_ACCOUNTS.forEach((user) => {
-    // Generate 50-100 entries per user for a rich telemetry experience
     const count = Math.floor(Math.random() * 51) + 50; 
     
     allTransactions.push({
@@ -220,7 +219,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerTransition = (callback: () => void) => {
     setIsTransitioning(true);
-    // Randomized duration for a realistic institutional feel
     const duration = Math.floor(Math.random() * 4000) + 1000;
     setTimeout(() => {
       callback();

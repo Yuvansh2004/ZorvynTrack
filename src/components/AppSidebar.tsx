@@ -43,7 +43,7 @@ export function AppSidebar() {
       <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4">
         <div className={cn(
           "flex w-full items-center",
-          isSidebarOpen ? "justify-between" : "justify-center gap-2"
+          isSidebarOpen ? "justify-between" : "justify-center gap-3"
         )}>
           <div 
             className="flex items-center gap-2 shrink-0 cursor-pointer group"
@@ -66,7 +66,7 @@ export function AppSidebar() {
               onClick={toggleSidebar} 
               className={cn(
                 "shrink-0 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
-                isSidebarOpen ? "h-9 w-9" : "h-7 w-7"
+                isSidebarOpen ? "h-9 w-9" : "h-8 w-8"
               )}
             >
               {isSidebarOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-3.5 h-3.5" />}

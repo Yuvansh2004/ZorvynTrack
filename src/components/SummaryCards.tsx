@@ -65,8 +65,8 @@ export const SummaryCards = () => {
                   <h3 className={cn(
                     "font-black text-slate-900 dark:text-white mt-2 lg:mt-3 tracking-tighter tabular-nums italic truncate transition-all duration-300",
                     isSidebarOpen 
-                      ? "text-lg md:text-xl lg:text-2xl" 
-                      : "text-xl md:text-2xl lg:text-3xl"
+                      ? "text-lg md:text-xl lg:text-3xl" 
+                      : "text-xl md:text-2xl lg:text-4xl"
                   )} title={formatINR(item.amount)}>
                     {formatINR(item.amount)}
                   </h3>
