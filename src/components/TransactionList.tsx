@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, Lock, FileSpreadsheet, Calendar as CalendarIcon } from 'lucide-react';
+import { Search, Plus, Trash2, Download, FileSpreadsheet } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -14,10 +14,9 @@ import {
 } from '@/components/ui/select';
 
 export const TransactionList = () => {
-  const { transactions, userRole, deleteTransaction, currentUser } = useFinance();
+  const { transactions, userRole, deleteTransaction } = useFinance();
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('All');
-  const [dateFilter, setDateFilter] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filtered = transactions.filter(t => {
@@ -28,45 +27,46 @@ export const TransactionList = () => {
       t.amount.toString().includes(term);
     
     const matchesType = typeFilter === 'All' || t.type === typeFilter;
-    const matchesDate = !dateFilter || t.date === dateFilter;
     
-    return matchesSearch && matchesType && matchesDate;
+    return matchesSearch && matchesType;
   });
 
   const exportCSV = () => {
-    const headers = ["DATE,DESCRIPTION,CATEGORY,AMOUNT,TYPE\n"];
+    const headers = ["DATE,DESCRIPTION,CATEGORY,AMOUNT,TYPE,OWNER_NODE\n"];
     const rows = filtered.map(t => 
-      `${t.date},"${t.description}",${t.category},${t.amount},${t.type}`
+      `${t.date},"${t.description}",${t.category},${t.amount},${t.type},${t.ownerEmail}`
     ).join("\n");
     const blob = new Blob([...headers, rows], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `transactions.csv`;
+    a.download = `zorvyn_ledger_export.csv`;
     a.click();
   };
 
   return (
-    <Card className="border-slate-100 dark:border-slate-800">
+    <Card className="border-slate-100 dark:border-slate-800 shadow-sm">
       <CardHeader className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <div>
-          <CardTitle className="text-xl font-bold">Recent Transactions</CardTitle>
-          <p className="text-xs text-slate-500 mt-1">Manage and track your financial activity</p>
+          <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Transaction Ledger</CardTitle>
+          <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-bold">
+            {userRole === 'Admin' ? 'Management Mode (Full Access)' : 'Audit Mode (Read Only)'}
+          </p>
         </div>
         <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
           <div className="relative flex-1 sm:flex-none">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
-              placeholder="Search..." 
-              className="pl-9 h-9 w-full sm:w-[180px]"
+              placeholder="Search amount, category..." 
+              className="pl-9 h-9 w-full sm:w-[220px] text-xs font-medium"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           
           <Select value={typeFilter} onValueChange={setTypeFilter}>
-            <SelectTrigger className="w-[110px] h-9">
-              <SelectValue placeholder="Type" />
+            <SelectTrigger className="w-[120px] h-9 text-xs font-medium">
+              <SelectValue placeholder="All Types" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="All">All Types</SelectItem>
@@ -75,13 +75,14 @@ export const TransactionList = () => {
             </SelectContent>
           </Select>
 
+          {/* Admin Exclusive: New Entry & Export */}
           {userRole === 'Admin' && (
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={exportCSV} className="h-9">
+              <Button variant="outline" size="sm" onClick={exportCSV} className="h-9 text-xs font-bold uppercase tracking-tight">
                 <Download className="w-4 h-4 mr-2" />
                 Export
               </Button>
-              <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700">
+              <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight">
                 <Plus className="w-4 h-4 mr-2" />
                 New Entry
               </Button>
@@ -93,12 +94,13 @@ export const TransactionList = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="text-slate-500 border-b border-slate-100 dark:border-slate-800">
-                <th className="pb-4 font-semibold">Date</th>
-                <th className="pb-4 font-semibold">Description</th>
-                <th className="pb-4 font-semibold">Category</th>
-                <th className="pb-4 font-semibold">Amount</th>
-                {userRole === 'Admin' && <th className="pb-4 text-right font-semibold">Action</th>}
+              <tr className="text-slate-400 border-b border-slate-50 dark:border-slate-900">
+                <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Date</th>
+                <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Description</th>
+                <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Category</th>
+                <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Amount</th>
+                {/* Admin Exclusive: Action Header */}
+                {userRole === 'Admin' && <th className="pb-4 text-right font-black uppercase text-[10px] tracking-widest">Action</th>}
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50 dark:divide-slate-900">
@@ -111,23 +113,24 @@ export const TransactionList = () => {
                     exit={{ opacity: 0 }}
                     className="group hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors"
                   >
-                    <td className="py-4 text-slate-500">{t.date}</td>
-                    <td className="py-4 font-medium">{t.description}</td>
+                    <td className="py-4 text-slate-500 font-medium tabular-nums">{t.date}</td>
+                    <td className="py-4 font-bold text-slate-800 dark:text-slate-200">{t.description}</td>
                     <td className="py-4">
-                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">
                         {t.category}
                       </span>
                     </td>
-                    <td className={`py-4 font-bold ${t.type === 'Income' ? 'text-emerald-600' : 'text-rose-500'}`}>
+                    <td className={`py-4 font-black tabular-nums ${t.type === 'Income' ? 'text-emerald-600' : 'text-rose-500'}`}>
                       {t.type === 'Income' ? '+' : '-'}{formatINR(t.amount)}
                     </td>
+                    {/* Admin Exclusive: Delete Action */}
                     {userRole === 'Admin' && (
                       <td className="py-4 text-right">
                         <Button 
                           variant="ghost" 
                           size="sm" 
                           onClick={() => deleteTransaction(t.id)}
-                          className="text-slate-300 hover:text-rose-500 hover:bg-transparent"
+                          className="text-slate-300 hover:text-rose-500 hover:bg-transparent transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -139,14 +142,16 @@ export const TransactionList = () => {
             </tbody>
           </table>
           {filtered.length === 0 && (
-            <div className="py-20 text-center flex flex-col items-center gap-3">
-              <FileSpreadsheet className="w-10 h-10 text-slate-200" />
-              <p className="text-slate-400 font-medium">No transactions found.</p>
+            <div className="py-20 text-center flex flex-col items-center gap-3 opacity-40">
+              <FileSpreadsheet className="w-10 h-10" />
+              <p className="text-xs font-black uppercase tracking-widest">No matching records found</p>
             </div>
           )}
         </div>
       </CardContent>
-      <AddTransactionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {userRole === 'Admin' && (
+        <AddTransactionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      )}
     </Card>
   );
 };
