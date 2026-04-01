@@ -232,9 +232,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       triggerTransition(() => {
         setCurrentUser(user);
         setUserRole(user.role);
-        if (hasSeenTutorial) {
-          setShowGreeting(true);
-        }
+        setShowGreeting(true);
       });
       return true;
     }
@@ -302,7 +300,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const completeTutorial = () => {
     setHasSeenTutorial(true);
-    setShowGreeting(true);
   };
 
   const closeGreeting = () => {
