@@ -25,7 +25,8 @@ export const TransactionList = () => {
     const matchesSearch = 
       t.category.toLowerCase().includes(term) ||
       t.description.toLowerCase().includes(term) ||
-      t.amount.toString().includes(term);
+      t.amount.toString().includes(term) ||
+      t.date.includes(term);
     
     const matchesType = typeFilter === 'All' || t.type === typeFilter;
     const matchesDate = !dateFilter || t.date === dateFilter;
@@ -60,8 +61,8 @@ export const TransactionList = () => {
           <div className="relative flex-1 min-w-[200px] sm:flex-none">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
-              placeholder="Search amount, category..." 
-              className="pl-9 h-9 w-full sm:w-[220px] text-xs font-medium"
+              placeholder="Search amount, category, date..." 
+              className="pl-9 h-9 w-full sm:w-[240px] text-xs font-medium"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -122,7 +123,6 @@ export const TransactionList = () => {
                 <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Description</th>
                 <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Category</th>
                 <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Amount</th>
-                {/* Admin Exclusive: Action Header */}
                 {userRole === 'Admin' && <th className="pb-4 text-right font-black uppercase text-[10px] tracking-widest">Action</th>}
               </tr>
             </thead>
@@ -146,7 +146,6 @@ export const TransactionList = () => {
                     <td className={`py-4 font-black tabular-nums ${t.type === 'Income' ? 'text-emerald-600' : 'text-rose-500'}`}>
                       {t.type === 'Income' ? '+' : '-'}{formatINR(t.amount)}
                     </td>
-                    {/* Admin Exclusive: Delete Action */}
                     {userRole === 'Admin' && (
                       <td className="py-4 text-right">
                         <Button 
@@ -168,20 +167,6 @@ export const TransactionList = () => {
             <div className="py-20 text-center flex flex-col items-center gap-3 opacity-40">
               <FileSpreadsheet className="w-10 h-10" />
               <p className="text-xs font-black uppercase tracking-widest">No matching records found</p>
-              { (searchTerm || typeFilter !== 'All' || dateFilter) && (
-                <Button 
-                  variant="link" 
-                  size="sm" 
-                  onClick={() => {
-                    setSearchTerm('');
-                    setTypeFilter('All');
-                    setDateFilter('');
-                  }}
-                  className="text-indigo-600 text-[10px] font-black uppercase tracking-widest"
-                >
-                  Clear all filters
-                </Button>
-              )}
             </div>
           )}
         </div>

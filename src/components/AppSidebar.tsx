@@ -8,18 +8,15 @@ import {
   User, 
   ChevronLeft,
   ChevronRight,
-  Shield,
   LogOut,
-  Eye,
   Wallet
 } from 'lucide-react';
 import { useFinance, ViewType } from '@/context/FinanceContext';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
 
 export function AppSidebar() {
-  const { activeView, setActiveView, userRole, setUserRole, currentUser, logout } = useFinance();
+  const { activeView, setActiveView, currentUser, logout } = useFinance();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   if (!currentUser) return null;
@@ -83,24 +80,6 @@ export function AppSidebar() {
       </nav>
 
       <div className="p-4 border-t border-slate-100 dark:border-slate-900 space-y-4">
-        {!isCollapsed && (
-          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Switch Role</span>
-                {userRole === 'Admin' ? <Shield className="w-3 h-3 text-indigo-600" /> : <Eye className="w-3 h-3 text-slate-400" />}
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-600 dark:text-slate-300">{userRole}</span>
-                <Switch 
-                  checked={userRole === 'Admin'} 
-                  onCheckedChange={(checked) => setUserRole(checked ? 'Admin' : 'Viewer')}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
         <div className={cn(
           "flex items-center gap-3",
           isCollapsed ? "justify-center" : "px-2"
@@ -120,6 +99,9 @@ export function AppSidebar() {
             </Button>
           )}
         </div>
+        {!isCollapsed && (
+          <p className="text-[9px] text-center font-black uppercase tracking-[2px] text-slate-300 dark:text-slate-700">Zorvyn Scan Technology</p>
+        )}
       </div>
     </aside>
   );
