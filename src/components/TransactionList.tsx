@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, Lock, FileSpreadsheet } from 'lucide-react';
+import { Search, Plus, Trash2, Download, Lock, FileSpreadsheet, ShieldAlert } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -24,21 +24,21 @@ export const TransactionList = () => {
     const headers = [
       "ZORVYN FINANCE - OFFICIAL TRANSACTION STATEMENT\n",
       `ACCOUNT HOLDER: ${currentUser?.name || 'N/A'}\n`,
-      `ACCOUNT EMAIL: ${currentUser?.email || 'N/A'}\n`,
+      `ROLE: ${userRole}\n`,
       `STATEMENT PERIOD: ${new Date().toLocaleDateString()}\n`,
       `SECURITY PROTOCOL: AES-256-INTERNAL-AUDIT\n\n`,
-      "TRANS_DATE,DESCRIPTION,CATEGORY,AMOUNT(INR),TX_TYPE\n"
+      "TX_ID,OWNER_EMAIL,TX_DATE,DESCRIPTION,CATEGORY,AMOUNT(INR),TX_TYPE\n"
     ];
     
     const rows = filtered.map(t => 
-      `${t.date},"${t.description.replace(/"/g, '""')}","${t.category}",${t.amount},${t.type}`
+      `${t.id},${t.ownerEmail},${t.date},"${t.description.replace(/"/g, '""')}","${t.category}",${t.amount},${t.type}`
     ).join("\n");
     
     const blob = new Blob([...headers, rows], { type: 'text/csv;charset=utf-8;' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Zorvyn_Statement_${currentUser?.name.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = `Zorvyn_Audit_${userRole}_${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
   };
@@ -48,13 +48,15 @@ export const TransactionList = () => {
       <CardHeader className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-7">
         <div className="space-y-1">
           <CardTitle className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Ledger Repository</CardTitle>
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
-            {userRole === 'Admin' ? (
-              <><span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" /> Full Read/Write Authority</>
-            ) : (
-              <><span className="w-1.5 h-1.5 rounded-full bg-slate-300" /> Standard Account Node</>
-            )}
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
+              {userRole === 'Admin' ? (
+                <><span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" /> Full Read/Write Authority (Global View)</>
+              ) : (
+                <><span className="w-1.5 h-1.5 rounded-full bg-slate-300" /> Read-Only Account Node (Personal View)</>
+              )}
+            </p>
+          </div>
         </div>
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
           <div className="relative flex-1 sm:flex-none">
@@ -67,24 +69,33 @@ export const TransactionList = () => {
             />
           </div>
           
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={exportCSV} 
-            className="text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Export Statement
-          </Button>
+          {userRole === 'Admin' && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={exportCSV} 
+              className="text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Master Export
+            </Button>
+          )}
 
-          <Button 
-            size="sm" 
-            onClick={() => setIsModalOpen(true)} 
-            className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg rounded-xl px-5"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            New Entry
-          </Button>
+          {userRole === 'Admin' ? (
+            <Button 
+              size="sm" 
+              onClick={() => setIsModalOpen(true)} 
+              className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg rounded-xl px-5"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              New Entry
+            </Button>
+          ) : (
+            <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 text-[10px] font-black uppercase text-slate-400">
+              <Lock className="w-3.5 h-3.5" />
+              Write-Access Denied
+            </div>
+          )}
         </div>
       </CardHeader>
       <CardContent>
@@ -94,6 +105,7 @@ export const TransactionList = () => {
               <tr className="text-slate-400 text-[10px] font-black uppercase tracking-widest border-b border-slate-50 dark:border-slate-900">
                 <th className="pb-4">TX_DATE</th>
                 <th className="pb-4">TX_DESCRIPTION</th>
+                {userRole === 'Admin' && <th className="pb-4">OWNER_NODE</th>}
                 <th className="pb-4">CLASSIFICATION</th>
                 <th className="pb-4">QUANTUM_AMOUNT</th>
                 <th className="pb-4 text-right">PROTOCOL</th>
@@ -111,6 +123,11 @@ export const TransactionList = () => {
                   >
                     <td className="py-4 text-slate-500 font-mono text-[12px]">{t.date}</td>
                     <td className="py-4 font-bold text-slate-900 dark:text-slate-200">{t.description}</td>
+                    {userRole === 'Admin' && (
+                      <td className="py-4 text-[10px] font-bold text-indigo-400 truncate max-w-[120px]">
+                        {t.ownerEmail.split('@')[0]}
+                      </td>
+                    )}
                     <td className="py-4">
                       <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-tight">
                         {t.category}
@@ -132,7 +149,7 @@ export const TransactionList = () => {
                       ) : (
                         <div className="flex items-center justify-end gap-2 text-slate-300 dark:text-slate-700">
                           <Lock className="w-3.5 h-3.5" />
-                          <span className="text-[10px] font-bold uppercase tracking-tighter">Locked</span>
+                          <span className="text-[10px] font-bold uppercase tracking-tighter">Read-Only</span>
                         </div>
                       )}
                     </td>
@@ -141,11 +158,11 @@ export const TransactionList = () => {
               </AnimatePresence>
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-20 text-center">
+                  <td colSpan={userRole === 'Admin' ? 6 : 5} className="py-20 text-center">
                     <div className="flex flex-col items-center gap-2">
                       <FileSpreadsheet className="w-10 h-10 text-slate-200" />
                       <p className="text-slate-400 text-sm font-bold">No statement entries detected.</p>
-                      <p className="text-slate-300 text-[10px] uppercase tracking-widest">Adjust filters or add a new entry.</p>
+                      <p className="text-slate-300 text-[10px] uppercase tracking-widest">Adjust filters or request Admin entry.</p>
                     </div>
                   </td>
                 </tr>

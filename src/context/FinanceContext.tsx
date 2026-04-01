@@ -20,6 +20,7 @@ export interface Transaction {
   amount: number;
   category: string;
   type: TransactionType;
+  ownerEmail: string; // Tracks who the transaction belongs to
 }
 
 export const DEMO_ACCOUNTS: User[] = [
@@ -28,37 +29,22 @@ export const DEMO_ACCOUNTS: User[] = [
   { name: 'Priya Sharma', email: 'priya.sharma@zorvyn.com', role: 'Viewer' },
 ];
 
-const INITIAL_DATA: Record<string, Transaction[]> = {
-  'yuvanshkoli1011@gmail.com': [
-    { id: 'y1', date: '2024-05-20', description: 'Corporate Stipend - Zorvyn', amount: 25000, category: 'Salary', type: 'Income' },
-    { id: 'y2', date: '2024-05-19', description: 'MacBook Pro EMI', amount: 8500, category: 'Electronics', type: 'Expense' },
-    { id: 'y3', date: '2024-05-18', description: 'AWS Cloud Services', amount: 1200, category: 'Cloud', type: 'Expense' },
-    { id: 'y4', date: '2024-05-15', description: 'Freelance UI Project', amount: 12000, category: 'Income', type: 'Income' },
-    { id: 'y5', date: '2024-05-14', description: 'Starlink Monthly', amount: 3500, category: 'Utilities', type: 'Expense' },
-  ],
-  'aditya.rao@zorvyn.com': [
-    { id: 'a1', date: '2024-05-20', description: 'University Canteen Card', amount: 2500, category: 'Food', type: 'Expense' },
-    { id: 'a2', date: '2024-05-19', description: 'NPTEL Course Certification', amount: 1200, category: 'Education', type: 'Expense' },
-    { id: 'a3', date: '2024-05-18', description: 'Part-time Tutoring', amount: 5000, category: 'Allowance', type: 'Income' },
-    { id: 'a4', date: '2024-05-17', description: 'Kindle E-book Store', amount: 450, category: 'Education', type: 'Expense' },
-    { id: 'a5', date: '2024-05-16', description: 'Gym Membership', amount: 1500, category: 'Health', type: 'Expense' },
-  ],
-  'priya.sharma@zorvyn.com': [
-    { id: 'p1', date: '2024-05-20', description: 'Behance Portfolio Premium', amount: 1500, category: 'Subscription', type: 'Expense' },
-    { id: 'p2', date: '2024-05-19', description: 'Commission: NFT Artwork', amount: 18000, category: 'Freelance', type: 'Income' },
-    { id: 'p3', date: '2024-05-18', description: 'Adobe Creative Cloud', amount: 2400, category: 'Subscription', type: 'Expense' },
-    { id: 'p4', date: '2024-05-16', description: 'Uber Rides (Co-working)', amount: 1200, category: 'Transport', type: 'Expense' },
-    { id: 'p5', date: '2024-05-15', description: 'Wacom Pen Nibs', amount: 800, category: 'Supplies', type: 'Expense' },
-  ]
-};
+const INITIAL_DATA: Transaction[] = [
+  { id: 'y1', date: '2024-05-20', description: 'Corporate Stipend - Zorvyn', amount: 25000, category: 'Salary', type: 'Income', ownerEmail: 'yuvanshkoli1011@gmail.com' },
+  { id: 'y2', date: '2024-05-19', description: 'MacBook Pro EMI', amount: 8500, category: 'Electronics', type: 'Expense', ownerEmail: 'yuvanshkoli1011@gmail.com' },
+  { id: 'a1', date: '2024-05-20', description: 'University Canteen Card', amount: 2500, category: 'Food', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
+  { id: 'a2', date: '2024-05-19', description: 'NPTEL Course Certification', amount: 1200, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
+  { id: 'p1', date: '2024-05-20', description: 'Behance Portfolio Premium', amount: 1500, category: 'Subscription', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com' },
+  { id: 'p2', date: '2024-05-19', description: 'Commission: NFT Artwork', amount: 18000, category: 'Freelance', type: 'Income', ownerEmail: 'priya.sharma@zorvyn.com' },
+];
 
 interface FinanceContextType {
-  transactions: Transaction[];
+  transactions: Transaction[]; // Visible transactions based on role
   userRole: UserRole;
   setUserRole: (role: UserRole) => void;
   activeView: ViewType;
   setActiveView: (view: ViewType) => void;
-  addTransaction: (transaction: Omit<Transaction, 'id'>) => void;
+  addTransaction: (transaction: Omit<Transaction, 'id' | 'ownerEmail'>) => void;
   deleteTransaction: (id: string) => void;
   isLoading: boolean;
   isDarkMode: boolean;
@@ -71,16 +57,18 @@ interface FinanceContextType {
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
 
 export const FinanceProvider = ({ children }: { children: ReactNode }) => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [masterLedger, setMasterLedger] = useState<Transaction[]>([]);
   const [userRole, setUserRole] = useState<UserRole>('Admin');
   const [activeView, setActiveView] = useState<ViewType>('Dashboard');
   const [isLoading, setIsLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
+  // Load initial data from localStorage or fallback to constants
   useEffect(() => {
     const savedUser = localStorage.getItem('zorvyn_current_user');
     const savedTheme = localStorage.getItem('zorvyn_theme');
+    const savedLedger = localStorage.getItem('zorvyn_master_ledger');
     
     if (savedTheme) {
       const isDark = savedTheme === 'dark';
@@ -89,27 +77,31 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       else document.documentElement.classList.remove('dark');
     }
 
+    if (savedLedger) {
+      setMasterLedger(JSON.parse(savedLedger));
+    } else {
+      setMasterLedger(INITIAL_DATA);
+    }
+
     if (savedUser) {
       const user = JSON.parse(savedUser);
       setCurrentUser(user);
       setUserRole(user.role);
-      
-      const userTransactions = localStorage.getItem(`zorvyn_tx_${user.email}`);
-      if (userTransactions) {
-        setTransactions(JSON.parse(userTransactions));
-      } else {
-        setTransactions(INITIAL_DATA[user.email] || []);
-      }
     }
 
     setIsLoading(false);
   }, []);
 
+  // Save changes to localStorage whenever masterLedger, user, or theme changes
   useEffect(() => {
-    if (!isLoading && currentUser) {
-      localStorage.setItem(`zorvyn_tx_${currentUser.email}`, JSON.stringify(transactions));
+    if (!isLoading) {
+      localStorage.setItem('zorvyn_master_ledger', JSON.stringify(masterLedger));
       localStorage.setItem('zorvyn_theme', isDarkMode ? 'dark' : 'light');
-      localStorage.setItem('zorvyn_current_user', JSON.stringify(currentUser));
+      if (currentUser) {
+        localStorage.setItem('zorvyn_current_user', JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem('zorvyn_current_user');
+      }
 
       if (isDarkMode) {
         document.documentElement.classList.add('dark');
@@ -117,7 +109,14 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
         document.documentElement.classList.remove('dark');
       }
     }
-  }, [transactions, currentUser, isLoading, isDarkMode]);
+  }, [masterLedger, currentUser, isLoading, isDarkMode]);
+
+  // Derived state: Filter transactions based on current role
+  // Admin sees EVERYTHING. Viewer sees ONLY their OWN data.
+  const transactions = masterLedger.filter(t => {
+    if (userRole === 'Admin') return true;
+    return currentUser ? t.ownerEmail === currentUser.email : false;
+  });
 
   const login = (email: string, password?: string) => {
     const user = DEMO_ACCOUNTS.find(acc => acc.email === email);
@@ -125,13 +124,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       const sessionUser = user || { name: 'Guest User', email, role: 'Viewer' as UserRole };
       setCurrentUser(sessionUser);
       setUserRole(sessionUser.role);
-      
-      const userTransactions = localStorage.getItem(`zorvyn_tx_${sessionUser.email}`);
-      if (userTransactions) {
-        setTransactions(JSON.parse(userTransactions));
-      } else {
-        setTransactions(INITIAL_DATA[sessionUser.email] || []);
-      }
       return true;
     }
     return false;
@@ -139,22 +131,23 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     setCurrentUser(null);
-    localStorage.removeItem('zorvyn_current_user');
-    setTransactions([]);
     setActiveView('Dashboard');
   };
 
-  const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
-    const newTransaction = {
+  const addTransaction = (transaction: Omit<Transaction, 'id' | 'ownerEmail'>) => {
+    if (!currentUser) return;
+    const newTransaction: Transaction = {
       ...transaction,
       id: Math.random().toString(36).substr(2, 9),
+      ownerEmail: currentUser.email // Mark as belonging to the current user
     };
-    setTransactions(prev => [newTransaction, ...prev]);
+    setMasterLedger(prev => [newTransaction, ...prev]);
   };
 
   const deleteTransaction = (id: string) => {
+    // Only Admin can delete records as per assignment requirement
     if (userRole !== 'Admin') return;
-    setTransactions(prev => prev.filter(t => t.id !== id));
+    setMasterLedger(prev => prev.filter(t => t.id !== id));
   };
 
   return (
