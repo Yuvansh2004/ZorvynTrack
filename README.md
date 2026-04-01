@@ -1,38 +1,28 @@
-
-# ZorvynTrack Pro - FinTech Assessment
+# ZorvynTrack - Student Internship Assignment
 
 Built by **Yuvansh Dashrath Koli** (yuvanshkoli1011@gmail.com)
-Terna Engineering College
 
-## Overview
-ZorvynTrack Pro is a high-performance personal finance dashboard designed to meet the rigorous requirements of the technical screening assessment. It provides real-time financial telemetry through a stylish, "Quantum Node" terminal interface.
+## My Approach
+For this assignment, I focused on building a clean, intuitive financial dashboard that prioritizes ease of use and professional data presentation. 
 
-## Approach & Methodology
-- **Modular Frontend Architecture**: Developed using Next.js 15 (App Router) and React 19 for industry-standard performance and scalability.
-- **Role-Based Access Control (RBAC)**: Implemented a robust context-driven role system (Admin/Viewer) that dynamically alters the UI based on user permissions.
-- **Global State Synchronization**: Leveraged React Context API paired with LocalStorage to ensure seamless data persistence across browser sessions and multiple user accounts.
-- **Professional Data Visualization**: Integrated Recharts for responsive, high-fidelity time-series and categorical analytics.
-- **Stylish Design System**: Utilized Tailwind CSS and Framer Motion to create a unique "Quantum Noir" aesthetic with smooth transitions and professional glassmorphism.
+### Tech Stack Decisions
+- **Next.js & React**: I chose this because of my extensive experience with the MERN stack in college projects. The component-based architecture allowed me to keep the code modular and maintainable.
+- **Tailwind CSS**: Used for the 'Student-Pro' aesthetic. I opted for a light, clean palette (Indigo accent) to ensure the UI feels modern yet professional.
+- **React Context API**: I chose Context over heavier state management libraries (like Redux) to demonstrate my ability to handle global state efficiently for front-end logic (transactions and RBAC).
+- **Framer Motion**: Integrated subtle animations to give the dashboard a polished, "genuine" feel.
 
-## Core Features (Checklist Compliance)
-- [x] **Summary Cards**: Total Balance, Total Income, and Total Expenses formatted in INR (₹).
-- [x] **Visualizations**: 7-day balance velocity trend and categorical sector distribution.
-- [x] **Ledger Terminal**: Full transaction list with Date, Amount, Category, and Type.
-- [x] **Advanced Search/Filter**: Description-based search and categorical filtering.
-- [x] **Persistence**: Full data retention across refreshes via LocalStorage.
-- [x] **RBAC Logic**: Functional Admin/Viewer mode (Add/Delete actions restricted to Admins).
-- [x] **Submission Strengths**: CSV Export engine and Framer Motion animations.
+### Key Assumptions
+- **Frontend-First RBAC**: I used local React state for the Role-Based UI (Admin/Viewer) to demonstrate the front-end logic requirements without the overhead of a back-end authentication provider for this specific UI task.
+- **LocalStorage for Persistence**: Assumed persistence was required across refreshes, so I implemented a simple LocalStorage sync in the FinanceProvider.
+
+## Features
+- [x] **Dashboard Summary**: Total Balance, Income, and Expenses formatted in INR (₹).
+- [x] **Visual Analytics**: Interactive Balance Trend (Area) and Spending Breakdown (Pie).
+- [x] **Interactive Ledger**: Searchable table with category filtering.
+- [x] **RBAC Controls**: Functional 'Viewer' and 'Admin' modes with dynamic UI updates.
+- [x] **Responsive Design**: Optimized for mobile and desktop viewports.
 
 ## Setup Instructions
 1. Install dependencies: `npm install`
 2. Run development server: `npm run dev`
-3. Access the application at `http://localhost:9002`
-4. Use the "System Access Manifest" on the login page to choose between 15 predefined Indian identities.
-5. Default Access Key: `zorvyn2024`
-
-## Tech Stack
-- **Framework**: Next.js 15
-- **Styling**: Tailwind CSS / ShadCN UI
-- **Animations**: Framer Motion
-- **Analytics**: Recharts
-- **Icons**: Lucide React
+3. Access at `http://localhost:9002`

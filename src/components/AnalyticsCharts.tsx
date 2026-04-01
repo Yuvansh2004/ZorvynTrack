@@ -1,153 +1,79 @@
-
 "use client";
 
 import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { 
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend 
 } from 'recharts';
-import { motion } from 'framer-motion';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const PIE_COLORS = [
-  '#3b82f6', // Primary Blue
-  '#10b981', // Emerald
-  '#f59e0b', // Amber
-  '#ef4444', // Rose
-  '#8b5cf6', // Violet
-  '#ec4899', // Pink
-  '#06b6d4'  // Cyan
-];
+const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
 
 export const AnalyticsCharts = () => {
   const { transactions } = useFinance();
 
-  // Prepare line chart data (last 7 days trend)
-  const lineData = Array.from({ length: 7 }, (_, i) => {
-    const date = new Date();
-    date.setDate(date.getDate() - (6 - i));
-    const dateStr = date.toISOString().split('T')[0];
-    
-    const dayBalance = transactions
-      .filter(t => t.date <= dateStr)
-      .reduce((acc, curr) => acc + (curr.type === 'Income' ? curr.amount : -curr.amount), 0);
-      
-    return {
-      name: date.toLocaleDateString('en-IN', { weekday: 'short' }),
-      balance: dayBalance
-    };
-  });
+  // Area chart data: Last 7 entries
+  const areaData = transactions.slice(-7).map(t => ({
+    name: new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
+    amount: t.amount
+  }));
 
-  // Prepare pie chart data (expense category breakdown)
-  const expenseTransactions = transactions.filter(t => t.type === 'Expense');
-  const categoryMap = expenseTransactions.reduce((acc: Record<string, number>, curr) => {
-    acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
-    return acc;
-  }, {});
+  // Pie chart data: Category breakdown
+  const categoryMap = transactions
+    .filter(t => t.type === 'Expense')
+    .reduce((acc: Record<string, number>, curr) => {
+      acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
+      return acc;
+    }, {});
 
-  const pieData = Object.entries(categoryMap)
-    .map(([name, value]) => ({ name, value }))
-    .sort((a, b) => b.value - a.value);
+  const pieData = Object.entries(categoryMap).map(([name, value]) => ({ name, value }));
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 w-full">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="glass-card p-6 md:p-10 rounded-[2.5rem] border border-slate-800/50 h-[450px] relative overflow-hidden flex flex-col"
-      >
-        <div className="absolute top-0 left-0 w-1.5 h-full bg-primary/20"></div>
-        <h3 className="text-[10px] font-black mb-10 text-white uppercase tracking-[3px] italic opacity-80">Velocity Telemetry (7D)</h3>
-        <div className="flex-1 w-full min-h-0">
+    <>
+      <Card className="card-shadow">
+        <CardHeader>
+          <CardTitle className="text-base font-semibold">Balance Trend</CardTitle>
+        </CardHeader>
+        <CardContent className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={lineData} margin={{ left: -10, right: 10, bottom: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} opacity={0.3} />
-              <XAxis 
-                dataKey="name" 
-                stroke="#475569" 
-                fontSize={9} 
-                fontWeight="black"
-                tickLine={false} 
-                axisLine={false} 
-                dy={10}
-              />
-              <YAxis 
-                stroke="#475569" 
-                fontSize={9} 
-                fontWeight="black"
-                tickLine={false} 
-                axisLine={false} 
-                tickFormatter={(value) => `₹${value/1000}k`}
-              />
+            <AreaChart data={areaData}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+              <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
+              <YAxis fontSize={12} tickLine={false} axisLine={false} />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '16px', boxShadow: '0 10px 40px rgba(0,0,0,0.8)' }}
-                itemStyle={{ color: '#3b82f6', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '9px', letterSpacing: '1px' }}
-                cursor={{ stroke: '#1e293b', strokeWidth: 1 }}
+                contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0' }}
               />
-              <Line 
-                type="monotone" 
-                dataKey="balance" 
-                stroke="#3b82f6" 
-                strokeWidth={5} 
-                dot={{ r: 5, fill: '#3b82f6', strokeWidth: 0 }}
-                activeDot={{ r: 8, strokeWidth: 0, shadow: '0 0 25px rgba(59,130,246,0.8)' }} 
-              />
-            </LineChart>
+              <Area type="monotone" dataKey="amount" stroke="#6366f1" fill="#6366f1" fillOpacity={0.1} strokeWidth={2} />
+            </AreaChart>
           </ResponsiveContainer>
-        </div>
-      </motion.div>
+        </CardContent>
+      </Card>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="glass-card p-6 md:p-10 rounded-[2.5rem] border border-slate-800/50 h-[450px] relative overflow-hidden flex flex-col"
-      >
-        <div className="absolute top-0 left-0 w-1.5 h-full bg-emerald-500/20"></div>
-        <h3 className="text-[10px] font-black mb-10 text-white uppercase tracking-[3px] italic opacity-80">Sector Distribution</h3>
-        <div className="flex-1 w-full min-h-0">
+      <Card className="card-shadow">
+        <CardHeader>
+          <CardTitle className="text-base font-semibold">Spending Breakdown</CardTitle>
+        </CardHeader>
+        <CardContent className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={pieData}
-                cx="50%"
-                cy="45%"
                 innerRadius={60}
                 outerRadius={80}
-                paddingAngle={8}
+                paddingAngle={5}
                 dataKey="value"
-                stroke="none"
               >
-                {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                {pieData.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '16px' }}
-                itemStyle={{ color: '#fff', fontSize: '9px', fontWeight: 'bold', textTransform: 'uppercase' }}
-              />
-              <Legend 
-                verticalAlign="bottom" 
-                height={70} 
-                iconType="circle"
-                layout="horizontal"
-                wrapperStyle={{ 
-                  fontSize: '8px', 
-                  fontWeight: 'black', 
-                  color: '#64748b', 
-                  textTransform: 'uppercase', 
-                  letterSpacing: '1.5px', 
-                  paddingTop: '30px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexWrap: 'wrap',
-                  gap: '8px'
-                }}
-              />
+              <Tooltip />
+              <Legend verticalAlign="bottom" height={36}/>
             </PieChart>
           </ResponsiveContainer>
-        </div>
-      </motion.div>
-    </div>
+        </CardContent>
+      </Card>
+    </>
   );
 };
