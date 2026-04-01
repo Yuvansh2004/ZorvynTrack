@@ -20,25 +20,26 @@ interface User {
   name: string;
   email: string;
   role: UserRole;
+  avatar?: string;
 }
 
-// Predefined Corporate Accounts
-export const DEMO_ACCOUNTS = [
-  { email: 'admin1@zorvyn.com', name: 'James Wilson', role: 'Admin' as UserRole },
-  { email: 'finance.lead@zorvyn.com', name: 'Sarah Jenkins', role: 'Admin' as UserRole },
-  { email: 'yuvansh.k@zorvyn.com', name: 'Yuvansh Koli', role: 'Admin' as UserRole },
-  { email: 'mike.ross@zorvyn.com', name: 'Michael Ross', role: 'Admin' as UserRole },
-  { email: 'executive.off@zorvyn.com', name: 'Harvey Specter', role: 'Admin' as UserRole },
-  { email: 'analyst1@zorvyn.com', name: 'Robert Quinn', role: 'Viewer' as UserRole },
-  { email: 'auditor.v@zorvyn.com', name: 'Jessica Pearson', role: 'Viewer' as UserRole },
-  { email: 'guest.demo@zorvyn.com', name: 'Louis Litt', role: 'Viewer' as UserRole },
-  { email: 'compliance@zorvyn.com', name: 'Donna Paulsen', role: 'Viewer' as UserRole },
-  { email: 'risk.mgmt@zorvyn.com', name: 'Rachel Zane', role: 'Viewer' as UserRole },
-  { email: 'partner.access@zorvyn.com', name: 'Katrina Bennett', role: 'Viewer' as UserRole },
-  { email: 'internal.review@zorvyn.com', name: 'Alex Williams', role: 'Viewer' as UserRole },
-  { email: 'dev.viewer@zorvyn.com', name: 'Samantha Wheeler', role: 'Viewer' as UserRole },
-  { email: 'hr.portal@zorvyn.com', name: 'Gretchen Bodinski', role: 'Viewer' as UserRole },
-  { email: 'external.auditor@zorvyn.com', name: 'Travis Tanner', role: 'Viewer' as UserRole },
+// 15 Enterprise Accounts for Assessment
+export const DEMO_ACCOUNTS: User[] = [
+  { email: 'admin.alpha@zorvyn.com', name: 'James Wilson', role: 'Admin' },
+  { email: 'admin.beta@zorvyn.com', name: 'Sarah Jenkins', role: 'Admin' },
+  { email: 'yuvansh.k@zorvyn.com', name: 'Yuvansh Koli', role: 'Admin' },
+  { email: 'lead.dev@zorvyn.com', name: 'Michael Ross', role: 'Admin' },
+  { email: 'ceo.zorvyn@zorvyn.com', name: 'Harvey Specter', role: 'Admin' },
+  { email: 'cto.zorvyn@zorvyn.com', name: 'Jessica Pearson', role: 'Admin' },
+  { email: 'viewer.one@zorvyn.com', name: 'Robert Quinn', role: 'Viewer' },
+  { email: 'viewer.two@zorvyn.com', name: 'Louis Litt', role: 'Viewer' },
+  { email: 'analyst.global@zorvyn.com', name: 'Rachel Zane', role: 'Viewer' },
+  { email: 'risk.officer@zorvyn.com', name: 'Donna Paulsen', role: 'Viewer' },
+  { email: 'audit.internal@zorvyn.com', name: 'Katrina Bennett', role: 'Viewer' },
+  { email: 'compliance.node@zorvyn.com', name: 'Alex Williams', role: 'Viewer' },
+  { email: 'external.node@zorvyn.com', name: 'Samantha Wheeler', role: 'Viewer' },
+  { email: 'hr.admin@zorvyn.com', name: 'Gretchen Bodinski', role: 'Viewer' },
+  { email: 'guest.access@zorvyn.com', name: 'Travis Tanner', role: 'Viewer' },
 ];
 
 interface FinanceContextType {
@@ -59,26 +60,16 @@ interface FinanceContextType {
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
 
 const INITIAL_TRANSACTIONS: Transaction[] = [
-  { id: '1', date: '2024-05-15', description: 'UPI to Ramesh', amount: 500, category: 'Food', type: 'Expense' },
-  { id: '2', date: '2024-05-14', description: 'Swiggy Biryani', amount: 350, category: 'Food', type: 'Expense' },
-  { id: '3', date: '2024-05-13', description: 'Jio Recharge', amount: 666, category: 'Bills', type: 'Expense' },
-  { id: '4', date: '2024-05-12', description: 'Internship Stipend', amount: 15000, category: 'Salary', type: 'Income' },
-  { id: '5', date: '2024-05-11', description: 'Airtel Bill', amount: 999, category: 'Bills', type: 'Expense' },
-  { id: '6', date: '2024-05-10', description: 'Zomato Pizza', amount: 450, category: 'Food', type: 'Expense' },
-  { id: '7', date: '2024-05-09', description: 'Uber Ride', amount: 220, category: 'Transport', type: 'Expense' },
-  { id: '8', date: '2024-05-08', description: 'Amazon Shopping', amount: 1200, category: 'Shopping', type: 'Expense' },
-  { id: '9', date: '2024-05-07', description: 'Netflix Subscription', amount: 199, category: 'Entertainment', type: 'Expense' },
-  { id: '10', date: '2024-05-06', description: 'Grocery Store', amount: 1500, category: 'Groceries', type: 'Expense' },
-  { id: '11', date: '2024-05-05', description: 'Freelance Project', amount: 8000, category: 'Salary', type: 'Income' },
-  { id: '12', date: '2024-05-04', description: 'Petrol Pump', amount: 1000, category: 'Transport', type: 'Expense' },
-  { id: '13', date: '2024-05-03', description: 'Electricity Bill', amount: 2500, category: 'Bills', type: 'Expense' },
-  { id: '14', date: '2024-05-02', description: 'Gym Membership', amount: 1200, category: 'Health', type: 'Expense' },
-  { id: '15', date: '2024-05-01', description: 'Medicine', amount: 500, category: 'Health', type: 'Expense' },
-  { id: '16', date: '2024-04-30', description: 'Movie Tickets', amount: 600, category: 'Entertainment', type: 'Expense' },
-  { id: '17', date: '2024-04-29', description: 'Rent Payment', amount: 12000, category: 'Rent', type: 'Expense' },
-  { id: '18', date: '2024-04-28', description: 'Dinner with Friends', amount: 2000, category: 'Food', type: 'Expense' },
-  { id: '19', date: '2024-04-27', description: 'Dividends', amount: 300, category: 'Salary', type: 'Income' },
-  { id: '20', date: '2024-04-26', description: 'Book Purchase', amount: 450, category: 'Education', type: 'Expense' },
+  { id: '1', date: '2024-05-15', description: 'Cloud Infra Payment', amount: 45000, category: 'Technology', type: 'Expense' },
+  { id: '2', date: '2024-05-14', description: 'Enterprise Subscription', amount: 125000, category: 'Software', type: 'Income' },
+  { id: '3', date: '2024-05-13', description: 'API Hub Access', amount: 12000, category: 'Bills', type: 'Expense' },
+  { id: '4', date: '2024-05-12', description: 'Asset Liquidation', amount: 500000, category: 'Capital', type: 'Income' },
+  { id: '5', date: '2024-05-11', description: 'Cyber Security Audit', amount: 25000, category: 'Services', type: 'Expense' },
+  { id: '6', date: '2024-05-10', description: 'UPI Node Ramesh', amount: 500, category: 'Personal', type: 'Expense' },
+  { id: '7', date: '2024-05-09', description: 'Swiggy Biryani Bulk', amount: 3500, category: 'Catering', type: 'Expense' },
+  { id: '8', date: '2024-05-08', description: 'Jio Business Link', amount: 6660, category: 'Bills', type: 'Expense' },
+  { id: '9', date: '2024-05-07', description: 'Internship Stipend Pool', amount: 150000, category: 'Payroll', type: 'Expense' },
+  { id: '10', date: '2024-05-06', description: 'Dividends (Asia)', amount: 85000, category: 'Investments', type: 'Income' },
 ];
 
 export const FinanceProvider = ({ children }: { children: ReactNode }) => {
@@ -90,8 +81,8 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const savedTransactions = localStorage.getItem('zorvyn_transactions');
-    const savedAuth = localStorage.getItem('zorvyn_auth');
+    const savedTransactions = localStorage.getItem('zorvyn_global_ledger');
+    const savedAuth = localStorage.getItem('zorvyn_session_v2');
     
     if (savedTransactions) {
       setTransactions(JSON.parse(savedTransactions));
@@ -111,20 +102,19 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!isLoading) {
-      localStorage.setItem('zorvyn_transactions', JSON.stringify(transactions));
+      // Global synchronization via LocalStorage
+      localStorage.setItem('zorvyn_global_ledger', JSON.stringify(transactions));
       if (isLoggedIn && user) {
-        localStorage.setItem('zorvyn_auth', JSON.stringify(user));
+        localStorage.setItem('zorvyn_session_v2', JSON.stringify(user));
       } else {
-        localStorage.removeItem('zorvyn_auth');
+        localStorage.removeItem('zorvyn_session_v2');
       }
     }
   }, [transactions, isLoggedIn, user, isLoading]);
 
   const login = (email: string, password: string) => {
-    // For assessment, any password works, but email must match DEMO_ACCOUNTS
     const foundUser = DEMO_ACCOUNTS.find(acc => acc.email === email.toLowerCase());
-    
-    if (foundUser && password.length >= 6) {
+    if (foundUser && password.length >= 4) {
       setIsLoggedIn(true);
       setUser(foundUser);
       setUserRole(foundUser.role);
@@ -136,6 +126,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setIsLoggedIn(false);
     setUser(null);
+    setActiveView('Dashboard');
   };
 
   const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
@@ -143,6 +134,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       ...transaction,
       id: Math.random().toString(36).substr(2, 9),
     };
+    // Sync state locally (Persistence handled by useEffect)
     setTransactions(prev => [newTransaction, ...prev]);
   };
 

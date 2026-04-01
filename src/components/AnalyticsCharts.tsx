@@ -46,34 +46,36 @@ export const AnalyticsCharts = () => {
         animate={{ opacity: 1, x: 0 }}
         className="glass-card p-6 rounded-2xl border border-slate-800/50 h-[400px]"
       >
-        <h3 className="text-lg font-semibold mb-6 text-white">7-Day Balance Trend</h3>
-        <ResponsiveContainer width="100%" height="85%">
+        <h3 className="text-lg font-bold mb-6 text-white uppercase tracking-tight">Financial Velocity</h3>
+        <ResponsiveContainer width="100%" height="80%">
           <LineChart data={lineData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
             <XAxis 
               dataKey="name" 
-              stroke="#64748b" 
-              fontSize={12} 
+              stroke="#475569" 
+              fontSize={10} 
+              fontWeight="bold"
               tickLine={false} 
               axisLine={false} 
             />
             <YAxis 
-              stroke="#64748b" 
-              fontSize={12} 
+              stroke="#475569" 
+              fontSize={10} 
+              fontWeight="bold"
               tickLine={false} 
               axisLine={false} 
-              tickFormatter={(value) => `₹${value}`}
+              tickFormatter={(value) => `₹${value/1000}k`}
             />
             <Tooltip 
-              contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }}
-              itemStyle={{ color: '#3b82f6' }}
+              contentStyle={{ backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px' }}
+              itemStyle={{ color: '#3b82f6', fontWeight: 'bold' }}
             />
             <Line 
-              type="monotone" 
+              type="step" 
               dataKey="balance" 
               stroke="#3b82f6" 
-              strokeWidth={3} 
-              dot={{ fill: '#3b82f6', r: 4 }} 
+              strokeWidth={4} 
+              dot={false}
               activeDot={{ r: 6, strokeWidth: 0 }} 
             />
           </LineChart>
@@ -85,31 +87,31 @@ export const AnalyticsCharts = () => {
         animate={{ opacity: 1, x: 0 }}
         className="glass-card p-6 rounded-2xl border border-slate-800/50 h-[400px]"
       >
-        <h3 className="text-lg font-semibold mb-6 text-white">Spending by Category</h3>
+        <h3 className="text-lg font-bold mb-6 text-white uppercase tracking-tight">Category Breakdown</h3>
         <ResponsiveContainer width="100%" height="85%">
           <PieChart>
             <Pie
               data={pieData}
               cx="50%"
-              cy="45%"
-              innerRadius={60}
-              outerRadius={100}
-              paddingAngle={5}
+              cy="40%"
+              innerRadius={70}
+              outerRadius={95}
+              paddingAngle={4}
               dataKey="value"
             >
               {pieData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} stroke="none" />
               ))}
             </Pie>
             <Tooltip 
-              contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }}
+              contentStyle={{ backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px' }}
               itemStyle={{ color: '#fff' }}
             />
             <Legend 
               verticalAlign="bottom" 
-              height={36} 
+              height={50} 
               iconType="circle"
-              wrapperStyle={{ fontSize: '12px', paddingTop: '20px' }}
+              wrapperStyle={{ fontSize: '11px', paddingTop: '30px', fontWeight: 'bold', color: '#64748b' }}
             />
           </PieChart>
         </ResponsiveContainer>

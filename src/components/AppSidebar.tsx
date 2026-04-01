@@ -8,7 +8,7 @@ import {
   Settings, 
   CreditCard, 
   TrendingUp,
-  Shield,
+  Zap,
   PieChart
 } from 'lucide-react';
 import {
@@ -40,22 +40,22 @@ export function AppSidebar() {
   const { activeView, setActiveView } = useFinance();
 
   return (
-    <Sidebar className="border-r border-slate-800/50">
+    <Sidebar className="border-r border-slate-800/50 bg-[#020617]">
       <SidebarHeader className="p-6">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-primary/20 rounded-lg">
-            <Shield className="w-6 h-6 text-primary" />
+        <div className="flex items-center gap-3 group cursor-pointer" onClick={() => setActiveView('Dashboard')}>
+          <div className="p-2 bg-primary/20 rounded-xl group-hover:bg-primary/30 transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+            <Zap className="w-6 h-6 text-primary fill-primary/20" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-white">ZorvynTrack</h1>
-            <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Pro Edition</p>
+            <h1 className="text-xl font-black tracking-tighter text-white uppercase italic">Zorvyn</h1>
+            <p className="text-[9px] text-primary font-bold uppercase tracking-[3px] -mt-1">Quantum Node</p>
           </div>
         </div>
       </SidebarHeader>
       
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="px-6 text-xs font-bold text-slate-500 uppercase">General</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-6 text-[10px] font-black text-slate-600 uppercase tracking-[2px]">Core Interfaces</SidebarGroupLabel>
           <SidebarGroupContent className="px-3">
             <SidebarMenu>
               {menuItems.map((item) => (
@@ -63,10 +63,10 @@ export function AppSidebar() {
                   <SidebarMenuButton 
                     isActive={activeView === item.view}
                     onClick={() => setActiveView(item.view)}
-                    className="hover:bg-slate-800/50 transition-colors"
+                    className="hover:bg-slate-900 transition-all rounded-xl h-11 px-4 data-[active=true]:bg-primary/10 data-[active=true]:text-primary"
                   >
-                    <item.icon className="w-4 h-4" />
-                    <span className="font-medium">{item.label}</span>
+                    <item.icon className={`w-5 h-5 ${activeView === item.view ? 'text-primary' : 'text-slate-500'}`} />
+                    <span className="font-bold tracking-tight">{item.label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -75,7 +75,7 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup className="mt-auto">
-          <SidebarGroupLabel className="px-6 text-xs font-bold text-slate-500 uppercase">Account</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-6 text-[10px] font-black text-slate-600 uppercase tracking-[2px]">Terminal</SidebarGroupLabel>
           <SidebarGroupContent className="px-3">
             <SidebarMenu>
               {settingsItems.map((item) => (
@@ -83,10 +83,10 @@ export function AppSidebar() {
                   <SidebarMenuButton 
                     isActive={activeView === item.view}
                     onClick={() => setActiveView(item.view)}
-                    className="hover:bg-slate-800/50 transition-colors"
+                    className="hover:bg-slate-900 transition-all rounded-xl h-11 px-4"
                   >
-                    <item.icon className="w-4 h-4" />
-                    <span className="font-medium">{item.label}</span>
+                    <item.icon className="w-5 h-5 text-slate-500" />
+                    <span className="font-bold tracking-tight">{item.label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

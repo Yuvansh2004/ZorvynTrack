@@ -58,23 +58,26 @@ export const SummaryCards = () => {
       {cardData.map((card, index) => (
         <motion.div
           key={card.title}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: index * 0.1 }}
-          className={`glass-card p-5 rounded-2xl border ${card.border} group min-h-[160px] flex flex-col justify-between`}
+          className={`glass-card p-6 rounded-3xl border ${card.border} group min-h-[160px] flex flex-col justify-between relative overflow-hidden`}
         >
-          <div className="flex items-center justify-between mb-4">
-            <div className={`p-2.5 ${card.bg} rounded-xl group-hover:scale-110 transition-transform`}>
-              <card.icon className={`w-5 h-5 ${card.color}`} />
+          <div className="absolute top-0 right-0 p-8 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform"></div>
+          
+          <div className="flex items-center justify-between mb-4 z-10">
+            <div className={`p-3 ${card.bg} rounded-2xl group-hover:scale-110 transition-transform shadow-inner`}>
+              <card.icon className={`w-6 h-6 ${card.color}`} />
             </div>
-            <div className={`flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full ${card.isPositive ? 'bg-emerald-400/10 text-emerald-400' : 'bg-rose-400/10 text-rose-400'}`}>
-              {card.isPositive ? <ArrowUpRight className="w-2.5 h-2.5" /> : <ArrowDownRight className="w-2.5 h-2.5" />}
+            <div className={`flex items-center gap-1 text-[10px] font-black px-3 py-1 rounded-full ${card.isPositive ? 'bg-emerald-400/10 text-emerald-400' : 'bg-rose-400/10 text-rose-400'} uppercase tracking-[1px]`}>
+              {card.isPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
               {card.trend}
             </div>
           </div>
-          <div className="overflow-hidden">
-            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 truncate">{card.title}</p>
-            <h3 className="text-2xl lg:text-3xl font-bold text-white tracking-tight truncate leading-none">
+          
+          <div className="z-10">
+            <p className="text-[10px] font-black text-slate-500 uppercase tracking-[2px] mb-2 truncate">{card.title}</p>
+            <h3 className="text-3xl font-black text-white tracking-tighter truncate leading-none">
               {formatINR(card.amount)}
             </h3>
           </div>
