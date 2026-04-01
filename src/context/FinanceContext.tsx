@@ -129,6 +129,8 @@ interface FinanceContextType {
   setShowPrivacy: (val: boolean) => void;
   showAudit: boolean;
   setShowAudit: (val: boolean) => void;
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: (val: boolean) => void;
 }
 
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
@@ -145,6 +147,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [showGreeting, setShowGreeting] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showAudit, setShowAudit] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('zorvyn_current_user');
@@ -219,7 +222,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       triggerTransition(() => {
         setCurrentUser(user);
         setUserRole(user.role);
-        // If they haven't seen the tutorial, Tutorial component will handle triggering the greeting
         if (hasSeenTutorial) {
           setShowGreeting(true);
         }
@@ -290,7 +292,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const completeTutorial = () => {
     setHasSeenTutorial(true);
-    setShowGreeting(true); // Tutorial finishes, then greet
+    setShowGreeting(true);
   };
 
   const closeGreeting = () => {
@@ -323,7 +325,9 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       showPrivacy,
       setShowPrivacy,
       showAudit,
-      setShowAudit
+      setShowAudit,
+      isSidebarOpen,
+      setIsSidebarOpen
     }}>
       {children}
     </FinanceContext.Provider>

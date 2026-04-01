@@ -3,13 +3,13 @@
 
 import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
-import { formatINR } from '@/lib/utils';
+import { formatINR, cn } from '@/lib/utils';
 import { Wallet, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 
 export const SummaryCards = () => {
-  const { transactions } = useFinance();
+  const { transactions, isSidebarOpen } = useFinance();
 
   const income = transactions
     .filter(t => t.type === 'Income')
@@ -62,7 +62,12 @@ export const SummaryCards = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-[9px] lg:text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] truncate">{item.title}</p>
-                  <h3 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-slate-900 dark:text-white mt-2 lg:mt-3 tracking-tighter tabular-nums italic truncate" title={formatINR(item.amount)}>
+                  <h3 className={cn(
+                    "font-black text-slate-900 dark:text-white mt-2 lg:mt-3 tracking-tighter tabular-nums italic truncate transition-all duration-300",
+                    isSidebarOpen 
+                      ? "text-lg md:text-xl lg:text-2xl xl:text-3xl" 
+                      : "text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                  )} title={formatINR(item.amount)}>
                     {formatINR(item.amount)}
                   </h3>
                 </div>

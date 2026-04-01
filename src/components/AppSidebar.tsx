@@ -20,8 +20,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 export function AppSidebar() {
-  const { activeView, setActiveView, currentUser, logout } = useFinance();
-  const [isOpen, setIsOpen] = React.useState(true);
+  const { activeView, setActiveView, currentUser, logout, isSidebarOpen, setIsSidebarOpen } = useFinance();
   const isMobile = useIsMobile();
 
   if (!currentUser) return null;
@@ -33,20 +32,20 @@ export function AppSidebar() {
     { icon: User, label: 'Profile Settings', view: 'Settings' as ViewType },
   ];
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   const SidebarContentNode = () => (
     <div className="flex flex-col h-full bg-white dark:bg-slate-950">
-      <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4 overflow-hidden">
+      <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4">
         <div className={cn(
           "flex w-full items-center",
-          isMobile || isOpen ? "justify-between" : "justify-center gap-3"
+          isSidebarOpen ? "justify-between" : "justify-center gap-2"
         )}>
           <div className="flex items-center gap-3 shrink-0">
             <div className="bg-indigo-600 rounded-xl p-2 shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
               <ZorvynLogo className="w-4 h-4 text-white" />
             </div>
-            {(isMobile || isOpen) && (
+            {(isMobile || isSidebarOpen) && (
               <span className="text-[14px] font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300">
                 Zorvyn<span className="text-indigo-600">Track</span>
               </span>
@@ -60,10 +59,10 @@ export function AppSidebar() {
               onClick={toggleSidebar} 
               className={cn(
                 "shrink-0 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
-                isOpen ? "h-9 w-9" : "h-8 w-8"
+                isSidebarOpen ? "h-9 w-9" : "h-7 w-7"
               )}
             >
-              {isOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-3.5 h-3.5" />}
+              {isSidebarOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-3.5 h-3.5" />}
             </Button>
           )}
         </div>
@@ -73,9 +72,7 @@ export function AppSidebar() {
         {menuItems.map((item) => (
           <button
             key={item.label}
-            onClick={() => {
-              setActiveView(item.view);
-            }}
+            onClick={() => setActiveView(item.view)}
             className={cn(
               "w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group",
               activeView === item.view 
@@ -87,7 +84,7 @@ export function AppSidebar() {
               "w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110", 
               activeView === item.view ? "opacity-100" : "opacity-60"
             )} />
-            {(isMobile || isOpen) && (
+            {(isMobile || isSidebarOpen) && (
               <span className="text-[11px] font-black uppercase tracking-[0.2em] whitespace-nowrap animate-in fade-in duration-300">
                 {item.label}
               </span>
@@ -99,12 +96,12 @@ export function AppSidebar() {
       <div className="p-3 border-t border-slate-50 dark:border-slate-900">
         <div className={cn(
           "flex items-center gap-3 p-4 rounded-2xl transition-all",
-          isMobile || isOpen ? "bg-slate-50 dark:bg-slate-900" : "justify-center"
+          isMobile || isSidebarOpen ? "bg-slate-50 dark:bg-slate-900" : "justify-center"
         )}>
           <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-sm font-black shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
             {currentUser.name[0]}
           </div>
-          {(isMobile || isOpen) && (
+          {(isMobile || isSidebarOpen) && (
             <>
               <div className="flex-1 min-w-0">
                 <p className="text-[11px] font-black uppercase tracking-tight truncate text-slate-900 dark:text-white">{currentUser.name}</p>
@@ -146,7 +143,7 @@ export function AppSidebar() {
   return (
     <aside className={cn(
       "bg-white dark:bg-slate-950 border-r border-slate-100 dark:border-slate-900 transition-all duration-500 flex flex-col h-screen sticky top-0 z-50 overflow-hidden",
-      isOpen ? "w-72" : "w-24"
+      isSidebarOpen ? "w-72" : "w-24"
     )}>
       <SidebarContentNode />
     </aside>
