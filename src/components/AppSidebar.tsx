@@ -43,7 +43,7 @@ export function AppSidebar() {
       <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4">
         {/* Dynamic header: Row-based side-by-side layout for logo and arrow */}
         <div className={cn(
-          "flex w-full items-center",
+          "flex w-full items-center px-1",
           isSidebarOpen ? "justify-between" : "justify-center gap-3"
         )}>
           <div 
