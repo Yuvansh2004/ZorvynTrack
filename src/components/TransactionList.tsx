@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -26,6 +25,7 @@ export const TransactionList = () => {
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   const [now, setNow] = useState(Date.now());
 
+  // High-frequency timer to manage the 30-second edit window
   useEffect(() => {
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
@@ -66,7 +66,10 @@ export const TransactionList = () => {
   };
 
   const canEdit = (t: Transaction) => {
+    // Admin always has full override authority
     if (userRole === 'Admin') return true;
+    
+    // Non-admin users have a 30-second grace period for errors
     const isOwner = currentUser && t.ownerEmail === currentUser.email;
     const isWithinWindow = (now - t.createdAt) < 30000;
     return !!(isOwner && isWithinWindow);
@@ -81,7 +84,7 @@ export const TransactionList = () => {
           <div>
             <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Transaction Ledger</CardTitle>
             <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-bold flex items-center gap-2">
-              {userRole === 'Admin' ? 'Management Mode (Full Access)' : 'Audit Mode (Grace Edit Enabled)'}
+              {userRole === 'Admin' ? 'Management Mode (Full Access)' : 'Audit Mode (Read Only)'}
               {userRole !== 'Admin' && <Clock className="w-3 h-3 text-amber-500" />}
             </p>
           </div>

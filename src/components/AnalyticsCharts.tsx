@@ -1,38 +1,54 @@
 "use client";
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend 
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
 
-const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899'];
+const COLORS = [
+  '#6366f1', // Indigo
+  '#10b981', // Emerald
+  '#f59e0b', // Amber
+  '#ef4444', // Rose
+  '#8b5cf6', // Violet
+  '#06b6d4', // Cyan
+  '#ec4899', // Pink
+  '#3b82f6', // Blue
+  '#f97316', // Orange
+  '#84cc16', // Lime
+];
 
 export const AnalyticsCharts = () => {
   const { transactions, setActiveView } = useFinance();
 
-  const areaData = [...transactions]
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .slice(-10)
-    .map(t => ({
-      name: new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
-      amount: t.type === 'Income' ? t.amount : -t.amount,
-      displayAmount: t.amount
-    }));
+  // Memoize chart data to ensure absolute accuracy and prevent jitter
+  const areaData = useMemo(() => {
+    return [...transactions]
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+      .slice(-15) // Show a wider window of recent velocity
+      .map(t => ({
+        name: new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
+        amount: t.type === 'Income' ? t.amount : -t.amount,
+        displayAmount: t.amount
+      }));
+  }, [transactions]);
 
-  const categoryMap = transactions
-    .filter(t => t.type === 'Expense')
-    .reduce((acc: Record<string, number>, curr) => {
-      acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
-      return acc;
-    }, {});
+  const pieData = useMemo(() => {
+    const categoryMap = transactions
+      .filter(t => t.type === 'Expense')
+      .reduce((acc: Record<string, number>, curr) => {
+        const cat = curr.category || 'Uncategorized';
+        acc[cat] = (acc[cat] || 0) + curr.amount;
+        return acc;
+      }, {});
 
-  const pieData = Object.entries(categoryMap)
-    .map(([name, value]) => ({ name, value }))
-    .sort((a, b) => b.value - a.value);
+    return Object.entries(categoryMap)
+      .map(([name, value]) => ({ name, value }))
+      .sort((a, b) => b.value - a.value);
+  }, [transactions]);
 
   return (
     <>
@@ -108,7 +124,7 @@ export const AnalyticsCharts = () => {
         </CardHeader>
         <CardContent className="h-[350px] pt-4 w-full flex items-center justify-center">
           {pieData.length > 0 ? (
-            <ResponsiveContainer width="100%" height="100%" minWidth={200}>
+            <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={pieData}
@@ -136,8 +152,8 @@ export const AnalyticsCharts = () => {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-full flex items-center justify-center text-slate-400 text-sm italic">
-              No expenditure classified
+            <div className="h-full flex items-center justify-center text-slate-400 text-sm italic text-center px-4">
+              No expenditure telemetry detected for classification.
             </div>
           )}
         </CardContent>
