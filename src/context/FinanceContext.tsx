@@ -19,25 +19,16 @@ export interface User {
 export const ASSIGNMENT_REF_ID = "TE85LMG1";
 
 export const DEMO_ACCOUNTS: User[] = [
-  { 
-    name: 'Yuvansh Dashrath Koli', 
-    email: 'yuvanshkoli@demozorvyn.com', 
-    personalEmail: 'yuvanshkoli1011@gmail.com',
-    password: 'admin_zorvyn',
-    role: 'Admin' 
-  },
-  { 
-    name: 'Aditya Rao', 
-    email: 'aditya.rao@zorvyn.com', 
-    password: 'viewer_rao',
-    role: 'Viewer' 
-  },
-  { 
-    name: 'Priya Sharma', 
-    email: 'priya.sharma@zorvyn.com', 
-    password: 'viewer_sharma',
-    role: 'Viewer' 
-  },
+  { name: 'Yuvansh Dashrath Koli', email: 'yuvanshkoli@demozorvyn.com', password: 'admin_zorvyn', role: 'Admin' },
+  { name: 'Aditya Rao', email: 'aditya.rao@zorvyn.com', password: 'viewer_rao', role: 'Viewer' },
+  { name: 'Priya Sharma', email: 'priya.sharma@zorvyn.com', password: 'viewer_sharma', role: 'Viewer' },
+  { name: 'Rohan Mehta', email: 'rohan.mehta@zorvyn.com', password: 'viewer_mehta', role: 'Viewer' },
+  { name: 'Sneha Kapoor', email: 'sneha.kapoor@zorvyn.com', password: 'viewer_kapoor', role: 'Viewer' },
+  { name: 'Vikram Singh', email: 'vikram.singh@zorvyn.com', password: 'viewer_singh', role: 'Viewer' },
+  { name: 'Ananya Iyer', email: 'ananya.iyer@zorvyn.com', password: 'viewer_iyer', role: 'Viewer' },
+  { name: 'Arjun Verma', email: 'arjun.verma@zorvyn.com', password: 'viewer_verma', role: 'Viewer' },
+  { name: 'Ishita Gupta', email: 'ishita.gupta@zorvyn.com', password: 'viewer_gupta', role: 'Viewer' },
+  { name: 'Kabir Malhotra', email: 'kabir.malhotra@zorvyn.com', password: 'viewer_malhotra', role: 'Viewer' },
 ];
 
 export interface Transaction {
@@ -51,31 +42,70 @@ export interface Transaction {
   createdAt: number;
 }
 
-// Fixed base timestamp for January 1st, 2026
-const BASE_TIME = 1767225600000; 
+// Data Generation Constants
+const CATEGORIES = ['Food', 'Transport', 'Education', 'Utilities', 'Health', 'Leisure', 'Electronics', 'Shopping', 'Subscriptions'];
+const DESCRIPTIONS: Record<string, string[]> = {
+  Food: ['UPI: Cafeteria Terminal', 'Zomato Office Protocol', 'Swiggy Dinner Sync', 'Grocery Mart Verification', 'Coffee Node Hub'],
+  Transport: ['Metro Rail Auto-Sync', 'Uber Premier - Tech Node', 'Fuel Station Settlement', 'Parking Node 04', 'Auto Rickshaw UPI'],
+  Education: ['Course Material Sync', 'Library Fine Protocol', 'Online Cert Verification', 'Bookstore Protocol', 'Lab Material Fee'],
+  Utilities: ['Cloud Services Subscription', 'Internet Fiber Connection', 'Mobile Data Terminal Bill', 'Electricity Node Sync', 'Water Utility Verified'],
+  Health: ['Pharmacy Verification', 'Gym Terminal Sync', 'Diagnostic Lab Node', 'Health Insurance Protocol', 'Medical Consultation'],
+  Leisure: ['Retail Outlet Sync', 'Cinema Hub Verification', 'Gaming Lounge Node', 'Weekend Retreat Settlement', 'Concert Terminal'],
+  Electronics: ['Amazon Institutional Node', 'Tech Accessory Sync', 'Hardware Component B', 'Device Maintenance Hub', 'Software License Fee'],
+  Shopping: ['Apparel Hub Sync', 'Footwear Verification', 'Lifestyle Store Node', 'Personal Care Protocol', 'Home Decor Settlement'],
+  Subscriptions: ['Spotify Node B', 'Netflix Terminal Sync', 'Adobe Creative Hub', 'Medium Tech Article Node', 'Newsletter Subscription']
+};
 
-const INITIAL_DATA: Transaction[] = [
-  { id: 'z1', date: '2026-01-01', description: 'Institutional Stipend Grant', amount: 15000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: 'z2', date: '2026-01-02', description: 'UPI: Cafeteria Terminal 04', amount: 240, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME + 86400000 },
-  { id: 'z3', date: '2026-01-03', description: 'Metro Rail Auto-Sync', amount: 500, category: 'Transport', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME + 172800000 },
-  { id: 'z4', date: '2026-01-05', description: 'Course Material Sync - Node B', amount: 1200, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME + 345600000 },
-  { id: 'z5', date: '2026-01-07', description: 'Cloud Services Subscription', amount: 899, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME + 518400000 },
-  { id: 'z6', date: '2026-01-10', description: 'Freelance Design Settlement', amount: 6500, category: 'Income', type: 'Income', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME + 777600000 },
-  { id: 'z7', date: '2026-01-12', description: 'Gym Terminal - Annual Sync', amount: 3500, category: 'Health', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME + 950400000 },
-  { id: 'z8', date: '2026-01-14', description: 'UPI: Bookstore Verification', amount: 450, category: 'Education', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME + 1123200000 },
-  { id: 'z9', date: '2026-01-16', description: 'Stipend Bonus - Cycle 01', amount: 2000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME + 1296000000 },
-  { id: 'z10', date: '2026-01-18', description: 'Internet Fiber Connection', amount: 999, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME + 1468800000 },
-  { id: 'z11', date: '2026-01-20', description: 'UPI: Retail Outlet Sync', amount: 1800, category: 'Leisure', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME + 1641600000 },
-  { id: 'z12', date: '2026-01-22', description: 'Mobile Data Terminal Bill', amount: 599, category: 'Utilities', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME + 1814400000 },
-  { id: 'z13', date: '2026-01-24', description: 'Uber Premier - Tech Node', amount: 320, category: 'Transport', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME + 1987200000 },
-  { id: 'z14', date: '2026-01-26', description: 'Republic Day Institutional Lunch', amount: 750, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME + 2160000000 },
-  { id: 'z15', date: '2026-01-28', description: 'Stock Dividend Sync', amount: 1200, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME + 2332800000 },
-  { id: 'z16', date: '2026-01-30', description: 'Library Fine Protocol', amount: 50, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME + 2505600000 },
-  { id: 'z17', date: '2026-02-01', description: 'February Cycle Stipend', amount: 15000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME + 2678400000 },
-  { id: 'z18', date: '2026-02-02', description: 'Amazon Institutional Node', amount: 2499, category: 'Electronics', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME + 2764800000 },
-  { id: 'z19', date: '2026-02-03', description: 'Zomato Office Protocol', amount: 600, category: 'Food', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME + 2851200000 },
-  { id: 'z20', date: '2026-02-04', description: 'Pharmacy Verification 09', amount: 450, category: 'Health', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME + 2937600000 },
-];
+const generateRandomData = () => {
+  const allTransactions: Transaction[] = [];
+  const baseTime = 1767225600000; // Jan 1st, 2026
+
+  DEMO_ACCOUNTS.forEach((user) => {
+    // Each user gets 50-100 transactions
+    const count = Math.floor(Math.random() * 51) + 50; 
+    
+    // Monthly stipends/income
+    allTransactions.push({
+      id: Math.random().toString(36).substr(2, 9),
+      date: '2026-01-01',
+      description: 'Institutional Stipend Grant',
+      amount: 15000 + Math.floor(Math.random() * 5000),
+      category: 'Income',
+      type: 'Income',
+      ownerEmail: user.email,
+      createdAt: baseTime
+    });
+
+    for (let i = 0; i < count; i++) {
+      const category = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
+      const descList = DESCRIPTIONS[category];
+      const description = descList[Math.floor(Math.random() * descList.length)];
+      const type: TransactionType = Math.random() > 0.9 ? 'Income' : 'Expense';
+      const amount = type === 'Income' 
+        ? Math.floor(Math.random() * 5000) + 1000 
+        : Math.floor(Math.random() * 2000) + 50;
+      
+      // Random date between Jan 1 and Feb 15, 2026
+      const randomDays = Math.floor(Math.random() * 45);
+      const randomHours = Math.floor(Math.random() * 24);
+      const timestamp = baseTime + (randomDays * 86400000) + (randomHours * 3600000);
+      const date = new Date(timestamp).toISOString().split('T')[0];
+
+      allTransactions.push({
+        id: Math.random().toString(36).substr(2, 9),
+        date,
+        description,
+        amount,
+        category,
+        type,
+        ownerEmail: user.email,
+        createdAt: timestamp
+      });
+    }
+  });
+
+  return allTransactions.sort((a, b) => b.createdAt - a.createdAt);
+};
 
 interface FinanceContextType {
   transactions: Transaction[];
@@ -130,7 +160,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     if (savedLedger) {
       setMasterLedger(JSON.parse(savedLedger));
     } else {
-      setMasterLedger(INITIAL_DATA);
+      setMasterLedger(generateRandomData());
     }
 
     if (savedUser) {
@@ -184,11 +214,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const login = (email: string, password?: string) => {
     const user = DEMO_ACCOUNTS.find(acc => acc.email === email && acc.password === password);
-    if (user || password === 'zorvyn2024') {
-      const sessionUser = user || { name: 'Guest User', email, role: 'Viewer' as UserRole };
+    if (user) {
       triggerTransition(() => {
-        setCurrentUser(sessionUser);
-        setUserRole(sessionUser.role);
+        setCurrentUser(user);
+        setUserRole(user.role);
         setShowGreeting(true);
       });
       return true;
@@ -252,7 +281,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const resetLedger = () => {
-    setMasterLedger(INITIAL_DATA);
+    setMasterLedger(generateRandomData());
   };
 
   const completeTutorial = () => {
