@@ -58,9 +58,13 @@ export const AppFooter = () => {
               <p className="text-xs font-black uppercase tracking-tight text-slate-900 dark:text-white">Yuvansh Dashrath Koli</p>
               <p className="text-[10px] text-slate-500 font-bold mt-1 italic">Internship Applicant</p>
             </div>
-            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-1">
-              <p className="text-[10px] text-slate-500 truncate font-medium">Personal: yuvanshkoli1011@gmail.com</p>
-              <p className="text-[10px] text-slate-500 truncate font-medium">College: yuvanshkoli2324@ternaengg.ac.in</p>
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-1.5">
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold break-all leading-tight">
+                Personal: <span className="text-indigo-600 dark:text-indigo-400 font-black">yuvanshkoli1011@gmail.com</span>
+              </p>
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold break-all leading-tight">
+                College: <span className="text-indigo-600 dark:text-indigo-400 font-black">yuvanshkoli2324@ternaengg.ac.in</span>
+              </p>
             </div>
           </div>
         </div>
