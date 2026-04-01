@@ -3,15 +3,14 @@
 
 import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
-import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Shield, Eye, Bell, Search, LogOut, Terminal, Zap, User } from 'lucide-react';
+import { Shield, Eye, Bell, Search, LogOut, Terminal, User } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 export const Navbar = () => {
-  const { userRole, setUserRole, user, logout } = useFinance();
+  const { userRole, user, logout } = useFinance();
 
   return (
     <nav className="border-b border-slate-800/50 bg-[#020617]/90 backdrop-blur-2xl sticky top-0 z-40 px-8 py-5 flex items-center justify-between shadow-[0_10px_40px_rgba(0,0,0,0.5)] font-body">
@@ -29,23 +28,15 @@ export const Navbar = () => {
 
       <div className="flex items-center gap-10">
         <div className="flex items-center gap-6">
-           <div className="flex items-center gap-4 bg-slate-900/80 p-2 rounded-2xl border border-slate-800 px-5 h-11 shadow-inner group">
-            <div className="flex items-center gap-2.5">
-              {userRole === 'Admin' ? (
-                <Shield className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
-              ) : (
-                <Eye className="w-4 h-4 text-slate-500" />
-              )}
-              <Label htmlFor="role-mode" className="text-[10px] font-black uppercase cursor-pointer text-slate-300 tracking-[1.5px] italic">
-                {userRole} Mode
-              </Label>
-            </div>
-            <Switch
-              id="role-mode"
-              checked={userRole === 'Admin'}
-              onCheckedChange={(checked) => setUserRole(checked ? 'Admin' : 'Viewer')}
-              className="scale-90 data-[state=checked]:bg-primary"
-            />
+           <div className="flex items-center gap-3 bg-slate-900/80 p-2 rounded-2xl border border-slate-800 px-5 h-11 shadow-inner group">
+            {userRole === 'Admin' ? (
+              <Shield className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
+            ) : (
+              <Eye className="w-4 h-4 text-slate-500" />
+            )}
+            <Label className="text-[10px] font-black uppercase text-slate-300 tracking-[1.5px] italic">
+              {userRole} Node
+            </Label>
           </div>
           
           <button className="p-3 rounded-2xl hover:bg-slate-800 text-slate-500 transition-all relative group border border-transparent hover:border-slate-800">
