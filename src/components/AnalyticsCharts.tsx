@@ -95,7 +95,7 @@ export const AnalyticsCharts = () => {
               cx="50%"
               cy="40%"
               innerRadius={70}
-              outerRadius={95}
+              outerRadius={85}
               paddingAngle={4}
               dataKey="value"
             >
@@ -111,7 +111,7 @@ export const AnalyticsCharts = () => {
               verticalAlign="bottom" 
               height={50} 
               iconType="circle"
-              wrapperStyle={{ fontSize: '11px', paddingTop: '30px', fontWeight: 'bold', color: '#64748b' }}
+              wrapperStyle={{ fontSize: '10px', paddingTop: '10px', fontWeight: 'bold', color: '#64748b' }}
             />
           </PieChart>
         </ResponsiveContainer>
