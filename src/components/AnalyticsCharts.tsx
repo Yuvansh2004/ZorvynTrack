@@ -7,11 +7,12 @@ import {
   PieChart, Pie, Cell, Legend 
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899'];
 
 export const AnalyticsCharts = () => {
-  const { transactions } = useFinance();
+  const { transactions, setActiveView } = useFinance();
 
   const areaData = [...transactions]
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
@@ -36,11 +37,15 @@ export const AnalyticsCharts = () => {
   return (
     <>
       <div className="lg:col-span-2 space-y-6">
-        <Card className="card-shadow overflow-hidden">
+        <Card 
+          className="card-shadow overflow-hidden cursor-pointer hover:border-indigo-200 transition-colors group"
+          onClick={() => setActiveView('Transactions')}
+        >
           <CardHeader className="flex flex-row items-center justify-between pb-4">
             <div>
-              <CardTitle className="text-[11px] weight-black uppercase tracking-[0.25em] text-slate-400">Transaction Velocity (Trend)</CardTitle>
+              <CardTitle className="text-[11px] weight-black uppercase tracking-[0.25em] text-slate-400 group-hover:text-indigo-600 transition-colors">Transaction Velocity (Trend)</CardTitle>
             </div>
+            <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">View Ledger →</span>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="h-[350px] w-full">
@@ -93,9 +98,13 @@ export const AnalyticsCharts = () => {
         </Card>
       </div>
 
-      <Card className="card-shadow overflow-hidden h-fit">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-[11px] weight-black uppercase tracking-[0.25em] text-slate-400">Expenditure Classification</CardTitle>
+      <Card 
+        className="card-shadow overflow-hidden h-fit cursor-pointer hover:border-indigo-200 transition-colors group"
+        onClick={() => setActiveView('Transactions')}
+      >
+        <CardHeader className="pb-2 flex flex-row items-center justify-between">
+          <CardTitle className="text-[11px] weight-black uppercase tracking-[0.25em] text-slate-400 group-hover:text-indigo-600 transition-colors">Expenditure Classification</CardTitle>
+          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">View Details →</span>
         </CardHeader>
         <CardContent className="h-[350px] pt-4">
           {pieData.length > 0 ? (
