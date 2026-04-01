@@ -10,6 +10,7 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
+  password?: string;
   personalEmail?: string;
   avatar?: string;
 }
@@ -21,16 +22,19 @@ export const DEMO_ACCOUNTS: User[] = [
     name: 'Yuvansh Dashrath Koli', 
     email: 'yuvanshkoli@demozorvyn.com', 
     personalEmail: 'yuvanshkoli1011@gmail.com',
+    password: 'admin_zorvyn',
     role: 'Admin' 
   },
   { 
     name: 'Aditya Rao', 
     email: 'aditya.rao@zorvyn.com', 
+    password: 'viewer_rao',
     role: 'Viewer' 
   },
   { 
     name: 'Priya Sharma', 
     email: 'priya.sharma@zorvyn.com', 
+    password: 'viewer_sharma',
     role: 'Viewer' 
   },
 ];
@@ -91,6 +95,9 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setIsDarkMode(isDark);
       if (isDark) document.documentElement.classList.add('dark');
       else document.documentElement.classList.remove('dark');
+    } else {
+      // Default to light for clean student look
+      document.documentElement.classList.remove('dark');
     }
 
     if (savedLedger) {
@@ -132,7 +139,8 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const login = (email: string, password?: string) => {
-    const user = DEMO_ACCOUNTS.find(acc => acc.email === email);
+    const user = DEMO_ACCOUNTS.find(acc => acc.email === email && acc.password === password);
+    // Support legacy "zorvyn2024" for dev convenience
     if (user || password === 'zorvyn2024') {
       const sessionUser = user || { name: 'Guest User', email, role: 'Viewer' as UserRole };
       setCurrentUser(sessionUser);
