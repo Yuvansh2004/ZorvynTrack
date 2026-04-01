@@ -3,22 +3,34 @@
 import React, { useState } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, Lock, FileSpreadsheet } from 'lucide-react';
+import { Search, Plus, Trash2, Download, Lock, FileSpreadsheet, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { AddTransactionModal } from './AddTransactionModal';
 import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue 
+} from '@/components/ui/select';
 
 export const TransactionList = () => {
   const { transactions, userRole, deleteTransaction, currentUser } = useFinance();
   const [searchTerm, setSearchTerm] = useState('');
+  const [typeFilter, setTypeFilter] = useState<string>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const filtered = transactions.filter(t => 
-    t.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    t.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filtered = transactions.filter(t => {
+    const term = searchTerm.toLowerCase();
+    const matchesSearch = 
+      t.category.toLowerCase().includes(term) ||
+      t.description.toLowerCase().includes(term) ||
+      t.amount.toString().includes(term) ||
+      t.date.includes(term);
+    
+    const matchesType = typeFilter === 'All' || t.type === typeFilter;
+    
+    return matchesSearch && matchesType;
+  });
 
   const exportCSV = () => {
     const headers = [
@@ -57,14 +69,26 @@ export const TransactionList = () => {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-          <div className="relative flex-1 sm:flex-none">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <Input 
-              placeholder="Search..." 
-              className="pl-9 w-full sm:w-[250px] bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-xl"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+          <div className="relative flex-1 sm:flex-none flex items-center gap-2">
+            <div className="relative flex-1 sm:flex-none">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Input 
+                placeholder="Search amount, date, category..." 
+                className="pl-9 w-full sm:w-[280px] bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-xl"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger className="w-[120px] bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-xl">
+                <SelectValue placeholder="All Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All Type</SelectItem>
+                <SelectItem value="Income">Income</SelectItem>
+                <SelectItem value="Expense">Expense</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           
           {userRole === 'Admin' && (
@@ -104,7 +128,7 @@ export const TransactionList = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50 dark:divide-slate-900">
-              <AnimatePresence>
+              <AnimatePresence mode="popLayout">
                 {filtered.map((t) => (
                   <motion.tr 
                     key={t.id} 
@@ -148,7 +172,7 @@ export const TransactionList = () => {
                   <td colSpan={5} className="py-20 text-center">
                     <div className="flex flex-col items-center gap-2">
                       <FileSpreadsheet className="w-10 h-10 text-slate-200" />
-                      <p className="text-slate-400 text-sm font-bold">No entries found.</p>
+                      <p className="text-slate-400 text-sm font-bold">No entries found matching criteria.</p>
                     </div>
                   </td>
                 </tr>

@@ -55,23 +55,24 @@ export const InsightsView = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <Card 
+        {/* Highest Spending Card - Refined visibility */}
+        <div 
           onClick={() => setActiveView('Transactions')}
-          className="card-shadow bg-indigo-600 text-white border-none cursor-pointer hover:scale-[1.02] transition-transform"
+          className="bg-indigo-600 dark:bg-indigo-600 rounded-2xl p-6 text-white shadow-xl shadow-indigo-200 dark:shadow-none cursor-pointer hover:scale-[1.02] transition-transform flex flex-col justify-between min-h-[160px]"
         >
-          <CardHeader className="pb-2">
-            <PieChart className="w-5 h-5 opacity-60 mb-2" />
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest opacity-60">Highest Spending</CardTitle>
-          </CardHeader>
-          <CardContent>
+          <div>
+            <PieChart className="w-6 h-6 opacity-60 mb-4" />
+            <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Highest Spending</p>
+          </div>
+          <div>
             {highestCategory[0] !== 'None' ? (
               <>
                 <h3 className="text-3xl font-black tracking-tight">{highestCategory[0]}</h3>
                 <p className="text-indigo-200 text-xs mt-1 font-bold">{formatINR(Number(highestCategory[1]))} total</p>
               </>
-            ) : <EmptyState message="No data" />}
-          </CardContent>
-        </Card>
+            ) : <p className="text-xs font-bold opacity-40 uppercase">No Data</p>}
+          </div>
+        </div>
 
         <Card 
           onClick={() => setActiveView('Transactions')}
