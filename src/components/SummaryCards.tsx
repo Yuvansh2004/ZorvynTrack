@@ -26,21 +26,21 @@ export const SummaryCards = () => {
       amount: balance, 
       icon: Wallet, 
       color: 'text-indigo-600', 
-      bg: 'bg-indigo-50',
+      bg: 'bg-indigo-50 dark:bg-indigo-950/30',
     },
     { 
       title: 'Monthly Income', 
       amount: income, 
       icon: ArrowUpCircle, 
       color: 'text-emerald-600', 
-      bg: 'bg-emerald-50',
+      bg: 'bg-emerald-50 dark:bg-emerald-950/30',
     },
     { 
       title: 'Monthly Expenses', 
       amount: expenses, 
       icon: ArrowDownCircle, 
       color: 'text-rose-600', 
-      bg: 'bg-rose-50',
+      bg: 'bg-rose-50 dark:bg-rose-950/30',
     },
   ];
 
@@ -49,19 +49,19 @@ export const SummaryCards = () => {
       {summaryData.map((item, index) => (
         <motion.div
           key={item.title}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }}
+          transition={{ delay: index * 0.15, duration: 0.5 }}
         >
-          <Card className="card-shadow overflow-hidden group hover:border-indigo-200">
-            <CardContent className="p-8">
-              <div className="flex items-center gap-6">
-                <div className={`p-4 rounded-2xl ${item.bg} group-hover:scale-110 transition-transform`}>
-                  <item.icon className={`w-8 h-8 ${item.color}`} />
+          <Card className="card-shadow overflow-hidden group hover:border-indigo-400 hover:scale-[1.02] transition-all">
+            <CardContent className="p-10">
+              <div className="flex items-center gap-8">
+                <div className={`p-5 rounded-[2rem] ${item.bg} group-hover:rotate-6 transition-transform`}>
+                  <item.icon className={`w-10 h-10 ${item.color}`} />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{item.title}</p>
-                  <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-2 tracking-tighter tabular-nums">
+                  <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">{item.title}</p>
+                  <h3 className="text-4xl font-black text-slate-900 dark:text-white mt-3 tracking-tighter tabular-nums italic">
                     {formatINR(item.amount)}
                   </h3>
                 </div>
