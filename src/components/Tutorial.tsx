@@ -19,7 +19,7 @@ import { ZorvynLogo } from '@/components/ZorvynLogo';
 const steps = [
   {
     title: "Welcome to ZorvynTrack",
-    description: "Your institutional-grade kernel for student finance management. Let's explore your terminal.",
+    description: "Your institutional-grade terminal for student finance management. Let's explore your terminal.",
     icon: ZorvynLogo,
     color: "text-indigo-600",
   },

@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -23,7 +22,7 @@ export const DashboardView = () => {
             Hi, {currentUser?.name.split(' ')[0]}!
           </h1>
           <p className="text-slate-500 text-sm mt-3 font-semibold uppercase tracking-widest opacity-70">
-            System Synchronization Active • 2026 Cycle
+            ZorvynTrack System Security Technology
           </p>
         </motion.div>
         

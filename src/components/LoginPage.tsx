@@ -36,7 +36,7 @@ export const LoginPage = () => {
       if (success) {
         toast({
           title: "Access Verified",
-          description: "System kernel synchronized.",
+          description: "System access verified.",
         });
       } else {
         toast({
@@ -82,7 +82,7 @@ export const LoginPage = () => {
           )}>
             Zorvyn<span className="text-indigo-600">Track</span>
           </h1>
-          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em]">Institutional Finance Kernel</p>
+          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em]">Institutional Finance Terminal</p>
         </div>
 
         <div className={cn(
