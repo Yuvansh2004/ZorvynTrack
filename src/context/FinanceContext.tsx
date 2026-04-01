@@ -71,7 +71,7 @@ const INITIAL_DATA: Transaction[] = [
   { id: '14', date: '2026-01-28', description: 'BigBasket Grocery Load', amount: 3000, category: 'Food', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
   { id: '15', date: '2026-01-30', description: 'Investment Dividend', amount: 2000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
   { id: '16', date: '2026-02-01', description: 'February Monthly Stipend', amount: 25000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com', createdAt: BASE_TIME },
-  { id: '17', date: '2026-02-02', description: 'Laptop Upgrade EMI', amount: 5000, category: 'Electronics', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
+  { id: '17', date: '2026-02-02', description: 'Laptop Upgrade EMI', amount: 500, category: 'Electronics', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
   { id: '18', date: '2026-02-04', description: 'Swiggy Gourmet Lunch', amount: 450, category: 'Food', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
   { id: '19', date: '2026-02-06', description: 'Fiber Internet Bill', amount: 799, category: 'Utilities', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com', createdAt: BASE_TIME },
   { id: '20', date: '2026-02-08', description: 'Pharmacy - Vitamins', amount: 450, category: 'Health', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com', createdAt: BASE_TIME },
@@ -88,6 +88,7 @@ interface FinanceContextType {
   deleteTransaction: (id: string) => void;
   resetLedger: () => void;
   isLoading: boolean;
+  isTransitioning: boolean;
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => void;
   currentUser: User | null;
@@ -105,6 +106,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [userRole, setUserRole] = useState<UserRole>('Admin');
   const [activeView, setActiveView] = useState<ViewType>('Dashboard');
   const [isLoading, setIsLoading] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [hasSeenTutorial, setHasSeenTutorial] = useState(false);
@@ -138,7 +140,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setHasSeenTutorial(true);
     }
 
-    setIsLoading(false);
+    // Initial system boot loading
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
   }, []);
 
   useEffect(() => {
@@ -165,20 +170,40 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     return currentUser ? t.ownerEmail === currentUser.email : false;
   });
 
+  const triggerTransition = (callback: () => void) => {
+    setIsTransitioning(true);
+    const duration = Math.floor(Math.random() * 4000) + 1000; // 1 to 5 seconds
+    setTimeout(() => {
+      callback();
+      setIsTransitioning(false);
+    }, duration);
+  };
+
   const login = (email: string, password?: string) => {
     const user = DEMO_ACCOUNTS.find(acc => acc.email === email && acc.password === password);
     if (user || password === 'zorvyn2024') {
       const sessionUser = user || { name: 'Guest User', email, role: 'Viewer' as UserRole };
-      setCurrentUser(sessionUser);
-      setUserRole(sessionUser.role);
+      triggerTransition(() => {
+        setCurrentUser(sessionUser);
+        setUserRole(sessionUser.role);
+      });
       return true;
     }
     return false;
   };
 
   const logout = () => {
-    setCurrentUser(null);
-    setActiveView('Dashboard');
+    triggerTransition(() => {
+      setCurrentUser(null);
+      setActiveView('Dashboard');
+    });
+  };
+
+  const handleSetActiveView = (view: ViewType) => {
+    if (view === activeView) return;
+    triggerTransition(() => {
+      setActiveView(view);
+    });
   };
 
   const updateProfile = (name: string) => {
@@ -235,12 +260,13 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       userRole, 
       setUserRole,
       activeView,
-      setActiveView,
+      setActiveView: handleSetActiveView,
       addTransaction, 
       updateTransaction,
       deleteTransaction, 
       resetLedger,
       isLoading,
+      isTransitioning,
       isDarkMode,
       setIsDarkMode,
       currentUser,

@@ -37,22 +37,21 @@ export function AppSidebar() {
       isOpen ? "w-72" : "w-20"
     )}>
       <div className={cn(
-        "h-24 flex items-center border-b border-slate-50 dark:border-slate-900 transition-all",
-        isOpen ? "px-5" : "px-2"
+        "h-24 flex items-center border-b border-slate-50 dark:border-slate-900 transition-all px-4"
       )}>
         <div className={cn(
           "flex w-full items-center",
-          isOpen ? "justify-between" : "justify-center gap-1"
+          isOpen ? "justify-between" : "justify-center gap-2"
         )}>
           <div className="flex items-center gap-2 overflow-hidden">
             <div className={cn(
               "bg-indigo-600 rounded-lg shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none transition-all",
-              isOpen ? "p-1.5" : "p-1"
+              isOpen ? "p-1.5" : "p-1.5"
             )}>
               <ZorvynLogo className={cn("text-white transition-all", isOpen ? "w-4 h-4" : "w-3.5 h-3.5")} />
             </div>
             {isOpen && (
-              <span className="text-[13px] font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300">
+              <span className="text-[14px] font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300">
                 Zorvyn<span className="text-indigo-600">Track</span>
               </span>
             )}

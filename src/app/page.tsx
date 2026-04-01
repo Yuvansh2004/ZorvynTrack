@@ -15,31 +15,28 @@ import { ZorvynLogo } from '@/components/ZorvynLogo';
 import { motion } from 'framer-motion';
 
 export default function Home() {
-  const { isLoading, activeView, currentUser, isDarkMode } = useFinance();
+  const { isLoading, isTransitioning, activeView, currentUser, isDarkMode } = useFinance();
 
-  if (isLoading) {
+  if (isLoading || isTransitioning) {
     return (
       <div className={`min-h-screen ${isDarkMode ? 'bg-slate-950' : 'bg-white'} flex items-center justify-center transition-colors duration-500`}>
-        <div className="text-center space-y-16">
+        <div className="text-center space-y-12">
           {/* 1. Name of the company */}
           <div className="space-y-2">
             <motion.p 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-2xl font-black italic uppercase tracking-[0.25em] text-slate-900 dark:text-white"
+              className="text-4xl font-black italic uppercase tracking-[0.2em] text-slate-900 dark:text-white"
             >
               Zorvyn<span className="text-indigo-600">Track</span>
             </motion.p>
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-500">
-              System Security Technology
-            </p>
           </div>
 
           {/* 2. Logo of the company */}
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ 
-              scale: [1, 1.05, 1],
+              scale: [1, 1.1, 1],
               opacity: 1,
             }}
             transition={{ 
@@ -47,9 +44,9 @@ export default function Home() {
               repeat: Infinity,
               ease: "easeInOut" 
             }}
-            className="inline-flex p-12 bg-indigo-600 rounded-[3rem] shadow-2xl relative"
+            className="inline-flex p-10 bg-indigo-600 rounded-[2.5rem] shadow-2xl relative"
           >
-            <ZorvynLogo className="w-20 h-20 text-white" />
+            <ZorvynLogo className="w-16 h-16 text-white" />
           </motion.div>
 
           {/* 3. Loading effect */}
@@ -59,17 +56,20 @@ export default function Home() {
                 className="h-full bg-indigo-600"
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
               />
             </div>
             
             <motion.p 
               animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-[9px] font-black uppercase tracking-[0.3em] text-indigo-600"
+              className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-600"
             >
-              System Initialization Active
+              System Synchronization Active
             </motion.p>
+            <p className="text-[8px] font-black uppercase tracking-[0.5em] text-slate-400 dark:text-slate-600">
+              ZorvynTrack System Security Technology
+            </p>
           </div>
         </div>
       </div>
