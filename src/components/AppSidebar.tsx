@@ -1,109 +1,87 @@
-
 "use client";
 
 import React from 'react';
 import { 
   LayoutDashboard, 
   History, 
+  Lightbulb, 
   Settings, 
-  CreditCard, 
-  TrendingUp,
-  PieChart,
-  Shield,
-  Zap,
-  Cpu
+  ChevronLeft,
+  ChevronRight,
+  Zap
 } from 'lucide-react';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-} from '@/components/ui/sidebar';
 import { useFinance, ViewType } from '@/context/FinanceContext';
-
-const menuItems = [
-  { icon: LayoutDashboard, label: 'Market Intelligence', view: 'Dashboard' as ViewType },
-  { icon: History, label: 'Ledger Terminal', view: 'Transactions' as ViewType },
-  { icon: PieChart, label: 'Quantum Analytics', view: 'Analytics' as ViewType },
-  { icon: CreditCard, label: 'Asset Vault', view: 'Cards' as ViewType },
-  { icon: TrendingUp, label: 'Alpha Portfolios', view: 'Investments' as ViewType },
-];
-
-const settingsItems = [
-  { icon: Settings, label: 'Kernel Config', view: 'Settings' as ViewType },
-];
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 export function AppSidebar() {
   const { activeView, setActiveView } = useFinance();
+  const [isCollapsed, setIsCollapsed] = React.useState(false);
+
+  const menuItems = [
+    { icon: LayoutDashboard, label: 'Dashboard', view: 'Dashboard' as ViewType },
+    { icon: History, label: 'Transactions', view: 'Transactions' as ViewType },
+    { icon: Lightbulb, label: 'Insights', view: 'Insights' as ViewType },
+    { icon: Settings, label: 'Settings', view: 'Settings' as ViewType },
+  ];
 
   return (
-    <Sidebar className="border-r border-slate-800/30 bg-[#020617] font-body transition-all duration-500">
-      <SidebarHeader className="p-8 pt-10">
-        <div 
-          className="flex items-center gap-5 group cursor-pointer transition-all active:scale-95" 
-          onClick={() => setActiveView('Dashboard')}
+    <aside className={cn(
+      "bg-white border-r border-slate-200 transition-all duration-300 flex flex-col h-full sticky top-0",
+      isCollapsed ? "w-20" : "w-64"
+    )}>
+      <div className="p-6 flex items-center justify-between border-b border-slate-50">
+        {!isCollapsed && (
+          <div className="flex items-center gap-2">
+            <Zap className="w-5 h-5 text-indigo-600 fill-indigo-600/10" />
+            <span className="text-sm font-black uppercase tracking-[3px] text-slate-900">Interface</span>
+          </div>
+        )}
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="hover:bg-slate-50 text-slate-400"
         >
-          <div className="relative">
-            <div className="p-4 bg-primary/10 rounded-[1.5rem] group-hover:bg-primary/20 transition-all shadow-[0_0_40px_rgba(59,130,246,0.3)] border border-primary/20 group-hover:rotate-6">
-              <Zap className="w-8 h-8 text-primary fill-primary/10 italic" />
-            </div>
-            <div className="absolute -top-1 -right-1 bg-[#020617] rounded-full p-1.5 border border-primary/40 shadow-lg">
-              <Shield className="w-3.5 h-3.5 text-primary" />
-            </div>
-          </div>
-          <div className="group-data-[collapsible=icon]:hidden">
-            <h1 className="text-2xl font-black tracking-tighter text-white uppercase italic leading-none">Zorvyn</h1>
-            <p className="text-[9px] text-primary font-black uppercase tracking-[5px] mt-2 opacity-60">Global Hub</p>
-          </div>
-        </div>
-      </SidebarHeader>
-      
-      <SidebarContent className="px-5 mt-10">
-        <SidebarGroup>
-          <SidebarGroupLabel className="px-4 text-[10px] font-black text-slate-700 uppercase tracking-[4px] mb-6">Interface Control</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu className="gap-3">
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton 
-                    isActive={activeView === item.view}
-                    onClick={() => setActiveView(item.view)}
-                    className="hover:bg-slate-900/40 transition-all rounded-2xl h-14 px-6 data-[active=true]:bg-primary/10 data-[active=true]:text-primary border border-transparent data-[active=true]:border-primary/10"
-                  >
-                    <item.icon className={`w-5 h-5 transition-all ${activeView === item.view ? 'text-primary' : 'text-slate-600'}`} />
-                    <span className="font-black uppercase text-[10px] tracking-[2px]">{item.label}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+          {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+        </Button>
+      </div>
 
-        <SidebarGroup className="mt-auto pb-10">
-          <SidebarGroupLabel className="px-4 text-[10px] font-black text-slate-700 uppercase tracking-[4px] mb-6">System Parameters</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {settingsItems.map((item) => (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton 
-                    isActive={activeView === item.view}
-                    onClick={() => setActiveView(item.view)}
-                    className="hover:bg-slate-900/40 transition-all rounded-2xl h-14 px-6 border border-transparent"
-                  >
-                    <item.icon className={`w-5 h-5 ${activeView === item.view ? 'text-primary' : 'text-slate-600'}`} />
-                    <span className="font-black uppercase text-[10px] tracking-[2px]">{item.label}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+      <nav className="flex-1 p-4 space-y-2">
+        {menuItems.map((item) => (
+          <button
+            key={item.label}
+            onClick={() => setActiveView(item.view)}
+            className={cn(
+              "w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all group",
+              activeView === item.view 
+                ? "bg-indigo-50 text-indigo-600" 
+                : "text-slate-500 hover:bg-slate-50"
+            )}
+          >
+            <item.icon className={cn(
+              "w-5 h-5",
+              activeView === item.view ? "text-indigo-600" : "text-slate-400 group-hover:text-indigo-400"
+            )} />
+            {!isCollapsed && (
+              <span className="text-sm font-semibold tracking-tight">{item.label}</span>
+            )}
+            {activeView === item.view && !isCollapsed && (
+              <div className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-600" />
+            )}
+          </button>
+        ))}
+      </nav>
+
+      <div className="p-6 border-t border-slate-50">
+        <div className={cn(
+          "bg-slate-950 rounded-2xl p-4 transition-all overflow-hidden",
+          isCollapsed ? "opacity-0" : "opacity-100"
+        )}>
+          <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1">Student Node</p>
+          <p className="text-xs text-white/50 truncate">Zorvyn Assignment 2024</p>
+        </div>
+      </div>
+    </aside>
   );
 }
