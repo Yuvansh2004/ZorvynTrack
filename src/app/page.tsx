@@ -8,6 +8,7 @@ import { TransactionsView } from '@/components/TransactionsView';
 import { InsightsView } from '@/components/InsightsView';
 import { SettingsView } from '@/components/SettingsView';
 import { LoginPage } from '@/components/LoginPage';
+import { AppFooter } from '@/components/AppFooter';
 import { Zap } from 'lucide-react';
 
 export default function Home() {
@@ -41,11 +42,14 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex font-body">
       <AppSidebar />
       <main className="flex-1 overflow-y-auto p-6 md:p-10 relative">
-        <div className="max-w-6xl mx-auto">
-          {activeView === 'Dashboard' && <DashboardView />}
-          {activeView === 'Transactions' && <TransactionsView />}
-          {activeView === 'Insights' && <InsightsView />}
-          {activeView === 'Settings' && <SettingsView />}
+        <div className="max-w-6xl mx-auto min-h-[calc(100vh-80px)] flex flex-col">
+          <div className="flex-1">
+            {activeView === 'Dashboard' && <DashboardView />}
+            {activeView === 'Transactions' && <TransactionsView />}
+            {activeView === 'Insights' && <InsightsView />}
+            {activeView === 'Settings' && <SettingsView />}
+          </div>
+          <AppFooter />
         </div>
       </main>
     </div>

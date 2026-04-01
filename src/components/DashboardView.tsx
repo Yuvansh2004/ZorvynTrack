@@ -11,7 +11,7 @@ export const DashboardView = () => {
   const { currentUser } = useFinance();
   
   return (
-    <div className="space-y-10 pb-20">
+    <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
