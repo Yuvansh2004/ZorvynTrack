@@ -23,7 +23,7 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 243 75% 59%;
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 
   .dark {
@@ -60,7 +60,11 @@
 }
 
 .card-shadow {
-  @apply shadow-sm border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition-all duration-200;
+  @apply shadow-xl shadow-slate-200/50 border border-slate-200/60 bg-white dark:bg-slate-900 dark:border-slate-800 dark:shadow-none transition-all duration-300;
+}
+
+.weight-black {
+  font-weight: 900;
 }
 
 @keyframes progress {

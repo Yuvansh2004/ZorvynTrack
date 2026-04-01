@@ -5,21 +5,26 @@ import { SummaryCards } from './SummaryCards';
 import { AnalyticsCharts } from './AnalyticsCharts';
 import { InsightsCard } from './InsightsCard';
 import { useFinance } from '@/context/FinanceContext';
+import { motion } from 'framer-motion';
 
 export const DashboardView = () => {
   const { currentUser } = useFinance();
   
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-            Welcome back, {currentUser?.name.split(' ')[0]}
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter italic uppercase">
+            Hi, <span className="text-indigo-600">{currentUser?.name.split(' ')[0]}!</span>
           </h1>
-          <p className="text-slate-500 text-sm mt-1">
-            Financial summary for {new Date().toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}
+          <p className="text-slate-500 text-sm mt-2 font-medium">
+            Here's what's happening with your finances today.
           </p>
-        </div>
+        </motion.div>
         
         <InsightsCard />
       </div>

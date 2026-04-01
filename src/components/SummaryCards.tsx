@@ -5,6 +5,7 @@ import { useFinance } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
 import { Wallet, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { motion } from 'framer-motion';
 
 export const SummaryCards = () => {
   const { transactions } = useFinance();
@@ -44,23 +45,30 @@ export const SummaryCards = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {summaryData.map((item) => (
-        <Card key={item.title} className="card-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4">
-              <div className={`p-3 rounded-lg ${item.bg}`}>
-                <item.icon className={`w-6 h-6 ${item.color}`} />
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {summaryData.map((item, index) => (
+        <motion.div
+          key={item.title}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.1 }}
+        >
+          <Card className="card-shadow overflow-hidden group hover:border-indigo-200">
+            <CardContent className="p-8">
+              <div className="flex items-center gap-6">
+                <div className={`p-4 rounded-2xl ${item.bg} group-hover:scale-110 transition-transform`}>
+                  <item.icon className={`w-8 h-8 ${item.color}`} />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{item.title}</p>
+                  <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-2 tracking-tighter tabular-nums">
+                    {formatINR(item.amount)}
+                  </h3>
+                </div>
               </div>
-              <div>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{item.title}</p>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
-                  {formatINR(item.amount)}
-                </h3>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </motion.div>
       ))}
     </div>
   );

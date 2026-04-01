@@ -11,11 +11,10 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Shield, BarChart3, History, Zap } from 'lucide-react';
+import { Shield, BarChart3, History } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-// Unified Z Logo
 const ZorvynLogo = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 20L80 20L20 80L80 80" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
@@ -29,7 +28,6 @@ const steps = [
     description: "Your institutional-grade kernel for student finance management. Let's explore your terminal.",
     icon: ZorvynLogo,
     color: "text-indigo-600",
-    isBrand: true
   },
   {
     title: "Dashboard Summary",
@@ -69,49 +67,50 @@ export const Tutorial = () => {
 
   return (
     <Dialog open={!hasSeenTutorial} onOpenChange={(open) => !open && completeTutorial()}>
-      <DialogContent className="sm:max-w-[440px] border-none shadow-2xl p-0 overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-950">
-        <div className="bg-indigo-600 p-12 flex items-center justify-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_100%)]" />
+      <DialogContent className="sm:max-w-[480px] border-none shadow-2xl p-0 overflow-hidden rounded-[3rem] bg-white dark:bg-slate-950">
+        <div className="bg-indigo-600 p-16 flex items-center justify-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15)_0%,transparent_100%)]" />
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}
-              initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
+              initial={{ scale: 0.5, opacity: 0, rotate: -15 }}
               animate={{ scale: 1, opacity: 1, rotate: 0 }}
-              exit={{ scale: 0.8, opacity: 0, rotate: 10 }}
-              className="bg-white p-6 rounded-[2rem] shadow-2xl relative z-10"
+              exit={{ scale: 0.5, opacity: 0, rotate: 15 }}
+              transition={{ type: "spring", damping: 12 }}
+              className="bg-white p-8 rounded-[2.5rem] shadow-2xl relative z-10"
             >
-              <step.icon className={cn("w-12 h-12", step.color)} />
+              <step.icon className={cn("w-16 h-16", step.color)} />
             </motion.div>
           </AnimatePresence>
         </div>
         
-        <div className="p-10 space-y-6">
+        <div className="p-12 space-y-8">
           <DialogHeader>
-            <div className="flex justify-center gap-1.5 mb-4">
+            <div className="flex justify-center gap-2 mb-6">
               {steps.map((_, i) => (
                 <div 
                   key={i} 
                   className={cn(
-                    "h-1 rounded-full transition-all duration-300",
-                    i === currentStep ? "w-8 bg-indigo-600" : "w-2 bg-slate-200 dark:bg-slate-800"
+                    "h-1.5 rounded-full transition-all duration-500",
+                    i === currentStep ? "w-10 bg-indigo-600" : "w-2 bg-slate-200 dark:bg-slate-800"
                   )} 
                 />
               ))}
             </div>
-            <DialogTitle className="text-2xl font-black italic uppercase tracking-tight text-center text-slate-900 dark:text-white">
+            <DialogTitle className="text-3xl font-black italic uppercase tracking-tighter text-center text-slate-900 dark:text-white">
               {step.title.split(' ')[0]} <span className="text-indigo-600">{step.title.split(' ').slice(1).join(' ')}</span>
             </DialogTitle>
-            <DialogDescription className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed text-center pt-2">
+            <DialogDescription className="text-base font-medium text-slate-500 dark:text-slate-400 leading-relaxed text-center pt-4">
               {step.description}
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter className="flex-col sm:flex-row gap-3 pt-4">
+          <DialogFooter className="flex-col sm:flex-row gap-4 pt-6">
             <Button 
               onClick={handleNext} 
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase text-[11px] tracking-[3px] h-12 rounded-xl transition-all shadow-lg shadow-indigo-200 dark:shadow-none"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase text-xs tracking-[4px] h-14 rounded-2xl transition-all shadow-xl shadow-indigo-200 dark:shadow-none hover:scale-[1.02] active:scale-95"
             >
-              {currentStep === steps.length - 1 ? "INITIALIZE TERMINAL" : "NEXT STEP"}
+              {currentStep === steps.length - 1 ? "INITIALIZE TERMINAL" : "NEXT PROTOCOL"}
             </Button>
           </DialogFooter>
         </div>
