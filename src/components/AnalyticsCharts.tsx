@@ -1,23 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend 
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Sparkles, Loader2, BrainCircuit } from 'lucide-react';
-import { analyzeFinance, type AnalyzeFinanceOutput } from '@/ai/flows/analyze-finance-flow';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899'];
 
 export const AnalyticsCharts = () => {
   const { transactions } = useFinance();
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysis, setAnalysis] = useState<AnalyzeFinanceOutput | null>(null);
 
   const areaData = [...transactions]
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
@@ -39,20 +33,6 @@ export const AnalyticsCharts = () => {
     .map(([name, value]) => ({ name, value }))
     .sort((a, b) => b.value - a.value);
 
-  const handleExplainChart = async () => {
-    setIsAnalyzing(true);
-    try {
-      const result = await analyzeFinance({ 
-        transactions: transactions.slice(-10) 
-      });
-      setAnalysis(result);
-    } catch (error) {
-      console.error('AI Analysis failed:', error);
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-
   return (
     <>
       <div className="lg:col-span-2 space-y-6">
@@ -61,16 +41,6 @@ export const AnalyticsCharts = () => {
             <div>
               <CardTitle className="text-[11px] weight-black uppercase tracking-[0.25em] text-slate-400">Transaction Velocity (Trend)</CardTitle>
             </div>
-            <Button 
-              size="sm" 
-              variant="outline" 
-              onClick={handleExplainChart} 
-              disabled={isAnalyzing || transactions.length === 0}
-              className="rounded-xl border-indigo-100 text-indigo-600 hover:bg-indigo-50 font-bold text-xs"
-            >
-              {isAnalyzing ? <Loader2 className="w-3.5 h-3.5 mr-2 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 mr-2" />}
-              Explain This Chart
-            </Button>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="h-[350px] w-full">
@@ -119,31 +89,6 @@ export const AnalyticsCharts = () => {
                 </div>
               )}
             </div>
-
-            {analysis && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-indigo-50/50 border border-indigo-100/50 p-6 rounded-[1.5rem]"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-indigo-600 rounded-lg shadow-lg">
-                    <BrainCircuit className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-[10px] weight-black text-indigo-600 uppercase tracking-widest">AI Analyst Reasoning</h4>
-                    <p className="text-sm font-bold text-slate-900">Trajectory: {analysis.status}</p>
-                  </div>
-                </div>
-                <p className="text-sm text-slate-600 leading-relaxed mb-4">{analysis.summary}</p>
-                <Alert className="bg-white/80 border-indigo-100">
-                  <AlertTitle className="text-xs weight-black text-indigo-900">PROACTIVE ACTION</AlertTitle>
-                  <AlertDescription className="text-xs text-indigo-700 font-medium">
-                    {analysis.recommendation}
-                  </AlertDescription>
-                </Alert>
-              </motion.div>
-            )}
           </CardContent>
         </Card>
       </div>
