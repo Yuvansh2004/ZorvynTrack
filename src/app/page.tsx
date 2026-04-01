@@ -11,20 +11,14 @@ import { AppSidebar } from '@/components/AppSidebar';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  CreditCard, 
   TrendingUp, 
-  Settings as SettingsIcon, 
-  LayoutDashboard,
-  ShieldCheck,
-  Zap,
-  BellRing,
   Target,
-  Info,
-  Calendar
+  Calendar,
+  ShieldCheck,
+  Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useEffect, useState } from 'react';
 import { LoginPage } from '@/components/LoginPage';
 
 const DashboardView = () => (
@@ -80,7 +74,7 @@ const DashboardView = () => (
               </div>
             </div>
             <div className="pt-4 border-t border-slate-800">
-              <p className="text-[10px] text-slate-400 font-medium">You are currently ₹2,400 under your monthly discretionary budget.</p>
+              <p className="text-[10px] text-slate-400 font-medium leading-relaxed">System Analysis: You are currently ₹2,400 under your monthly discretionary budget. Performance is optimal.</p>
             </div>
           </CardContent>
         </Card>
@@ -227,7 +221,7 @@ const SettingsView = () => (
         <div className="flex items-center justify-between py-2 border-b border-slate-800/50">
           <div className="flex items-center gap-3">
             <ShieldCheck className="w-5 h-5 text-slate-400" />
-            <span className="text-sm font-medium text-white">System Notifications</span>
+            <span className="text-sm font-medium text-white">Biometric Authentication</span>
           </div>
           <div className="w-10 h-6 bg-primary rounded-full relative">
             <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
@@ -283,7 +277,7 @@ const AuthenticatedApp = () => (
 export default function Home() {
   const { isLoggedIn, isLoading } = useFinance();
 
-  if (isLoading) return <div className="min-h-screen bg-[#020617] flex items-center justify-center text-white">Initialising Zorvyn Engine...</div>;
+  if (isLoading) return <div className="min-h-screen bg-[#020617] flex items-center justify-center text-white font-bold tracking-widest animate-pulse">ZORVYN ENGINE v1.0 INITIALISING...</div>;
 
   return (
     <AnimatePresence mode="wait">

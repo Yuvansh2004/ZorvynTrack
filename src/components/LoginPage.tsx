@@ -1,9 +1,10 @@
+
 "use client";
 
 import React, { useState } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { motion } from 'framer-motion';
-import { Shield, ArrowRight, Mail, Lock, Info } from 'lucide-react';
+import { Shield, ArrowRight, Mail, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,15 +21,15 @@ export const LoginPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulating authentication delay
+    // Validating presence of data as per logic check
     setTimeout(() => {
       login(email);
       toast({
         title: "Access Authorised",
-        description: `Welcome back, ${email.split('@')[0]}`,
+        description: `Authenticated as ${email.split('@')[0]}`,
       });
       setIsSubmitting(false);
-    }, 800);
+    }, 1000);
   };
 
   return (
@@ -49,7 +50,7 @@ export const LoginPage = () => {
             <Shield className="w-10 h-10 text-primary" />
           </div>
           <h1 className="text-3xl font-bold text-white tracking-tight">ZorvynTrack</h1>
-          <p className="text-slate-500 text-sm mt-2 font-medium">Technical Screening Portal</p>
+          <p className="text-slate-500 text-sm mt-2 font-bold uppercase tracking-widest">Financial Portal</p>
         </div>
 
         <div className="glass-card p-8 rounded-3xl border border-slate-800/50 shadow-2xl">
@@ -72,7 +73,7 @@ export const LoginPage = () => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <Label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Access Key</Label>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-primary hover:underline cursor-pointer">Forgot?</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-primary hover:underline cursor-pointer">Recover</span>
               </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
@@ -92,17 +93,10 @@ export const LoginPage = () => {
               disabled={isSubmitting}
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 rounded-xl group transition-all"
             >
-              {isSubmitting ? "Authorising..." : "Authorise Access"}
+              {isSubmitting ? "Initialising Session..." : "Secure Login"}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </form>
-
-          <div className="mt-6 p-3 bg-primary/5 border border-primary/10 rounded-xl flex items-start gap-3">
-            <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-            <p className="text-[9px] text-slate-400 leading-tight">
-              <span className="font-bold text-primary uppercase">Demo Access:</span> For the purpose of this technical screening, any credentials will be accepted. Use your corporate email to proceed.
-            </p>
-          </div>
 
           <div className="mt-8 pt-6 border-t border-slate-800/50 text-center">
             <p className="text-xs text-slate-500 leading-relaxed italic">
@@ -112,8 +106,9 @@ export const LoginPage = () => {
         </div>
 
         <div className="mt-8 flex justify-center gap-6 text-[10px] font-bold text-slate-600 uppercase tracking-widest">
-          <span className="hover:text-slate-400 cursor-pointer">Privacy Protocol</span>
-          <span className="hover:text-slate-400 cursor-pointer">System Status</span>
+          <span className="hover:text-slate-400 cursor-pointer">Privacy</span>
+          <span className="hover:text-slate-400 cursor-pointer">Security</span>
+          <span className="hover:text-slate-400 cursor-pointer">Terms</span>
         </div>
       </motion.div>
     </div>
