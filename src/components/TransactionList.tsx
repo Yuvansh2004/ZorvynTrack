@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useFinance } from '@/context/FinanceContext';
+import { useFinance, Transaction } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, X } from 'lucide-react';
+import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, X, Pencil } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { AddTransactionModal } from './AddTransactionModal';
+import { EditTransactionModal } from './EditTransactionModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue 
@@ -19,6 +20,7 @@ export const TransactionList = () => {
   const [typeFilter, setTypeFilter] = useState<string>('All');
   const [dateFilter, setDateFilter] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   const filtered = transactions.filter(t => {
     const term = searchTerm.toLowerCase();
@@ -26,7 +28,8 @@ export const TransactionList = () => {
       t.category.toLowerCase().includes(term) ||
       t.description.toLowerCase().includes(term) ||
       t.amount.toString().includes(term) ||
-      t.date.includes(term);
+      t.date.includes(term) ||
+      t.ownerEmail.toLowerCase().includes(term);
     
     const matchesType = typeFilter === 'All' || t.type === typeFilter;
     const matchesDate = !dateFilter || t.date === dateFilter;
@@ -57,18 +60,16 @@ export const TransactionList = () => {
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-          {/* Search Input */}
           <div className="relative flex-1 min-w-[200px] sm:flex-none">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
-              placeholder="Search amount, category..." 
+              placeholder="Search amount, category, user..." 
               className="pl-9 h-9 w-full sm:w-[240px] text-xs font-medium"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           
-          {/* Date Filter - Increased width and adjusted padding for better visibility */}
           <div className="relative flex items-center">
             <CalendarIcon className="absolute left-3 w-4 h-4 text-slate-400 pointer-events-none" />
             <Input 
@@ -87,7 +88,6 @@ export const TransactionList = () => {
             )}
           </div>
 
-          {/* Type Filter */}
           <Select value={typeFilter} onValueChange={setTypeFilter}>
             <SelectTrigger className="w-[120px] h-9 text-xs font-medium">
               <SelectValue placeholder="All Types" />
@@ -99,7 +99,6 @@ export const TransactionList = () => {
             </SelectContent>
           </Select>
 
-          {/* Admin Exclusive: New Entry & Export */}
           {userRole === 'Admin' && (
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" onClick={exportCSV} className="h-9 text-xs font-bold uppercase tracking-tight">
@@ -123,6 +122,9 @@ export const TransactionList = () => {
                 <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Description</th>
                 <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Category</th>
                 <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Amount</th>
+                {userRole === 'Admin' && (
+                  <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Owner</th>
+                )}
                 {userRole === 'Admin' && <th className="pb-4 text-right font-black uppercase text-[10px] tracking-widest">Action</th>}
               </tr>
             </thead>
@@ -147,15 +149,32 @@ export const TransactionList = () => {
                       {t.type === 'Income' ? '+' : '-'}{formatINR(t.amount)}
                     </td>
                     {userRole === 'Admin' && (
+                      <td className="py-4">
+                        <span className="text-[10px] text-indigo-500 font-bold italic truncate block max-w-[120px]" title={t.ownerEmail}>
+                          {t.ownerEmail.split('@')[0]}
+                        </span>
+                      </td>
+                    )}
+                    {userRole === 'Admin' && (
                       <td className="py-4 text-right">
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          onClick={() => deleteTransaction(t.id)}
-                          className="text-slate-300 hover:text-rose-500 hover:bg-transparent transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                        <div className="flex items-center justify-end gap-1">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => setEditingTransaction(t)}
+                            className="text-slate-300 hover:text-indigo-600 hover:bg-transparent transition-colors"
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </Button>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => deleteTransaction(t.id)}
+                            className="text-slate-300 hover:text-rose-500 hover:bg-transparent transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </td>
                     )}
                   </motion.tr>
@@ -173,6 +192,13 @@ export const TransactionList = () => {
       </CardContent>
       {userRole === 'Admin' && (
         <AddTransactionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      )}
+      {userRole === 'Admin' && editingTransaction && (
+        <EditTransactionModal 
+          isOpen={!!editingTransaction} 
+          onClose={() => setEditingTransaction(null)} 
+          transaction={editingTransaction}
+        />
       )}
     </Card>
   );
