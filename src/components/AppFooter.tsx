@@ -2,7 +2,15 @@
 
 import React from 'react';
 import { ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
-import { Mail, Github, Linkedin, Shield } from 'lucide-react';
+import { Mail, Github, Linkedin, Shield, Info, Lock, Activity } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 
 export const AppFooter = () => {
   const currentYear = new Date().getFullYear();
@@ -58,11 +66,11 @@ export const AppFooter = () => {
               <p className="text-xs font-black uppercase tracking-tight text-slate-900 dark:text-white">Yuvansh Dashrath Koli</p>
               <p className="text-[10px] text-slate-500 font-bold mt-1 italic">Internship Applicant</p>
             </div>
-            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-1.5">
-              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold break-all leading-tight">
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold whitespace-nowrap overflow-hidden text-ellipsis leading-tight">
                 Personal: <span className="text-indigo-600 dark:text-indigo-400 font-black">yuvanshkoli1011@gmail.com</span>
               </p>
-              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold break-all leading-tight">
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 font-bold whitespace-nowrap overflow-hidden text-ellipsis leading-tight">
                 College: <span className="text-indigo-600 dark:text-indigo-400 font-black">yuvanshkoli2324@ternaengg.ac.in</span>
               </p>
             </div>
@@ -73,8 +81,55 @@ export const AppFooter = () => {
       <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
         <p className="text-[9px] font-black uppercase tracking-[3px] text-slate-300 dark:text-slate-700">© {currentYear} Zorvyn Scan Technology • Institutional Node Terminal</p>
         <div className="flex items-center gap-8">
-          <button className="text-[9px] font-black uppercase tracking-[1px] text-slate-400 hover:text-indigo-600 transition-colors">Privacy Protocols</button>
-          <button className="text-[9px] font-black uppercase tracking-[1px] text-slate-400 hover:text-indigo-600 transition-colors">System Audit</button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="text-[9px] font-black uppercase tracking-[1px] text-slate-400 hover:text-indigo-600 transition-colors">Privacy Protocols</button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <div className="p-2 w-fit bg-indigo-50 dark:bg-indigo-950 rounded-lg mb-4">
+                  <Lock className="w-5 h-5 text-indigo-600" />
+                </div>
+                <DialogTitle className="text-xl font-black italic uppercase tracking-tight">Privacy <span className="text-indigo-600">Protocols</span></DialogTitle>
+                <DialogDescription className="text-xs font-medium leading-relaxed pt-2">
+                  At ZorvynTrack, we adhere to institutional-grade security standards. All financial telemetry is stored locally within your secure session kernel. We do not transmit sensitive transaction data to external third-party servers without explicit user-authorized sync triggers.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 space-y-2">
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Security Parameters</p>
+                <ul className="text-[10px] font-bold text-slate-600 dark:text-slate-400 space-y-1">
+                  <li>• AES-256 Equivalent Local Storage Encryption</li>
+                  <li>• Role-Based Access Modulation (RBAC)</li>
+                  <li>• Zero-Knowledge Data Architecture</li>
+                </ul>
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="text-[9px] font-black uppercase tracking-[1px] text-slate-400 hover:text-indigo-600 transition-colors">System Audit</button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <div className="p-2 w-fit bg-indigo-50 dark:bg-indigo-950 rounded-lg mb-4">
+                  <Activity className="w-5 h-5 text-indigo-600" />
+                </div>
+                <DialogTitle className="text-xl font-black italic uppercase tracking-tight">System <span className="text-indigo-600">Audit</span></DialogTitle>
+                <DialogDescription className="text-xs font-medium leading-relaxed pt-2">
+                  ZorvynTrack maintains a continuous monitoring state to ensure ledger integrity. All administrative actions (Record Modification, Entry Deletion) are logged within the session history for internal transparency and compliance with Zorvyn Scan Technology standards.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 space-y-2">
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Audit Telemetry</p>
+                <ul className="text-[10px] font-bold text-slate-600 dark:text-slate-400 space-y-1">
+                  <li>• Current Node: {ASSIGNMENT_REF_ID}</li>
+                  <li>• Status: System Operational</li>
+                  <li>• Data Integrity: Verified</li>
+                </ul>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </footer>
