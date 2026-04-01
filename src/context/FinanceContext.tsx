@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 export type TransactionType = 'Income' | 'Expense';
 export type ViewType = 'Dashboard' | 'Transactions' | 'Analytics' | 'Cards' | 'Investments' | 'Settings';
+export type UserRole = 'Admin' | 'Viewer';
 
 export interface Transaction {
   id: string;
@@ -15,12 +16,30 @@ export interface Transaction {
   type: TransactionType;
 }
 
-export type UserRole = 'Admin' | 'Viewer';
-
 interface User {
   name: string;
   email: string;
+  role: UserRole;
 }
+
+// Predefined Corporate Accounts
+export const DEMO_ACCOUNTS = [
+  { email: 'admin1@zorvyn.com', name: 'James Wilson', role: 'Admin' as UserRole },
+  { email: 'finance.lead@zorvyn.com', name: 'Sarah Jenkins', role: 'Admin' as UserRole },
+  { email: 'yuvansh.k@zorvyn.com', name: 'Yuvansh Koli', role: 'Admin' as UserRole },
+  { email: 'mike.ross@zorvyn.com', name: 'Michael Ross', role: 'Admin' as UserRole },
+  { email: 'executive.off@zorvyn.com', name: 'Harvey Specter', role: 'Admin' as UserRole },
+  { email: 'analyst1@zorvyn.com', name: 'Robert Quinn', role: 'Viewer' as UserRole },
+  { email: 'auditor.v@zorvyn.com', name: 'Jessica Pearson', role: 'Viewer' as UserRole },
+  { email: 'guest.demo@zorvyn.com', name: 'Louis Litt', role: 'Viewer' as UserRole },
+  { email: 'compliance@zorvyn.com', name: 'Donna Paulsen', role: 'Viewer' as UserRole },
+  { email: 'risk.mgmt@zorvyn.com', name: 'Rachel Zane', role: 'Viewer' as UserRole },
+  { email: 'partner.access@zorvyn.com', name: 'Katrina Bennett', role: 'Viewer' as UserRole },
+  { email: 'internal.review@zorvyn.com', name: 'Alex Williams', role: 'Viewer' as UserRole },
+  { email: 'dev.viewer@zorvyn.com', name: 'Samantha Wheeler', role: 'Viewer' as UserRole },
+  { email: 'hr.portal@zorvyn.com', name: 'Gretchen Bodinski', role: 'Viewer' as UserRole },
+  { email: 'external.auditor@zorvyn.com', name: 'Travis Tanner', role: 'Viewer' as UserRole },
+];
 
 interface FinanceContextType {
   transactions: Transaction[];
@@ -28,7 +47,7 @@ interface FinanceContextType {
   activeView: ViewType;
   isLoggedIn: boolean;
   user: User | null;
-  login: (email: string) => void;
+  login: (email: string, password: string) => boolean;
   logout: () => void;
   addTransaction: (transaction: Omit<Transaction, 'id'>) => void;
   deleteTransaction: (id: string) => void;
@@ -72,8 +91,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const savedTransactions = localStorage.getItem('zorvyn_transactions');
-    const savedRole = localStorage.getItem('zorvyn_role');
-    const savedView = localStorage.getItem('zorvyn_view');
     const savedAuth = localStorage.getItem('zorvyn_auth');
     
     if (savedTransactions) {
@@ -82,18 +99,11 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setTransactions(INITIAL_TRANSACTIONS);
     }
 
-    if (savedRole) {
-      setUserRole(savedRole as UserRole);
-    }
-
-    if (savedView) {
-      setActiveView(savedView as ViewType);
-    }
-
     if (savedAuth) {
       const authData = JSON.parse(savedAuth);
       setIsLoggedIn(true);
       setUser(authData);
+      setUserRole(authData.role);
     }
     
     setIsLoading(false);
@@ -102,22 +112,25 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!isLoading) {
       localStorage.setItem('zorvyn_transactions', JSON.stringify(transactions));
-      localStorage.setItem('zorvyn_role', userRole);
-      localStorage.setItem('zorvyn_view', activeView);
       if (isLoggedIn && user) {
         localStorage.setItem('zorvyn_auth', JSON.stringify(user));
       } else {
         localStorage.removeItem('zorvyn_auth');
       }
     }
-  }, [transactions, userRole, activeView, isLoggedIn, user, isLoading]);
+  }, [transactions, isLoggedIn, user, isLoading]);
 
-  const login = (email: string) => {
-    setIsLoggedIn(true);
-    setUser({
-      name: 'Yuvansh Dashrath Koli',
-      email: email || 'yuvanshkoli1011@gmail.com'
-    });
+  const login = (email: string, password: string) => {
+    // For assessment, any password works, but email must match DEMO_ACCOUNTS
+    const foundUser = DEMO_ACCOUNTS.find(acc => acc.email === email.toLowerCase());
+    
+    if (foundUser && password.length >= 6) {
+      setIsLoggedIn(true);
+      setUser(foundUser);
+      setUserRole(foundUser.role);
+      return true;
+    }
+    return false;
   };
 
   const logout = () => {

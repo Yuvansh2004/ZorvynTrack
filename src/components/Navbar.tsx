@@ -5,7 +5,7 @@ import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Shield, Eye, Bell, Search, LogOut } from 'lucide-react';
+import { Shield, Eye, Bell, Search, LogOut, Terminal } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -21,7 +21,7 @@ export const Navbar = () => {
         <div className="relative hidden lg:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
           <Input 
-            placeholder="Search records, intelligence..." 
+            placeholder="Search network nodes..." 
             className="w-72 pl-10 bg-slate-900/30 border-slate-800 h-9 text-xs focus:ring-primary focus:w-80 transition-all border-none"
           />
         </div>
@@ -58,8 +58,10 @@ export const Navbar = () => {
 
         <div className="flex items-center gap-3 pl-2">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-bold text-white leading-none">{user?.name || 'Yuvansh Koli'}</p>
-            <p className="text-[9px] text-primary font-bold uppercase mt-1 tracking-widest leading-none">{user?.email || 'yuvanshkoli1011@gmail.com'}</p>
+            <p className="text-sm font-bold text-white leading-none">{user?.name || 'Authorized User'}</p>
+            <p className="text-[9px] text-primary font-bold uppercase mt-1 tracking-widest leading-none flex items-center justify-end gap-1">
+              <Terminal className="w-2 h-2" /> {user?.email || 'secure@zorvyn.com'}
+            </p>
           </div>
           <Button 
             variant="ghost" 
