@@ -15,7 +15,7 @@ export const SettingsView = () => {
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
-            Project<span className="text-indigo-600">Settings</span>
+            ZorvynTrack<span className="text-indigo-600">Settings</span>
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Assignment Reference ID: {ASSIGNMENT_REF_ID}</p>
         </div>

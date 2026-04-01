@@ -22,7 +22,7 @@ export const DashboardView = () => {
             Welcome back, {currentUser?.name.split(' ')[0]}!
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm mt-3 font-medium uppercase tracking-widest opacity-60">
-            Node Sync Active • Session V.2.1
+            Zorvyn Scan Technology
           </p>
         </motion.div>
         

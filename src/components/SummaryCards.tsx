@@ -67,7 +67,7 @@ export const SummaryCards = () => {
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100">
                   <TrendingUp className="w-3.5 h-3.5 text-slate-400" />
-                  <span className="text-slate-400 text-[10px] weight-black uppercase tracking-[0.2em]">Live Sync V.2.1</span>
+                  <span className="text-slate-400 text-[10px] weight-black uppercase tracking-[0.2em]">Zorvyn Scan Technology</span>
                 </div>
               </div>
               <div className="space-y-2">

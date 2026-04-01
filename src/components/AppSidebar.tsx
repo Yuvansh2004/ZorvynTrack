@@ -53,7 +53,7 @@ export function AppSidebar() {
             <div className="p-1 rounded-lg">
               <ZorvynLogo className="w-8 h-8" />
             </div>
-            <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Zorvyn<span className="text-indigo-600">Dash</span></span>
+            <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Zorvyn<span className="text-indigo-600">Track</span></span>
           </div>
         )}
         <Button 

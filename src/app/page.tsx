@@ -23,7 +23,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-xs font-black uppercase tracking-[8px] text-slate-400">Syncing Node</p>
+            <p className="text-xs font-black uppercase tracking-[8px] text-slate-400">Zorvyn Scan Technology</p>
             <div className="w-24 h-1 bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
               <div className="h-full bg-indigo-600 animate-progress origin-left"></div>
             </div>
