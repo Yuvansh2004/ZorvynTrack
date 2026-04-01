@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -47,6 +48,7 @@ const INITIAL_DATA: Transaction[] = [
   { id: 'y4', date: '2024-05-15', description: 'Zomato Food Order', amount: 450, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
   { id: 'y5', date: '2024-05-12', description: 'Amazon Kindle Book', amount: 299, category: 'Education', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
   { id: 'y6', date: '2024-05-10', description: 'Fuel Refill', amount: 1200, category: 'Transport', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
+  { id: 'y7', date: '2024-05-25', description: 'Interest Credit', amount: 150, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
 
   // Aditya (Viewer) Data
   { id: 'a1', date: '2024-05-22', description: 'University Course Fee', amount: 5000, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
@@ -84,6 +86,7 @@ interface FinanceContextType {
   addTransaction: (transaction: Omit<Transaction, 'id' | 'ownerEmail'>) => void;
   updateTransaction: (id: string, updates: Partial<Transaction>) => void;
   deleteTransaction: (id: string) => void;
+  resetLedger: () => void;
   isLoading: boolean;
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => void;
@@ -188,6 +191,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     setMasterLedger(prev => prev.filter(t => t.id !== id));
   };
 
+  const resetLedger = () => {
+    setMasterLedger([]);
+  };
+
   return (
     <FinanceContext.Provider value={{ 
       transactions, 
@@ -198,6 +205,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       addTransaction, 
       updateTransaction,
       deleteTransaction, 
+      resetLedger,
       isLoading,
       isDarkMode,
       setIsDarkMode,

@@ -5,11 +5,15 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Moon, Shield, UserCircle, Mail, User, ShieldCheck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { 
+  Moon, Shield, UserCircle, Mail, User, ShieldCheck, 
+  Trash2, Database, AlertCircle 
+} from 'lucide-react';
 import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
 
 export const SettingsView = () => {
-  const { currentUser, isDarkMode, setIsDarkMode, userRole } = useFinance();
+  const { currentUser, isDarkMode, setIsDarkMode, userRole, resetLedger } = useFinance();
 
   if (!currentUser) return null;
 
@@ -27,45 +31,73 @@ export const SettingsView = () => {
         </div>
       </div>
 
+      {/* Mock Data Disclaimer Banner */}
+      <div className="bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-start gap-4">
+          <div className="p-3 bg-white dark:bg-slate-950 rounded-xl shadow-sm">
+            <AlertCircle className="w-5 h-5 text-rose-600" />
+          </div>
+          <div className="max-w-xl">
+            <h4 className="text-sm font-black uppercase tracking-tight text-rose-900 dark:text-rose-400">System Disclaimer</h4>
+            <p className="text-xs text-rose-800 dark:text-rose-300 font-medium mt-1 leading-relaxed">
+              This terminal currently contains mock telemetry and dummy entries for demonstration. If you wish to delete the mock data or reset the system ledger to a clean state, execute the wipe command.
+            </p>
+          </div>
+        </div>
+        <Button 
+          variant="destructive" 
+          onClick={resetLedger}
+          className="rounded-xl font-black uppercase text-[10px] tracking-[2px] px-8 h-11 shadow-lg shadow-rose-200 dark:shadow-none hover:scale-105 transition-transform"
+        >
+          <Trash2 className="w-4 h-4 mr-2" />
+          Clear Mock Data
+        </Button>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
-          {/* 1. Identity Records - Dynamic based on currentUser */}
-          <Card className="border-none shadow-sm bg-white dark:bg-slate-900">
-            <CardHeader>
-              <CardTitle className="text-lg font-black italic uppercase tracking-tight flex items-center gap-2">
+          {/* 1. Identity Records */}
+          <Card className="border-none shadow-sm bg-white dark:bg-slate-900 overflow-hidden">
+            <CardHeader className="border-b border-slate-50 dark:border-slate-800">
+              <CardTitle className="text-lg font-black italic uppercase tracking-tight flex items-center gap-2 text-slate-800 dark:text-white">
                 <UserCircle className="w-5 h-5 text-indigo-600" /> Identity Records
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
-                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1 flex items-center gap-1"><User className="w-3 h-3"/> Full Name</p>
+                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
+                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><User className="w-3.5 h-3.5"/> Full Name</p>
                   <p className="text-sm font-bold text-slate-900 dark:text-white">{currentUser.name}</p>
                 </div>
                 
-                <div className="p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
-                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1 flex items-center gap-1.5"><Mail className="w-3 h-3"/> System Identity</p>
+                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
+                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5"/> System Identity</p>
                   <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
                 </div>
 
-                <div className="p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
-                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1 flex items-center gap-1"><Shield className="w-3 h-3"/> Active Session Node</p>
+                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
+                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Shield className="w-3.5 h-3.5"/> Active Session Node</p>
                   <p className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-tighter">{userRole} Terminal</p>
+                </div>
+
+                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
+                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Database className="w-3.5 h-3.5"/> Reference ID</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white">{ASSIGNMENT_REF_ID}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* 2. Preferences (Settings) */}
+          {/* 2. Preferences */}
           <Card className="border-none shadow-sm bg-white dark:bg-slate-900">
-            <CardHeader>
-              <CardTitle className="text-lg font-black italic uppercase tracking-tight flex items-center gap-2">
+            <CardHeader className="border-b border-slate-50 dark:border-slate-800">
+              <CardTitle className="text-lg font-black italic uppercase tracking-tight flex items-center gap-2 text-slate-800 dark:text-white">
                 <Moon className="w-5 h-5 text-indigo-600" /> System Preferences
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800">
-                <div className="space-y-0.5">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800">
+                <div className="space-y-1">
                   <Label className="text-sm font-bold">Dark Theme</Label>
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">Modulate Interface Appearance</p>
                 </div>
@@ -86,7 +118,7 @@ export const SettingsView = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="p-6 rounded-2xl bg-indigo-600 text-white relative overflow-hidden">
+              <div className="p-6 rounded-2xl bg-indigo-600 text-white relative overflow-hidden shadow-xl shadow-indigo-200 dark:shadow-none">
                 <Shield className="absolute -right-4 -bottom-4 w-24 h-24 opacity-10" />
                 <p className="text-[10px] font-black uppercase opacity-60 mb-2">Authenticated Access</p>
                 <div className="flex items-center gap-3">
@@ -95,7 +127,8 @@ export const SettingsView = () => {
                 </div>
                 <div className="my-4 h-px bg-white/20" />
                 <p className="text-[10px] font-bold leading-relaxed opacity-80">
-                  Terminal behavior is currently modulated by {userRole === 'Admin' ? 'Management' : 'Audit-only'} protocols.
+                  Terminal behavior is currently modulated by {userRole === 'Admin' ? 'Management' : 'Audit-only'} protocols. 
+                  Deletion and modification are restricted per node roles.
                 </p>
               </div>
             </CardContent>
