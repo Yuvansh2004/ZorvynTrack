@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -11,6 +12,7 @@ import { LoginPage } from '@/components/LoginPage';
 import { AppFooter } from '@/components/AppFooter';
 import { Tutorial } from '@/components/Tutorial';
 import { ZorvynLogo } from '@/components/ZorvynLogo';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const { isLoading, activeView, currentUser } = useFinance();
@@ -18,11 +20,34 @@ export default function Home() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="inline-flex p-4 bg-indigo-600 rounded-2xl shadow-lg animate-pulse">
-            <ZorvynLogo className="w-10 h-10 text-white" />
+        <div className="text-center space-y-8">
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ 
+              scale: [0.9, 1.1, 0.9],
+              opacity: 1,
+              rotate: [0, 5, 0]
+            }}
+            transition={{ 
+              duration: 3, 
+              repeat: Infinity,
+              ease: "easeInOut" 
+            }}
+            className="inline-flex p-6 bg-indigo-600 rounded-[2.5rem] shadow-2xl shadow-indigo-200 dark:shadow-none"
+          >
+            <ZorvynLogo className="w-12 h-12 text-white" />
+          </motion.div>
+          <div className="space-y-2">
+            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-600/50">Synchronizing Kernel</p>
+            <div className="w-32 h-1 bg-slate-200 dark:bg-slate-800 mx-auto rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-indigo-600"
+                initial={{ x: "-100%" }}
+                animate={{ x: "100%" }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
           </div>
-          <p className="text-xs font-black uppercase tracking-[0.3em] text-slate-400">Synchronizing Kernel...</p>
         </div>
       </div>
     );

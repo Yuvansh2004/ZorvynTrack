@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -19,7 +20,7 @@ export const DashboardView = () => {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h1 className="text-5xl font-black text-slate-900 dark:text-white tracking-tighter italic uppercase">
-            Hi, <span className="text-indigo-600">{currentUser?.name.split(' ')[0]}!</span>
+            Hi, {currentUser?.name.split(' ')[0]}!
           </h1>
           <p className="text-slate-500 text-sm mt-3 font-semibold uppercase tracking-widest opacity-70">
             System Synchronization Active • 2026 Cycle
