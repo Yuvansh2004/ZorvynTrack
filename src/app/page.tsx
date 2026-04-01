@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -9,6 +10,7 @@ import { InsightsView } from '@/components/InsightsView';
 import { SettingsView } from '@/components/SettingsView';
 import { LoginPage } from '@/components/LoginPage';
 import { AppFooter } from '@/components/AppFooter';
+import { Tutorial } from '@/components/Tutorial';
 import { Zap } from 'lucide-react';
 
 export default function Home() {
@@ -52,6 +54,7 @@ export default function Home() {
           <AppFooter />
         </div>
       </main>
+      <Tutorial />
     </div>
   );
 }

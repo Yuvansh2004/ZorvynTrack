@@ -93,6 +93,8 @@ interface FinanceContextType {
   currentUser: User | null;
   login: (email: string, password?: string) => boolean;
   logout: () => void;
+  hasSeenTutorial: boolean;
+  completeTutorial: () => void;
 }
 
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
@@ -104,11 +106,13 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [hasSeenTutorial, setHasSeenTutorial] = useState(false);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('zorvyn_current_user');
     const savedTheme = localStorage.getItem('zorvyn_theme');
     const savedLedger = localStorage.getItem('zorvyn_master_ledger');
+    const tutorialSeen = localStorage.getItem('zorvyn_tutorial_seen');
     
     if (savedTheme) {
       const isDark = savedTheme === 'dark';
@@ -129,6 +133,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setUserRole(user.role);
     }
 
+    if (tutorialSeen === 'true') {
+      setHasSeenTutorial(true);
+    }
+
     setIsLoading(false);
   }, []);
 
@@ -136,6 +144,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     if (!isLoading) {
       localStorage.setItem('zorvyn_master_ledger', JSON.stringify(masterLedger));
       localStorage.setItem('zorvyn_theme', isDarkMode ? 'dark' : 'light');
+      localStorage.setItem('zorvyn_tutorial_seen', hasSeenTutorial.toString());
       if (currentUser) {
         localStorage.setItem('zorvyn_current_user', JSON.stringify(currentUser));
       } else {
@@ -148,7 +157,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
         document.documentElement.classList.remove('dark');
       }
     }
-  }, [masterLedger, currentUser, isLoading, isDarkMode]);
+  }, [masterLedger, currentUser, isLoading, isDarkMode, hasSeenTutorial]);
 
   const transactions = masterLedger.filter(t => {
     if (userRole === 'Admin') return true;
@@ -195,6 +204,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     setMasterLedger([]);
   };
 
+  const completeTutorial = () => {
+    setHasSeenTutorial(true);
+  };
+
   return (
     <FinanceContext.Provider value={{ 
       transactions, 
@@ -211,7 +224,9 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setIsDarkMode,
       currentUser,
       login,
-      logout
+      logout,
+      hasSeenTutorial,
+      completeTutorial
     }}>
       {children}
     </FinanceContext.Provider>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -38,19 +39,21 @@ export function AppSidebar() {
       isCollapsed ? "w-20" : "w-64"
     )}>
       <div className="p-6 flex items-center justify-between border-b border-slate-50 dark:border-slate-900">
-        {!isCollapsed && (
-          <div className="flex items-center gap-2">
-            <div className="bg-indigo-600 p-1.5 rounded-lg">
-              <Wallet className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Zorvyn<span className="text-indigo-600">Track</span></span>
+        <div className="flex items-center gap-2">
+          <div className="bg-indigo-600 p-1.5 rounded-lg shrink-0">
+            <Wallet className="w-5 h-5 text-white" />
           </div>
-        )}
+          {!isCollapsed && (
+            <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white truncate">
+              Zorvyn<span className="text-indigo-600">Track</span>
+            </span>
+          )}
+        </div>
         <Button 
           variant="ghost" 
           size="icon" 
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-slate-400"
+          className="text-slate-400 shrink-0"
         >
           {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
         </Button>
@@ -69,11 +72,11 @@ export function AppSidebar() {
             )}
           >
             <item.icon className={cn(
-              "w-5 h-5",
+              "w-5 h-5 shrink-0",
               activeView === item.view ? "text-indigo-600 dark:text-indigo-400" : "text-slate-400 dark:text-slate-500"
             )} />
             {!isCollapsed && (
-              <span className="text-sm font-semibold">{item.label}</span>
+              <span className="text-sm font-semibold truncate">{item.label}</span>
             )}
           </button>
         ))}
@@ -84,7 +87,7 @@ export function AppSidebar() {
           "flex items-center gap-3",
           isCollapsed ? "justify-center" : "px-2"
         )}>
-          <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xs font-bold">
+          <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xs font-bold shrink-0">
             {getInitials(currentUser.name)}
           </div>
           {!isCollapsed && (
@@ -94,7 +97,7 @@ export function AppSidebar() {
             </div>
           )}
           {!isCollapsed && (
-            <Button variant="ghost" size="icon" onClick={logout} className="text-slate-400 hover:text-rose-500 hover:bg-transparent">
+            <Button variant="ghost" size="icon" onClick={logout} className="text-slate-400 hover:text-rose-500 hover:bg-transparent shrink-0">
               <LogOut className="w-4 h-4" />
             </Button>
           )}
