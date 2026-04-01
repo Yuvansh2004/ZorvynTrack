@@ -9,7 +9,7 @@ import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
 import { Separator } from '@/components/ui/separator';
 
 export const SettingsView = () => {
-  const { isDarkMode, setIsDarkMode, userRole, currentUser } = useFinance();
+  const { isDarkMode, setIsDarkMode, userRole } = useFinance();
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
@@ -73,7 +73,7 @@ export const SettingsView = () => {
             </CardContent>
           </Card>
 
-          {/* 3. About the Developer (Last) */}
+          {/* 3. About the Developer */}
           <Card className="border-none shadow-sm bg-white dark:bg-slate-900 overflow-hidden relative">
             <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
               <Globe className="w-32 h-32" />
@@ -106,10 +106,17 @@ export const SettingsView = () => {
                   <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                     I am a passionate student developer focused on crafting clean, data-driven financial interfaces. This dashboard demonstrates my expertise in frontend state management, responsive design, and building intuitive user experiences as part of my computer engineering curriculum.
                   </p>
-                  <div className="flex flex-wrap gap-4 pt-2">
-                    <a href="mailto:yuvanshkoli1011@gmail.com" className="flex items-center gap-2 text-xs font-black text-indigo-600 hover:text-indigo-700 transition-colors uppercase tracking-widest">
-                      <Mail className="w-3.5 h-3.5" /> Email Me
-                    </a>
+                  <div className="flex flex-col gap-3 pt-2">
+                    <div className="flex flex-wrap gap-4">
+                      <a href="mailto:yuvanshkoli1011@gmail.com" className="flex items-center gap-2 text-xs font-black text-indigo-600 hover:text-indigo-700 transition-colors uppercase tracking-widest">
+                        <Mail className="w-3.5 h-3.5" /> Personal: yuvanshkoli1011@gmail.com
+                      </a>
+                    </div>
+                    <div className="flex flex-wrap gap-4">
+                      <a href="mailto:yuvanshkoli2324@ternaengg.ac.in" className="flex items-center gap-2 text-xs font-black text-indigo-600 hover:text-indigo-700 transition-colors uppercase tracking-widest">
+                        <Mail className="w-3.5 h-3.5" /> College: yuvanshkoli2324@ternaengg.ac.in
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
