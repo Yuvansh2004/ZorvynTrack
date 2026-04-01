@@ -9,18 +9,22 @@ import {
   ChevronLeft,
   ChevronRight,
   Shield,
-  Zap,
   LogOut,
   Eye
 } from 'lucide-react';
 import { useFinance, ViewType } from '@/context/FinanceContext';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
+
+const ZorvynLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 20L80 20L20 80L80 80" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="50" cy="50" r="10" fill="currentColor" />
+  </svg>
+);
 
 export function AppSidebar() {
-  const { activeView, setActiveView, userRole, setUserRole, currentUser, logout } = useFinance();
+  const { activeView, setActiveView, userRole, currentUser, logout } = useFinance();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   if (!currentUser) return null;
@@ -43,11 +47,11 @@ export function AppSidebar() {
     )}>
       <div className="p-6 flex items-center justify-between border-b border-slate-50 dark:border-slate-900">
         {!isCollapsed && (
-          <div className="flex items-center gap-2">
-            <div className="bg-indigo-600 p-1.5 rounded-lg shadow-md shadow-indigo-500/20">
-              <Zap className="w-5 h-5 text-white" />
+          <div className="flex items-center gap-3">
+            <div className="bg-indigo-600 p-1.5 rounded-lg shadow-lg">
+              <ZorvynLogo className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Zorvyn<span className="text-indigo-600">Track</span></span>
+            <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Zorvyn<span className="text-indigo-600">Track</span></span>
           </div>
         )}
         <Button 
@@ -85,23 +89,13 @@ export function AppSidebar() {
 
       <div className="p-4 border-t border-slate-100 dark:border-slate-900 space-y-4">
         {!isCollapsed && (
-          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl space-y-3">
+          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl">
             <div className="flex items-center justify-between">
-              <Label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                Current Role
-              </Label>
-              <div className="flex items-center gap-2">
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Node Role</span>
+              <div className="flex items-center gap-1.5">
                 {userRole === 'Admin' ? <Shield className="w-3 h-3 text-indigo-600" /> : <Eye className="w-3 h-3 text-slate-400" />}
                 <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300">{userRole}</span>
               </div>
-            </div>
-            <div className="flex items-center justify-between pt-1">
-              <p className="text-[10px] text-slate-400 italic">Toggle for Demo RBAC</p>
-              <Switch 
-                checked={userRole === 'Admin'} 
-                onCheckedChange={(checked) => setUserRole(checked ? 'Admin' : 'Viewer')}
-                className="scale-75 origin-right"
-              />
             </div>
           </div>
         )}

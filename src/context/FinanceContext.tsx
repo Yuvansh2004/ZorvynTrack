@@ -28,6 +28,27 @@ export const DEMO_ACCOUNTS: User[] = [
   { name: 'Priya Sharma', email: 'priya.sharma@zorvyn.com', role: 'Viewer' },
 ];
 
+const INITIAL_DATA: Record<string, Transaction[]> = {
+  'yuvanshkoli1011@gmail.com': [
+    { id: 'y1', date: '2024-05-20', description: 'Corporate Stipend - Zorvyn', amount: 25000, category: 'Salary', type: 'Income' },
+    { id: 'y2', date: '2024-05-19', description: 'MacBook Pro EMI', amount: 8500, category: 'Electronics', type: 'Expense' },
+    { id: 'y3', date: '2024-05-18', description: 'AWS Cloud Services', amount: 1200, category: 'Development', type: 'Expense' },
+    { id: 'y4', date: '2024-05-15', description: 'Freelance UI Project', amount: 12000, category: 'Income', type: 'Income' },
+  ],
+  'aditya.rao@zorvyn.com': [
+    { id: 'a1', date: '2024-05-20', description: 'College Canteen', amount: 120, category: 'Food', type: 'Expense' },
+    { id: 'a2', date: '2024-05-19', description: 'Monthly Bus Pass', amount: 600, category: 'Transport', type: 'Expense' },
+    { id: 'a3', date: '2024-05-18', description: 'Pocket Money from Dad', amount: 3000, category: 'Allowance', type: 'Income' },
+    { id: 'a4', date: '2024-05-17', description: 'Book Store - React Guide', amount: 450, category: 'Education', type: 'Expense' },
+  ],
+  'priya.sharma@zorvyn.com': [
+    { id: 'p1', date: '2024-05-20', description: 'Starbucks Coffee', amount: 350, category: 'Food', type: 'Expense' },
+    { id: 'p2', date: '2024-05-19', description: 'Client Payment - Logo Design', amount: 8000, category: 'Income', type: 'Income' },
+    { id: 'p3', date: '2024-05-18', description: 'Adobe Creative Cloud', amount: 2400, category: 'Subscription', type: 'Expense' },
+    { id: 'p4', date: '2024-05-16', description: 'Uber to Co-working', amount: 180, category: 'Transport', type: 'Expense' },
+  ]
+};
+
 interface FinanceContextType {
   transactions: Transaction[];
   userRole: UserRole;
@@ -44,19 +65,6 @@ interface FinanceContextType {
   logout: () => void;
 }
 
-const INITIAL_TRANSACTIONS: Transaction[] = [
-  { id: '1', date: '2024-05-20', description: 'UPI to Ramesh (Lunch)', amount: 450, category: 'Food', type: 'Expense' },
-  { id: '2', date: '2024-05-19', description: 'Internship Stipend', amount: 15000, category: 'Salary', type: 'Income' },
-  { id: '3', date: '2024-05-18', description: 'Jio Recharge', amount: 749, category: 'Bills', type: 'Expense' },
-  { id: '4', date: '2024-05-17', description: 'Swiggy Biryani', amount: 320, category: 'Food', type: 'Expense' },
-  { id: '5', date: '2024-05-16', description: 'Airtel Broadband', amount: 1180, category: 'Bills', type: 'Expense' },
-  { id: '6', date: '2024-05-15', description: 'Freelance Work', amount: 5000, category: 'Income', type: 'Income' },
-  { id: '7', date: '2024-05-14', description: 'Amazon - Laptop Bag', amount: 1200, category: 'Shopping', type: 'Expense' },
-  { id: '8', date: '2024-05-13', description: 'Petrol - HP Pump', amount: 500, category: 'Transport', type: 'Expense' },
-  { id: '9', date: '2024-05-12', description: 'Bank Refund', amount: 1200, category: 'Refund', type: 'Income' },
-  { id: '10', date: '2024-05-11', description: 'Zomato Dinner', amount: 890, category: 'Food', type: 'Expense' },
-];
-
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
 
 export const FinanceProvider = ({ children }: { children: ReactNode }) => {
@@ -68,39 +76,37 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const savedTransactions = localStorage.getItem('zorvyn_transactions');
     const savedUser = localStorage.getItem('zorvyn_current_user');
     const savedTheme = localStorage.getItem('zorvyn_theme');
     
-    if (savedTransactions) {
-      setTransactions(JSON.parse(savedTransactions));
-    } else {
-      setTransactions(INITIAL_TRANSACTIONS);
+    if (savedTheme) {
+      const isDark = savedTheme === 'dark';
+      setIsDarkMode(isDark);
+      if (isDark) document.documentElement.classList.add('dark');
+      else document.documentElement.classList.remove('dark');
     }
 
     if (savedUser) {
       const user = JSON.parse(savedUser);
       setCurrentUser(user);
       setUserRole(user.role);
-    }
-
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
+      
+      const userTransactions = localStorage.getItem(`zorvyn_tx_${user.email}`);
+      if (userTransactions) {
+        setTransactions(JSON.parse(userTransactions));
+      } else {
+        setTransactions(INITIAL_DATA[user.email] || []);
+      }
     }
 
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    if (!isLoading) {
-      localStorage.setItem('zorvyn_transactions', JSON.stringify(transactions));
+    if (!isLoading && currentUser) {
+      localStorage.setItem(`zorvyn_tx_${currentUser.email}`, JSON.stringify(transactions));
       localStorage.setItem('zorvyn_theme', isDarkMode ? 'dark' : 'light');
-      
-      if (currentUser) {
-        localStorage.setItem('zorvyn_current_user', JSON.stringify(currentUser));
-      } else {
-        localStorage.removeItem('zorvyn_current_user');
-      }
+      localStorage.setItem('zorvyn_current_user', JSON.stringify(currentUser));
 
       if (isDarkMode) {
         document.documentElement.classList.add('dark');
@@ -111,12 +117,18 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   }, [transactions, currentUser, isLoading, isDarkMode]);
 
   const login = (email: string, password?: string) => {
-    // For student assignment, we simulate auth with a master key or demo account match
     const user = DEMO_ACCOUNTS.find(acc => acc.email === email);
     if (user || password === 'zorvyn2024') {
-      const sessionUser = user || { name: 'External Auditor', email, role: 'Viewer' as UserRole };
+      const sessionUser = user || { name: 'Guest User', email, role: 'Viewer' as UserRole };
       setCurrentUser(sessionUser);
       setUserRole(sessionUser.role);
+      
+      const userTransactions = localStorage.getItem(`zorvyn_tx_${sessionUser.email}`);
+      if (userTransactions) {
+        setTransactions(JSON.parse(userTransactions));
+      } else {
+        setTransactions(INITIAL_DATA[sessionUser.email] || []);
+      }
       return true;
     }
     return false;
@@ -125,6 +137,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setCurrentUser(null);
     localStorage.removeItem('zorvyn_current_user');
+    setTransactions([]);
     setActiveView('Dashboard');
   };
 
