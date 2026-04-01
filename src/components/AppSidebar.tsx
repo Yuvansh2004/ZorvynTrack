@@ -5,28 +5,21 @@ import {
   LayoutDashboard, 
   History, 
   Lightbulb, 
-  Settings, 
+  User, 
   ChevronLeft,
   ChevronRight,
   Shield,
   LogOut,
   Eye,
-  Zap
+  Wallet
 } from 'lucide-react';
 import { useFinance, ViewType } from '@/context/FinanceContext';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-
-export const ZorvynLogo = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="20" y="20" width="60" height="60" rx="12" className="fill-indigo-600 shadow-xl" />
-    <path d="M40 35L60 35L40 65L60 65" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="50" cy="50" r="6" className="fill-white animate-pulse" />
-  </svg>
-);
+import { Switch } from '@/components/ui/switch';
 
 export function AppSidebar() {
-  const { activeView, setActiveView, userRole, currentUser, logout } = useFinance();
+  const { activeView, setActiveView, userRole, setUserRole, currentUser, logout } = useFinance();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   if (!currentUser) return null;
@@ -35,7 +28,7 @@ export function AppSidebar() {
     { icon: LayoutDashboard, label: 'Dashboard', view: 'Dashboard' as ViewType },
     { icon: History, label: 'Transactions', view: 'Transactions' as ViewType },
     { icon: Lightbulb, label: 'Insights', view: 'Insights' as ViewType },
-    { icon: Settings, label: 'Profile', view: 'Settings' as ViewType },
+    { icon: User, label: 'Profile', view: 'Settings' as ViewType },
   ];
 
   const getInitials = (name: string) => {
@@ -49,11 +42,11 @@ export function AppSidebar() {
     )}>
       <div className="p-6 flex items-center justify-between border-b border-slate-50 dark:border-slate-900">
         {!isCollapsed && (
-          <div className="flex items-center gap-3">
-            <div className="p-1 rounded-lg">
-              <ZorvynLogo className="w-8 h-8" />
+          <div className="flex items-center gap-2">
+            <div className="bg-indigo-600 p-1.5 rounded-lg">
+              <Wallet className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Zorvyn<span className="text-indigo-600">Track</span></span>
+            <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Zorvyn<span className="text-indigo-600">Track</span></span>
           </div>
         )}
         <Button 
@@ -83,7 +76,7 @@ export function AppSidebar() {
               activeView === item.view ? "text-indigo-600 dark:text-indigo-400" : "text-slate-400 dark:text-slate-500"
             )} />
             {!isCollapsed && (
-              <span className="text-sm font-bold tracking-tight">{item.label}</span>
+              <span className="text-sm font-semibold">{item.label}</span>
             )}
           </button>
         ))}
@@ -91,12 +84,18 @@ export function AppSidebar() {
 
       <div className="p-4 border-t border-slate-100 dark:border-slate-900 space-y-4">
         {!isCollapsed && (
-          <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Current Role</span>
-              <div className="flex items-center gap-1.5">
+          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Switch Role</span>
                 {userRole === 'Admin' ? <Shield className="w-3 h-3 text-indigo-600" /> : <Eye className="w-3 h-3 text-slate-400" />}
-                <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300">{userRole}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-600 dark:text-slate-300">{userRole}</span>
+                <Switch 
+                  checked={userRole === 'Admin'} 
+                  onCheckedChange={(checked) => setUserRole(checked ? 'Admin' : 'Viewer')}
+                />
               </div>
             </div>
           </div>
@@ -106,13 +105,13 @@ export function AppSidebar() {
           "flex items-center gap-3",
           isCollapsed ? "justify-center" : "px-2"
         )}>
-          <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xs font-black">
+          <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xs font-bold">
             {getInitials(currentUser.name)}
           </div>
           {!isCollapsed && (
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-black text-slate-900 dark:text-white truncate">{currentUser.name}</p>
-              <p className="text-[10px] text-slate-400 truncate">{currentUser.email}</p>
+              <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{currentUser.name}</p>
+              <p className="text-[10px] text-slate-400 truncate">TE85LMG1</p>
             </div>
           )}
           {!isCollapsed && (
