@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -60,20 +61,22 @@ export const SummaryCards = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
-          className={`glass-card p-6 rounded-2xl border ${card.border} group`}
+          className={`glass-card p-5 rounded-2xl border ${card.border} group min-h-[160px] flex flex-col justify-between`}
         >
-          <div className="flex items-center justify-between mb-6">
-            <div className={`p-3 ${card.bg} rounded-xl group-hover:scale-110 transition-transform`}>
-              <card.icon className={`w-6 h-6 ${card.color}`} />
+          <div className="flex items-center justify-between mb-4">
+            <div className={`p-2.5 ${card.bg} rounded-xl group-hover:scale-110 transition-transform`}>
+              <card.icon className={`w-5 h-5 ${card.color}`} />
             </div>
-            <div className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full ${card.isPositive ? 'bg-emerald-400/10 text-emerald-400' : 'bg-rose-400/10 text-rose-400'}`}>
-              {card.isPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+            <div className={`flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full ${card.isPositive ? 'bg-emerald-400/10 text-emerald-400' : 'bg-rose-400/10 text-rose-400'}`}>
+              {card.isPositive ? <ArrowUpRight className="w-2.5 h-2.5" /> : <ArrowDownRight className="w-2.5 h-2.5" />}
               {card.trend}
             </div>
           </div>
-          <div>
-            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">{card.title}</p>
-            <h3 className="text-3xl font-bold text-white tracking-tight">{formatINR(card.amount)}</h3>
+          <div className="overflow-hidden">
+            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 truncate">{card.title}</p>
+            <h3 className="text-2xl lg:text-3xl font-bold text-white tracking-tight truncate leading-none">
+              {formatINR(card.amount)}
+            </h3>
           </div>
         </motion.div>
       ))}
