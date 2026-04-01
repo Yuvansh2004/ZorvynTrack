@@ -62,6 +62,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const savedTransactions = localStorage.getItem('zorvyn_transactions');
     const savedRole = localStorage.getItem('zorvyn_role');
+    const savedView = localStorage.getItem('zorvyn_view');
     
     if (savedTransactions) {
       setTransactions(JSON.parse(savedTransactions));
@@ -72,6 +73,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     if (savedRole) {
       setUserRole(savedRole as UserRole);
     }
+
+    if (savedView) {
+      setActiveView(savedView as ViewType);
+    }
     
     setIsLoading(false);
   }, []);
@@ -80,8 +85,9 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     if (!isLoading) {
       localStorage.setItem('zorvyn_transactions', JSON.stringify(transactions));
       localStorage.setItem('zorvyn_role', userRole);
+      localStorage.setItem('zorvyn_view', activeView);
     }
-  }, [transactions, userRole, isLoading]);
+  }, [transactions, userRole, activeView, isLoading]);
 
   const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
     const newTransaction = {
@@ -96,7 +102,16 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <FinanceContext.Provider value={{ transactions, userRole, activeView, addTransaction, deleteTransaction, setUserRole, setActiveView, isLoading }}>
+    <FinanceContext.Provider value={{ 
+      transactions, 
+      userRole, 
+      activeView, 
+      addTransaction, 
+      deleteTransaction, 
+      setUserRole, 
+      setActiveView, 
+      isLoading 
+    }}>
       {children}
     </FinanceContext.Provider>
   );
