@@ -33,15 +33,15 @@ export function AppSidebar() {
   return (
     <aside className={cn(
       "bg-white dark:bg-slate-950 border-r border-slate-100 dark:border-slate-900 transition-all duration-500 flex flex-col h-screen sticky top-0 z-50 overflow-hidden",
-      isOpen ? "w-72" : "w-20"
+      isOpen ? "w-72" : "w-24"
     )}>
       <div className={cn(
-        "h-16 flex items-center px-4 border-b border-slate-50 dark:border-slate-900 transition-all",
-        !isOpen && "px-2 justify-center gap-1"
+        "h-20 flex items-center px-4 border-b border-slate-50 dark:border-slate-900 transition-all",
+        !isOpen ? "justify-center gap-2" : "justify-between"
       )}>
-        <div className="flex items-center gap-2 min-w-0 overflow-hidden flex-1">
+        <div className="flex items-center gap-3 min-w-0 overflow-hidden">
           <div className="bg-indigo-600 p-2 rounded-xl shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none rotate-3">
-            <ZorvynLogo className="w-4 h-4 text-white" />
+            <ZorvynLogo className="w-5 h-5 text-white" />
           </div>
           {isOpen && (
             <span className="text-xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap overflow-hidden animate-in fade-in slide-in-from-left-2 duration-300">
@@ -55,11 +55,11 @@ export function AppSidebar() {
           size="icon" 
           onClick={toggleSidebar} 
           className={cn(
-            "shrink-0 h-8 w-8 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
-            !isOpen && "h-6 w-6 p-0"
+            "shrink-0 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
+            isOpen ? "h-9 w-9" : "h-7 w-7"
           )}
         >
-          {isOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+          {isOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-4 h-4" />}
         </Button>
       </div>
 

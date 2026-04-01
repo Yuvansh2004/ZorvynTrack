@@ -19,31 +19,31 @@ export default function Home() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
-        <div className="text-center space-y-8">
+        <div className="text-center space-y-10">
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ 
-              scale: [0.9, 1.1, 0.9],
+              scale: [1, 1.15, 1],
               opacity: 1,
-              rotate: [0, 5, 0]
+              rotate: [0, 2, 0]
             }}
             transition={{ 
-              duration: 3, 
+              duration: 4, 
               repeat: Infinity,
               ease: "easeInOut" 
             }}
-            className="inline-flex p-6 bg-indigo-600 rounded-[2.5rem] shadow-2xl shadow-indigo-200 dark:shadow-none"
+            className="inline-flex p-10 bg-indigo-600 rounded-[3rem] shadow-2xl shadow-indigo-200 dark:shadow-none"
           >
-            <ZorvynLogo className="w-12 h-12 text-white" />
+            <ZorvynLogo className="w-24 h-24 text-white" />
           </motion.div>
-          <div className="space-y-2">
-            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-600/50">ZorvynTrack System Security Technology</p>
-            <div className="w-32 h-1 bg-slate-200 dark:bg-slate-800 mx-auto rounded-full overflow-hidden">
+          <div className="space-y-4">
+            <p className="text-[11px] font-black uppercase tracking-[0.6em] text-indigo-600/60">ZorvynTrack System Security Technology</p>
+            <div className="w-48 h-1 bg-slate-200 dark:bg-slate-800 mx-auto rounded-full overflow-hidden">
               <motion.div 
                 className="h-full bg-indigo-600"
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
               />
             </div>
           </div>
