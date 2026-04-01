@@ -1,26 +1,38 @@
-
 "use client";
 
 import React, { useState } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { motion } from 'framer-motion';
-import { Shield, ArrowRight, Mail, Lock } from 'lucide-react';
+import { Shield, ArrowRight, Mail, Lock, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 
 export const LoginPage = () => {
   const { login } = useFinance();
+  const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login(email);
+    setIsSubmitting(true);
+    
+    // Simulating authentication delay
+    setTimeout(() => {
+      login(email);
+      toast({
+        title: "Access Authorised",
+        description: `Welcome back, ${email.split('@')[0]}`,
+      });
+      setIsSubmitting(false);
+    }, 800);
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#020617] flex items-center justify-center p-6 relative overflow-hidden font-body">
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-primary/10 blur-[120px] rounded-full"></div>
@@ -77,12 +89,20 @@ export const LoginPage = () => {
 
             <Button 
               type="submit" 
+              disabled={isSubmitting}
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 rounded-xl group transition-all"
             >
-              Authorise Access
+              {isSubmitting ? "Authorising..." : "Authorise Access"}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </form>
+
+          <div className="mt-6 p-3 bg-primary/5 border border-primary/10 rounded-xl flex items-start gap-3">
+            <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+            <p className="text-[9px] text-slate-400 leading-tight">
+              <span className="font-bold text-primary uppercase">Demo Access:</span> For the purpose of this technical screening, any credentials will be accepted. Use your corporate email to proceed.
+            </p>
+          </div>
 
           <div className="mt-8 pt-6 border-t border-slate-800/50 text-center">
             <p className="text-xs text-slate-500 leading-relaxed italic">
