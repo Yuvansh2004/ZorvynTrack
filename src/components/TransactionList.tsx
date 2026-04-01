@@ -70,33 +70,29 @@ export const TransactionList = () => {
           </div>
           <div className="flex items-center gap-2">
             {userRole === 'Admin' && (
-              <>
-                <Button variant="outline" size="sm" onClick={exportCSV} className="h-9 text-xs font-bold uppercase tracking-tight rounded-xl">
-                  <Download className="w-4 h-4 mr-2" />
-                  Export
-                </Button>
-                <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight rounded-xl">
-                  <Plus className="w-4 h-4 mr-2" />
-                  New Entry
-                </Button>
-              </>
+              <Button variant="outline" size="sm" onClick={exportCSV} className="h-9 text-xs font-bold uppercase tracking-tight rounded-xl">
+                <Download className="w-4 h-4 mr-2" />
+                Export
+              </Button>
             )}
+            <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight rounded-xl">
+              <Plus className="w-4 h-4 mr-2" />
+              New Entry
+            </Button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3 w-full">
-          {/* Search */}
           <div className="relative col-span-1 md:col-span-2 xl:col-span-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
-              placeholder="Search data..." 
+              placeholder="Search records..." 
               className="pl-9 h-10 w-full text-xs font-bold rounded-xl"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           
-          {/* Date Range */}
           <div className="flex items-center gap-2 col-span-1 md:col-span-2 xl:col-span-2">
             <div className="relative flex-1">
               <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
@@ -105,7 +101,7 @@ export const TransactionList = () => {
                 className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                placeholder="Start"
+                placeholder="Start Date"
               />
             </div>
             <ArrowRight className="w-4 h-4 text-slate-300 shrink-0" />
@@ -116,12 +112,11 @@ export const TransactionList = () => {
                 className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                placeholder="End"
+                placeholder="End Date"
               />
             </div>
           </div>
 
-          {/* Type Filter */}
           <Select value={typeFilter} onValueChange={setTypeFilter}>
             <SelectTrigger className="h-10 text-xs font-bold rounded-xl">
               <SelectValue placeholder="All Types" />
@@ -133,7 +128,6 @@ export const TransactionList = () => {
             </SelectContent>
           </Select>
 
-          {/* Row Limit */}
           <div className="flex items-center gap-2">
             <Select value={rowsLimit} onValueChange={setRowsLimit}>
               <SelectTrigger className="h-10 text-xs font-bold rounded-xl">
@@ -245,9 +239,7 @@ export const TransactionList = () => {
           )}
         </div>
       </CardContent>
-      {userRole === 'Admin' && (
-        <AddTransactionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      )}
+      <AddTransactionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       {userRole === 'Admin' && editingTransaction && (
         <EditTransactionModal 
           isOpen={!!editingTransaction} 
