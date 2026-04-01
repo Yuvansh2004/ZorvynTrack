@@ -10,9 +10,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Shield,
-  Eye,
+  Zap,
   LogOut,
-  LineChart
+  LineChart,
+  Bell
 } from 'lucide-react';
 import { useFinance, ViewType, UserRole } from '@/context/FinanceContext';
 import { cn } from '@/lib/utils';
@@ -37,11 +38,16 @@ export function AppSidebar() {
     )}>
       <div className="p-6 flex items-center justify-between border-b border-slate-50 dark:border-slate-900">
         {!isCollapsed && (
-          <div className="flex items-center gap-2">
-            <div className="bg-indigo-600 p-1.5 rounded-lg shadow-sm shadow-indigo-200 dark:shadow-none">
-              <Shield className="w-4 h-4 text-white" />
+          <div className="flex items-center gap-2.5">
+            <div className="relative flex items-center justify-center">
+              <div className="bg-indigo-600 p-1.5 rounded-xl rotate-3 shadow-lg shadow-indigo-500/20">
+                <Zap className="w-4 h-4 text-white fill-white/20" />
+              </div>
+              <div className="absolute -bottom-1 -right-1 bg-white dark:bg-slate-950 rounded-full p-0.5 border border-slate-100 dark:border-slate-800">
+                <Shield className="w-2.5 h-2.5 text-indigo-600" />
+              </div>
             </div>
-            <span className="text-sm font-bold tracking-tight text-slate-900 dark:text-white">ZorvynTrack</span>
+            <span className="text-sm font-black tracking-tighter text-slate-900 dark:text-white uppercase italic">Zorvyn<span className="text-indigo-600">Track</span></span>
           </div>
         )}
         <Button 
@@ -85,7 +91,7 @@ export function AppSidebar() {
           <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl space-y-3">
             <div className="flex items-center justify-between">
               <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                Active Role
+                Identity Profile
               </Label>
               <span className={cn(
                 "text-[10px] font-black uppercase tracking-tight px-2 py-0.5 rounded-full",
@@ -95,7 +101,7 @@ export function AppSidebar() {
               </span>
             </div>
             <p className="text-[9px] text-slate-400 italic">
-              {userRole === 'Admin' ? 'Management privileges active.' : 'Standard read/write ledger access.'}
+              {userRole === 'Admin' ? 'Audit & Management unlocked.' : 'Standard read/write terminal access.'}
             </p>
           </div>
         )}
@@ -104,7 +110,7 @@ export function AppSidebar() {
           "flex items-center gap-3 transition-opacity",
           isCollapsed ? "justify-center" : "px-2"
         )}>
-          <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xs font-bold">
+          <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xs font-bold ring-2 ring-white dark:ring-slate-900">
             {currentUser?.name.split(' ').map(n => n[0]).join('')}
           </div>
           {!isCollapsed && (
