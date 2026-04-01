@@ -3,16 +3,15 @@
 import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, PieChart, Wallet, ArrowRight, BarChart3, Star } from 'lucide-react';
+import { TrendingUp, PieChart, Wallet, ArrowRight, BarChart3, Star, Info } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 export const InsightsView = () => {
-  const { transactions } = useFinance();
+  const { transactions, setActiveView } = useFinance();
 
   const expenses = transactions.filter(t => t.type === 'Expense');
   
-  // Highest Spending Category
   const expenseCategories = expenses.reduce((acc: Record<string, number>, curr) => {
     acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
     return acc;
@@ -21,8 +20,7 @@ export const InsightsView = () => {
   const highestCategory = Object.entries(expenseCategories)
     .sort((a, b) => b[1] - a[1])[0] || ['None', 0];
 
-  // Highest Single Expense
-  const highestSingleExpense = [...expenses].sort((a, b) => b.amount - a.amount)[0] || { description: 'None', amount: 0 };
+  const highestSingleExpense = [...expenses].sort((a, b) => b.amount - a.amount)[0] || { description: 'No Data', amount: 0 };
 
   const totalIncome = transactions
     .filter(t => t.type === 'Income')
@@ -31,110 +29,139 @@ export const InsightsView = () => {
   const totalExpenses = expenses.reduce((acc, curr) => acc + curr.amount, 0);
   const savingsRate = totalIncome > 0 ? ((totalIncome - totalExpenses) / totalIncome) * 100 : 0;
 
-  // Comparison Mock Data logic
   const comparisonData = [
-    { name: 'Last Month', amount: totalExpenses * 0.9, color: '#94a3b8' },
-    { name: 'This Month', amount: totalExpenses, color: '#6366f1' },
+    { name: 'Prior Cycle', amount: totalExpenses * 0.85, color: '#94a3b8' },
+    { name: 'Active Node', amount: totalExpenses, color: '#6366f1' },
   ];
 
+  const EmptyState = ({ message }: { message: string }) => (
+    <div className="flex flex-col items-center justify-center py-10 text-center opacity-40">
+      <Info className="w-8 h-8 mb-2" />
+      <p className="text-xs font-bold uppercase tracking-widest">{message}</p>
+    </div>
+  );
+
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Financial Insights</h1>
-        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Key observations based on your spending patterns.</p>
+        <h1 className="text-4xl weight-black text-slate-900 dark:text-white tracking-tighter italic uppercase">Analytics<span className="text-indigo-600">Kernel</span></h1>
+        <p className="text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-[6px] mt-2 opacity-60">Automated Data Interpretation</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="card-shadow bg-indigo-600 text-white border-none">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <Card 
+          onClick={() => setActiveView('Transactions')}
+          className="card-shadow bg-indigo-600 text-white border-none cursor-pointer hover:scale-[1.02] transition-transform"
+        >
           <CardHeader className="pb-2">
-            <PieChart className="w-5 h-5 opacity-80 mb-1" />
-            <CardTitle className="text-xs font-bold uppercase tracking-widest opacity-80">Top Category</CardTitle>
+            <PieChart className="w-5 h-5 opacity-60 mb-2" />
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest opacity-60">Core Inflow Target</CardTitle>
           </CardHeader>
           <CardContent>
-            <h3 className="text-2xl font-bold">{highestCategory[0]}</h3>
-            <p className="text-indigo-200 text-xs mt-1">{formatINR(Number(highestCategory[1]))} total spent</p>
+            {highestCategory[0] !== 'None' ? (
+              <>
+                <h3 className="text-3xl font-black tracking-tight">{highestCategory[0]}</h3>
+                <p className="text-indigo-200 text-xs mt-1 font-bold">{formatINR(Number(highestCategory[1]))} total audit</p>
+              </>
+            ) : <EmptyState message="No classifications" />}
           </CardContent>
         </Card>
 
-        <Card className="card-shadow">
+        <Card 
+          onClick={() => setActiveView('Transactions')}
+          className="card-shadow cursor-pointer hover:scale-[1.02] transition-transform"
+        >
           <CardHeader className="pb-2">
-            <Star className="w-5 h-5 text-amber-500 mb-1" />
-            <CardTitle className="text-xs font-bold uppercase tracking-widest text-slate-400">Largest Purchase</CardTitle>
+            <Star className="w-5 h-5 text-amber-500 mb-2" />
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">Quantum Spike</CardTitle>
           </CardHeader>
           <CardContent>
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-white truncate" title={highestSingleExpense.description}>
-              {highestSingleExpense.description}
-            </h3>
-            <p className="text-slate-500 text-xs mt-1">{formatINR(highestSingleExpense.amount)}</p>
+            {highestSingleExpense.amount > 0 ? (
+              <>
+                <h3 className="text-3xl font-black text-slate-900 dark:text-white truncate" title={highestSingleExpense.description}>
+                  {highestSingleExpense.description}
+                </h3>
+                <p className="text-slate-500 text-xs mt-1 font-bold">{formatINR(highestSingleExpense.amount)} single outflow</p>
+              </>
+            ) : <EmptyState message="No entries" />}
           </CardContent>
         </Card>
 
-        <Card className="card-shadow">
+        <Card 
+          onClick={() => setActiveView('Dashboard')}
+          className="card-shadow cursor-pointer hover:scale-[1.02] transition-transform"
+        >
           <CardHeader className="pb-2">
-            <TrendingUp className="w-5 h-5 text-emerald-500 mb-1" />
-            <CardTitle className="text-xs font-bold uppercase tracking-widest text-slate-400">Savings Rate</CardTitle>
+            <TrendingUp className="w-5 h-5 text-emerald-500 mb-2" />
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">Retention Ratio</CardTitle>
           </CardHeader>
           <CardContent>
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{Math.max(0, savingsRate).toFixed(1)}%</h3>
-            <p className="text-emerald-500 text-xs mt-1 font-semibold">Health: {savingsRate > 20 ? 'Optimal' : 'Needs attention'}</p>
+            <h3 className="text-3xl font-black text-slate-900 dark:text-white">{Math.max(0, savingsRate).toFixed(1)}%</h3>
+            <p className={`text-xs mt-1 font-black uppercase tracking-tighter ${savingsRate > 20 ? 'text-emerald-500' : 'text-rose-500'}`}>
+              STATUS: {savingsRate > 20 ? 'OPTIMAL' : 'BELOW THRESHOLD'}
+            </p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <Card className="card-shadow">
           <CardHeader>
-            <CardTitle className="text-lg font-bold flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-indigo-600" />
-              Monthly Comparison
+            <CardTitle className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
+              <BarChart3 className="w-4 h-4 text-indigo-600" />
+              Node Comparison (Audit)
             </CardTitle>
           </CardHeader>
-          <CardContent className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={comparisonData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} fontSize={12} />
-                <YAxis axisLine={false} tickLine={false} fontSize={12} tickFormatter={(v) => `₹${v}`} />
-                <Tooltip 
-                  cursor={{ fill: 'transparent' }}
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
-                />
-                <Bar dataKey="amount" radius={[8, 8, 0, 0]}>
-                  {comparisonData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+          <CardContent className="h-[350px]">
+            {totalExpenses > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={comparisonData}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} fontSize={10} fontWeight={700} tick={{ fill: '#94a3b8' }} />
+                  <YAxis axisLine={false} tickLine={false} fontSize={10} fontWeight={700} tick={{ fill: '#94a3b8' }} tickFormatter={(v) => `₹${v}`} />
+                  <Tooltip 
+                    cursor={{ fill: '#f8fafc' }}
+                    contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}
+                  />
+                  <Bar dataKey="amount" radius={[8, 8, 0, 0]}>
+                    {comparisonData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            ) : <div className="h-full flex items-center justify-center italic text-slate-400">Zero-base outflow detected.</div>}
           </CardContent>
         </Card>
 
         <Card className="card-shadow">
           <CardHeader>
-            <CardTitle className="text-lg font-bold">Smart Observations</CardTitle>
+            <CardTitle className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Kernel Deductions</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-              <div className="p-2 bg-white dark:bg-slate-900 rounded-lg shadow-sm mt-1">
+          <CardContent className="space-y-6">
+            <div className="flex items-start gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 group hover:border-indigo-500/20 transition-all">
+              <div className="p-2.5 bg-white dark:bg-slate-950 rounded-xl shadow-sm mt-1">
                 <ArrowRight className="w-4 h-4 text-indigo-600" />
               </div>
               <div>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">Spending Alert</p>
-                <p className="text-xs text-slate-500 mt-1">
-                  Your primary expenditure is in <span className="font-bold text-indigo-600">{highestCategory[0]}</span>. 
-                  This accounts for {((Number(highestCategory[1]) / totalExpenses) * 100).toFixed(1)}% of total monthly expenses.
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Structural Analysis</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
+                  {highestCategory[0] !== 'None' ? (
+                    <>Your primary expenditure is concentrated in <span className="text-indigo-600">{highestCategory[0]}</span>, accounting for {((Number(highestCategory[1]) / totalExpenses) * 100).toFixed(0)}% of outflow.</>
+                  ) : "Insufficient classification telemetry to perform structural analysis."}
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-              <div className="p-2 bg-white dark:bg-slate-900 rounded-lg shadow-sm mt-1">
+            <div className="flex items-start gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 group hover:border-emerald-500/20 transition-all">
+              <div className="p-2.5 bg-white dark:bg-slate-950 rounded-xl shadow-sm mt-1">
                 <ArrowRight className="w-4 h-4 text-emerald-600" />
               </div>
               <div>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">Savings Outlook</p>
-                <p className="text-xs text-slate-500 mt-1">
-                  You have saved <span className="font-bold text-emerald-600">{formatINR(totalIncome - totalExpenses)}</span> this month. 
-                  Maintain this trend to build your emergency fund.
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Liquidity Outlook</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
+                  {totalIncome > 0 ? (
+                    <>You have retained <span className="text-emerald-600">{formatINR(totalIncome - totalExpenses)}</span> this cycle. Node health is {savingsRate > 20 ? 'Optimal' : 'Compromised'}.</>
+                  ) : "Node inflow currently zero. Awaiting stipend or salary sync."}
                 </p>
               </div>
             </div>
