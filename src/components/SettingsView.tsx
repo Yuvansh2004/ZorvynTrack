@@ -1,90 +1,90 @@
+
 "use client";
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Moon, Sun, Bell, Shield, User } from 'lucide-react';
+import { Moon, Sun, Bell, Shield, UserCircle, Database } from 'lucide-react';
+import { useFinance } from '@/context/FinanceContext';
+import { Button } from '@/components/ui/button';
 
 export const SettingsView = () => {
+  const { isDarkMode, setIsDarkMode, userRole } = useFinance();
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div>
-        <h1 className="text-3xl font-black text-slate-900 tracking-tighter">System Settings</h1>
-        <p className="text-slate-500 text-sm mt-1">Configure your personal dashboard parameters</p>
+        <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">System Settings</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Personalize your terminal experience.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <Card className="border-none shadow-sm">
+        <Card className="border-none shadow-sm bg-white dark:bg-slate-900">
           <CardHeader>
             <CardTitle className="text-lg font-bold flex items-center gap-2">
-              <Moon className="w-4 h-4" /> Interface
+              <Moon className="w-4 h-4 text-indigo-600" /> Appearance
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label>Dark Mode</Label>
-                <p className="text-xs text-slate-500">Enable high-contrast dark theme</p>
+                <Label className="text-sm font-bold">Dark Mode</Label>
+                <p className="text-xs text-slate-500">Switch between light and high-contrast themes.</p>
               </div>
-              <Switch />
-            </div>
-            <div className="flex items-center justify-between opacity-50 pointer-events-none">
-              <div className="space-y-0.5">
-                <Label>Compact View</Label>
-                <p className="text-xs text-slate-500">Reduce padding across all views</p>
-              </div>
-              <Switch />
+              <Switch 
+                checked={isDarkMode}
+                onCheckedChange={setIsDarkMode}
+              />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-sm">
+        <Card className="border-none shadow-sm bg-white dark:bg-slate-900">
           <CardHeader>
             <CardTitle className="text-lg font-bold flex items-center gap-2">
-              <Bell className="w-4 h-4" /> Notifications
+              <Shield className="w-4 h-4 text-indigo-600" /> Security & Access
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Budget Alerts</Label>
-                <p className="text-xs text-slate-500">Notify when spending exceeds threshold</p>
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <p className="text-[10px] font-black uppercase text-slate-400 mb-1">Active Role</p>
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-bold text-slate-900 dark:text-white">{userRole}</p>
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               </div>
-              <Switch defaultChecked />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Monthly Reports</Label>
-                <p className="text-xs text-slate-500">Receive automated PDF audit reports</p>
-              </div>
-              <Switch defaultChecked />
+              <p className="text-xs text-slate-500 mt-2">
+                Use the toggle in the sidebar footer to switch roles for testing RBAC logic.
+              </p>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-sm md:col-span-2">
+        <Card className="border-none shadow-sm bg-white dark:bg-slate-900 md:col-span-2">
           <CardHeader>
             <CardTitle className="text-lg font-bold flex items-center gap-2">
-              <User className="w-4 h-4" /> Account Identification
+              <UserCircle className="w-4 h-4 text-indigo-600" /> Student Identification
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
-                <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Developer Name</p>
-                <p className="text-sm font-bold text-slate-900">Yuvansh Dashrath Koli</p>
+              <div className="p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
+                <p className="text-[10px] font-black uppercase text-slate-400 mb-1">Developer Name</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">Yuvansh Dashrath Koli</p>
               </div>
-              <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
-                <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Registered Email</p>
-                <p className="text-sm font-bold text-slate-900">yuvanshkoli@zorvyn.com</p>
+              <div className="p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
+                <p className="text-[10px] font-black uppercase text-slate-400 mb-1">Corporate Email</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">yuvanshkoli1011@gmail.com</p>
               </div>
             </div>
-            <div className="p-4 rounded-xl border border-indigo-100 bg-indigo-50 flex items-center gap-4">
-              <Shield className="w-5 h-5 text-indigo-600" />
+            
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800">
+              <Database className="w-5 h-5 text-indigo-600" />
               <div>
-                <p className="text-sm font-bold text-indigo-900">Internship Project Access</p>
-                <p className="text-xs text-indigo-700">All data is currently stored locally for assessment purposes.</p>
+                <p className="text-sm font-bold text-indigo-900 dark:text-indigo-400">LocalStorage Persistence Active</p>
+                <p className="text-xs text-indigo-700 dark:text-indigo-500">
+                  Data is stored locally in your browser to simulate a real-world backend environment.
+                </p>
               </div>
             </div>
           </CardContent>

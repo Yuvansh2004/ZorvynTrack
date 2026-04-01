@@ -25,6 +25,8 @@ interface FinanceContextType {
   addTransaction: (transaction: Omit<Transaction, 'id'>) => void;
   deleteTransaction: (id: string) => void;
   isLoading: boolean;
+  isDarkMode: boolean;
+  setIsDarkMode: (val: boolean) => void;
 }
 
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
@@ -47,11 +49,13 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [userRole, setUserRole] = useState<UserRole>('Admin');
   const [activeView, setActiveView] = useState<ViewType>('Dashboard');
   const [isLoading, setIsLoading] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     // Load persisted state from LocalStorage
     const savedTransactions = localStorage.getItem('zorvyn_transactions');
     const savedRole = localStorage.getItem('zorvyn_role');
+    const savedTheme = localStorage.getItem('zorvyn_theme');
     
     if (savedTransactions) {
       setTransactions(JSON.parse(savedTransactions));
@@ -63,23 +67,32 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setUserRole(savedRole as UserRole);
     }
 
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark');
+    }
+
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
     if (!isLoading) {
-      // Sync state to LocalStorage for persistence
       localStorage.setItem('zorvyn_transactions', JSON.stringify(transactions));
       localStorage.setItem('zorvyn_role', userRole);
+      localStorage.setItem('zorvyn_theme', isDarkMode ? 'dark' : 'light');
+      
+      if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     }
-  }, [transactions, userRole, isLoading]);
+  }, [transactions, userRole, isLoading, isDarkMode]);
 
   const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
     const newTransaction = {
       ...transaction,
       id: Math.random().toString(36).substr(2, 9),
     };
-    // Prepend to maintain chronological focus in the table while charts handle sorting
     setTransactions(prev => [newTransaction, ...prev]);
   };
 
@@ -96,7 +109,9 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setActiveView,
       addTransaction, 
       deleteTransaction, 
-      isLoading 
+      isLoading,
+      isDarkMode,
+      setIsDarkMode
     }}>
       {children}
     </FinanceContext.Provider>
