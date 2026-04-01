@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -14,6 +13,8 @@ export interface User {
   personalEmail?: string;
   avatar?: string;
 }
+
+export const ASSIGNMENT_REF_ID = "TE85LMG1";
 
 export const DEMO_ACCOUNTS: User[] = [
   { 
@@ -35,13 +36,13 @@ export const DEMO_ACCOUNTS: User[] = [
 ];
 
 const INITIAL_DATA: Transaction[] = [
-  { id: 'y1', date: '2024-05-20', description: 'Corporate Stipend - Zorvyn', amount: 25000, category: 'Salary', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-  { id: 'y2', date: '2024-05-19', description: 'MacBook Pro EMI', amount: 8500, category: 'Electronics', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-  { id: 'y3', date: '2024-05-18', description: 'Zomato Lunch', amount: 450, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
-  { id: 'a1', date: '2024-05-20', description: 'University Canteen Card', amount: 2500, category: 'Food', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
-  { id: 'a2', date: '2024-05-19', description: 'NPTEL Course Certification', amount: 1200, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
-  { id: 'p1', date: '2024-05-20', description: 'Behance Portfolio Premium', amount: 1500, category: 'Subscription', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com' },
-  { id: 'p2', date: '2024-05-19', description: 'Commission: NFT Artwork', amount: 18000, category: 'Freelance', type: 'Income', ownerEmail: 'priya.sharma@zorvyn.com' },
+  { id: 'y1', date: '2024-05-20', description: 'Monthly Internship Stipend', amount: 25000, category: 'Income', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
+  { id: 'y2', date: '2024-05-19', description: 'Laptop Monthly Installment', amount: 8500, category: 'Electronics', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
+  { id: 'y3', date: '2024-05-18', description: 'Grocery Shopping', amount: 3200, category: 'Food', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
+  { id: 'a1', date: '2024-05-20', description: 'University Course Fee', amount: 5000, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
+  { id: 'a2', date: '2024-05-19', description: 'Cafeteria Expenses', amount: 1500, category: 'Food', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
+  { id: 'p1', date: '2024-05-20', description: 'Freelance Design Project', amount: 12000, category: 'Freelance', type: 'Income', ownerEmail: 'priya.sharma@zorvyn.com' },
+  { id: 'p2', date: '2024-05-19', description: 'Adobe Creative Cloud', amount: 2100, category: 'Subscription', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com' },
 ];
 
 export interface Transaction {

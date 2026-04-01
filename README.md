@@ -1,31 +1,39 @@
-
-# ZorvynTrack - Student Internship Assignment
+# ZorvynDash - Finance Dashboard Submission
 
 Built by **Yuvansh Dashrath Koli**  
 **Personal Email:** yuvanshkoli1011@gmail.com  
 **Demo Identity:** yuvanshkoli@demozorvyn.com  
-**Assignment Reference ID:** Z-992-KOLI
+**Reference ID:** TE85LMG1
 
-## My Approach
-For this technical screening by Zorvyn FinTech, I focused on building a modular, state-driven financial terminal that demonstrates technical depth while remaining clean and intuitive.
+## Project Overview
+This dashboard is a clean, interactive frontend application built for the Zorvyn internship assessment. It focuses on intuitive data visualization, component modularity, and a simulated role-based user interface.
 
-### Tech Stack & Architecture
-- **Framework**: Next.js 15 (App Router) with React 19.
-- **State Management**: React Context API (`FinanceProvider`) managing unified transaction data, user roles, and UI states.
-- **Persistence**: `localStorage` implementation to simulate backend behavior for data persistence and role selection.
-- **Visuals**: `Recharts` for time-based (Area) and categorical (Pie/Bar) data interpretation.
-- **Styling**: Tailwind CSS with a "Student-Pro" aesthetic focusing on weight-based typography and Indigo accents.
+### Features
+- **Dashboard Summary**: Real-time KPI cards for Balance, Income, and Expenses.
+- **Data Visualizations**: Time-based balance trends and categorical spending breakdowns using Recharts.
+- **Transaction Ledger**: Searchable and filterable table with isolated data views for different users.
+- **Simulated RBAC**: Distinct behaviors for 'Admin' and 'Viewer' roles. Admins have full CRUD access, while Viewers are restricted to read-only views of their own data.
+- **Insights Kernel**: Automated logic to identify spending patterns and monthly comparisons.
+- **Persistence**: Utilization of `localStorage` to maintain data across browser refreshes.
 
-### Core Features (Requirement Alignment)
-- [x] **Dashboard Overview**: KPI cards for Net Liquidity, Inflow, and Outflow. Time-based balance trends and expenditure classification charts.
-- [x] **Ledger Terminal (Transactions)**: Advanced table with real-time search, category tagging, and status-based coloring.
-- [x] **Role-Based UI (RBAC)**: Distinct 'Admin' and 'Viewer' experiences. Toggling to Viewer locks the UI and isolates data, while Admin provides global oversight and modification rights.
-- [x] **Analytics Kernel (Insights)**: Dedicated view identifying highest expenditure categories, retention ratios, and monthly comparison audits.
-- [x] **Responsive UX**: Fluid sidebar navigation that adapts from desktop expanded mode to mobile-optimized patterns.
-- [x] **Export Logic**: Professional CSV generation for Admin users, simulating official financial statements.
+### Tech Stack
+- **Framework**: Next.js 15 (App Router)
+- **Library**: React 19
+- **Styling**: Tailwind CSS & Shadcn UI
+- **Charts**: Recharts
+- **Icons**: Lucide React
 
 ## Setup Instructions
-1. Install dependencies: `npm install`
-2. Run development server: `npm run dev`
-3. Access at `http://localhost:9002`
-4. Use the "Sector Manifest" on the login screen to test different user roles.
+1. Clone the repository or download the source.
+2. Run `npm install` to install dependencies.
+3. Start the development server with `npm run dev`.
+4. Access the application at `http://localhost:9002`.
+5. Use the "Sector Manifest" on the login screen to test different user scenarios.
+
+## Evaluation Alignment
+- **Requirement 1**: Summary cards and charts included in the Dashboard.
+- **Requirement 2**: Functional Transaction Ledger with search/filter.
+- **Requirement 3**: UI behavior changes based on Admin/Viewer role simulation.
+- **Requirement 4**: Highest spending category and monthly comparisons in Insights.
+- **Requirement 5**: State managed via React Context.
+- **Requirement 6**: Fully responsive design for mobile and desktop.

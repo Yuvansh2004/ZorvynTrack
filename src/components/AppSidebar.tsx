@@ -33,9 +33,9 @@ export function AppSidebar() {
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', view: 'Dashboard' as ViewType },
-    { icon: History, label: 'Ledger Terminal', view: 'Transactions' as ViewType },
-    { icon: Lightbulb, label: 'Analytics', view: 'Insights' as ViewType },
-    { icon: Settings, label: 'Preferences', view: 'Settings' as ViewType },
+    { icon: History, label: 'Transactions', view: 'Transactions' as ViewType },
+    { icon: Lightbulb, label: 'Insights', view: 'Insights' as ViewType },
+    { icon: Settings, label: 'Profile', view: 'Settings' as ViewType },
   ];
 
   const getInitials = (name: string) => {
@@ -53,7 +53,7 @@ export function AppSidebar() {
             <div className="p-1 rounded-lg">
               <ZorvynLogo className="w-8 h-8" />
             </div>
-            <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Zorvyn<span className="text-indigo-600">Track</span></span>
+            <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Zorvyn<span className="text-indigo-600">Dash</span></span>
           </div>
         )}
         <Button 
@@ -93,7 +93,7 @@ export function AppSidebar() {
         {!isCollapsed && (
           <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Node Status</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Current Role</span>
               <div className="flex items-center gap-1.5">
                 {userRole === 'Admin' ? <Shield className="w-3 h-3 text-indigo-600" /> : <Eye className="w-3 h-3 text-slate-400" />}
                 <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300">{userRole}</span>
