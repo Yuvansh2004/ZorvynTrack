@@ -34,15 +34,15 @@ export function AppSidebar() {
   return (
     <aside className={cn(
       "bg-white dark:bg-slate-950 border-r border-slate-100 dark:border-slate-900 transition-all duration-500 flex flex-col h-screen sticky top-0 z-50 overflow-hidden",
-      isOpen ? "w-72" : "w-24"
+      isOpen ? "w-72" : "w-20"
     )}>
       <div className="h-24 flex items-center px-4 border-b border-slate-50 dark:border-slate-900">
         <div className={cn(
-          "flex items-center w-full",
-          isOpen ? "justify-between" : "justify-center gap-2"
+          "flex w-full items-center",
+          isOpen ? "flex-row justify-between" : "flex-col justify-center gap-3"
         )}>
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="bg-indigo-600 p-2 rounded-xl shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none rotate-3">
+            <div className="bg-indigo-600 p-2 rounded-xl shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none">
               <ZorvynLogo className="w-5 h-5 text-white" />
             </div>
             {isOpen && (
@@ -58,10 +58,10 @@ export function AppSidebar() {
             onClick={toggleSidebar} 
             className={cn(
               "shrink-0 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
-              isOpen ? "h-9 w-9" : "h-7 w-7"
+              isOpen ? "h-9 w-9" : "h-8 w-8"
             )}
           >
-            {isOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-4 h-4" />}
+            {isOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
           </Button>
         </div>
       </div>
