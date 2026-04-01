@@ -5,12 +5,13 @@ import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Shield, Eye, Bell, Search, SidebarIcon, GraduationCap } from 'lucide-react';
+import { Shield, Eye, Bell, Search, LogOut } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export const Navbar = () => {
-  const { userRole, setUserRole } = useFinance();
+  const { userRole, setUserRole, user, logout } = useFinance();
 
   return (
     <nav className="border-b border-slate-800/50 bg-[#020617]/50 backdrop-blur-xl sticky top-0 z-40 px-6 py-3 flex items-center justify-between">
@@ -20,7 +21,7 @@ export const Navbar = () => {
         <div className="relative hidden lg:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
           <Input 
-            placeholder="Search transactions, insights..." 
+            placeholder="Search records, intelligence..." 
             className="w-72 pl-10 bg-slate-900/30 border-slate-800 h-9 text-xs focus:ring-primary focus:w-80 transition-all border-none"
           />
         </div>
@@ -36,7 +37,7 @@ export const Navbar = () => {
                 <Eye className="w-3.5 h-3.5 text-slate-400" />
               )}
               <Label htmlFor="role-mode" className="text-[10px] font-bold uppercase cursor-pointer text-slate-400 tracking-tighter">
-                {userRole} MODE
+                {userRole}
               </Label>
             </div>
             <Switch
@@ -57,12 +58,17 @@ export const Navbar = () => {
 
         <div className="flex items-center gap-3 pl-2">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-bold text-white leading-none">Yuvansh Koli</p>
-            <p className="text-[9px] text-primary font-bold uppercase mt-1 tracking-widest">Dev / Terna EC</p>
+            <p className="text-sm font-bold text-white leading-none">{user?.name || 'Yuvansh Koli'}</p>
+            <p className="text-[9px] text-primary font-bold uppercase mt-1 tracking-widest leading-none">{user?.email || 'yuvanshkoli1011@gmail.com'}</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-blue-700 flex items-center justify-center font-bold text-white text-sm shadow-[0_0_20px_rgba(59,130,246,0.3)] border border-white/10">
-            YK
-          </div>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={logout}
+            className="hover:bg-rose-500/10 text-slate-500 hover:text-rose-400"
+          >
+            <LogOut className="w-4 h-4" />
+          </Button>
         </div>
       </div>
     </nav>

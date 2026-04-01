@@ -17,10 +17,19 @@ export interface Transaction {
 
 export type UserRole = 'Admin' | 'Viewer';
 
+interface User {
+  name: string;
+  email: string;
+}
+
 interface FinanceContextType {
   transactions: Transaction[];
   userRole: UserRole;
   activeView: ViewType;
+  isLoggedIn: boolean;
+  user: User | null;
+  login: (email: string) => void;
+  logout: () => void;
   addTransaction: (transaction: Omit<Transaction, 'id'>) => void;
   deleteTransaction: (id: string) => void;
   setUserRole: (role: UserRole) => void;
@@ -57,12 +66,15 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [userRole, setUserRole] = useState<UserRole>('Admin');
   const [activeView, setActiveView] = useState<ViewType>('Dashboard');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const savedTransactions = localStorage.getItem('zorvyn_transactions');
     const savedRole = localStorage.getItem('zorvyn_role');
     const savedView = localStorage.getItem('zorvyn_view');
+    const savedAuth = localStorage.getItem('zorvyn_auth');
     
     if (savedTransactions) {
       setTransactions(JSON.parse(savedTransactions));
@@ -77,6 +89,12 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     if (savedView) {
       setActiveView(savedView as ViewType);
     }
+
+    if (savedAuth) {
+      const authData = JSON.parse(savedAuth);
+      setIsLoggedIn(true);
+      setUser(authData);
+    }
     
     setIsLoading(false);
   }, []);
@@ -86,8 +104,26 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem('zorvyn_transactions', JSON.stringify(transactions));
       localStorage.setItem('zorvyn_role', userRole);
       localStorage.setItem('zorvyn_view', activeView);
+      if (isLoggedIn && user) {
+        localStorage.setItem('zorvyn_auth', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('zorvyn_auth');
+      }
     }
-  }, [transactions, userRole, activeView, isLoading]);
+  }, [transactions, userRole, activeView, isLoggedIn, user, isLoading]);
+
+  const login = (email: string) => {
+    setIsLoggedIn(true);
+    setUser({
+      name: 'Yuvansh Dashrath Koli',
+      email: email || 'yuvanshkoli1011@gmail.com'
+    });
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    setUser(null);
+  };
 
   const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
     const newTransaction = {
@@ -106,6 +142,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       transactions, 
       userRole, 
       activeView, 
+      isLoggedIn,
+      user,
+      login,
+      logout,
       addTransaction, 
       deleteTransaction, 
       setUserRole, 
