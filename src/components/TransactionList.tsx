@@ -61,19 +61,19 @@ export const TransactionList = () => {
           <div className="relative flex-1 min-w-[200px] sm:flex-none">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
-              placeholder="Search amount, category, date..." 
+              placeholder="Search amount, category..." 
               className="pl-9 h-9 w-full sm:w-[240px] text-xs font-medium"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           
-          {/* Date Filter */}
+          {/* Date Filter - Increased width and adjusted padding for better visibility */}
           <div className="relative flex items-center">
             <CalendarIcon className="absolute left-3 w-4 h-4 text-slate-400 pointer-events-none" />
             <Input 
               type="date"
-              className="h-9 pl-9 pr-8 w-[160px] text-xs font-medium appearance-none"
+              className="h-9 pl-9 pr-8 w-[190px] text-[11px] font-bold"
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
             />
