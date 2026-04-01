@@ -25,8 +25,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LoginPage } from '@/components/LoginPage';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
 import { useState, useEffect } from 'react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip as RechartsTooltip, CartesianGrid } from 'recharts';
 
@@ -41,14 +39,18 @@ const exposureData = [
 ];
 
 const DashboardView = () => {
-  const [date, setDate] = useState<Date | undefined>(new Date());
   const [currentTime, setCurrentTime] = useState<string | null>(null);
+  const [currentDate, setCurrentDate] = useState<string | null>(null);
 
   useEffect(() => {
-    setCurrentTime(new Date().toLocaleTimeString('en-US', { hour12: false }));
-    const timer = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString('en-US', { hour12: false }));
-    }, 1000);
+    const updateDateTime = () => {
+      const now = new Date();
+      setCurrentTime(now.toLocaleTimeString('en-US', { hour12: false }));
+      setCurrentDate(now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase());
+    };
+    
+    updateDateTime();
+    const timer = setInterval(updateDateTime, 1000);
     return () => clearInterval(timer);
   }, []);
 
@@ -65,29 +67,17 @@ const DashboardView = () => {
           <p className="text-slate-500 text-[10px] font-black tracking-[4px] mt-1.5 opacity-70">REAL-TIME GLOBAL TELEMETRY ENGINE v9.4</p>
         </div>
         <div className="flex items-center gap-4">
-          <Popover>
-            <PopoverTrigger asChild>
-              <button className="flex items-center gap-4 bg-slate-900/80 border border-slate-800 px-6 py-3 rounded-2xl text-[10px] font-black text-primary tracking-[2px] uppercase hover:bg-slate-800 transition-all shadow-xl group text-left min-w-[220px]">
-                <CalendarIcon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
-                <div className="flex flex-col">
-                  <span className="text-primary truncate">
-                    {date ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase() : 'SELECT EPOCH'}
-                  </span>
-                  <span className="text-[8px] text-slate-500 font-mono tracking-[1px] opacity-60">
-                    T-MARK: {currentTime || '--:--:--'}
-                  </span>
-                </div>
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 bg-slate-950 border-slate-800 shadow-2xl" align="end">
-              <Calendar
-                mode="single"
-                selected={date}
-                onSelect={setDate}
-                className="rounded-xl border border-slate-800 bg-[#020617] text-white"
-              />
-            </PopoverContent>
-          </Popover>
+          <div className="flex items-center gap-4 bg-slate-900/80 border border-slate-800 px-6 py-3 rounded-2xl text-[10px] font-black text-primary tracking-[2px] uppercase shadow-xl group text-left min-w-[220px]">
+            <CalendarIcon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+            <div className="flex flex-col">
+              <span className="text-primary truncate">
+                {currentDate || 'SYNCING...'}
+              </span>
+              <span className="text-[8px] text-slate-500 font-mono tracking-[1px] opacity-60">
+                T-MARK: {currentTime || '--:--:--'}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
