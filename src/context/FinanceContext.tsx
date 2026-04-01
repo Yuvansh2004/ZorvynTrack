@@ -82,7 +82,7 @@ const generateRandomData = () => {
         ? Math.floor(Math.random() * 5000) + 1000 
         : Math.floor(Math.random() * 2000) + 50;
       
-      const randomDays = Math.floor(Math.random() * 45);
+      const randomDays = Math.floor(Math.random() * 30);
       const randomHours = Math.floor(Math.random() * 24);
       const timestamp = baseTime + (randomDays * 86400000) + (randomHours * 3600000);
       const date = new Date(timestamp).toISOString().split('T')[0];
@@ -125,6 +125,10 @@ interface FinanceContextType {
   completeTutorial: () => void;
   showGreeting: boolean;
   closeGreeting: () => void;
+  showPrivacy: boolean;
+  setShowPrivacy: (val: boolean) => void;
+  showAudit: boolean;
+  setShowAudit: (val: boolean) => void;
 }
 
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
@@ -139,6 +143,8 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [hasSeenTutorial, setHasSeenTutorial] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [showAudit, setShowAudit] = useState(false);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('zorvyn_current_user');
@@ -213,7 +219,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       triggerTransition(() => {
         setCurrentUser(user);
         setUserRole(user.role);
-        setShowGreeting(true);
+        // If they haven't seen the tutorial, Tutorial component will handle triggering the greeting
+        if (hasSeenTutorial) {
+          setShowGreeting(true);
+        }
       });
       return true;
     }
@@ -281,6 +290,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const completeTutorial = () => {
     setHasSeenTutorial(true);
+    setShowGreeting(true); // Tutorial finishes, then greet
   };
 
   const closeGreeting = () => {
@@ -309,7 +319,11 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       hasSeenTutorial,
       completeTutorial,
       showGreeting,
-      closeGreeting
+      closeGreeting,
+      showPrivacy,
+      setShowPrivacy,
+      showAudit,
+      setShowAudit
     }}>
       {children}
     </FinanceContext.Provider>

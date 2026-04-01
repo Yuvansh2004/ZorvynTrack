@@ -16,7 +16,7 @@ import { ZorvynLogo } from '@/components/ZorvynLogo';
 import { motion } from 'framer-motion';
 
 export default function Home() {
-  const { isLoading, isTransitioning, activeView, currentUser, isDarkMode } = useFinance();
+  const { isLoading, isTransitioning, activeView, currentUser, isDarkMode, hasSeenTutorial } = useFinance();
 
   if (isLoading || isTransitioning) {
     return (
@@ -94,8 +94,9 @@ export default function Home() {
           <AppFooter />
         </div>
       </main>
-      <GreetingPopup />
+      {/* Onboarding Flow: Tutorial first for new users, then Greeting triggers after tutorial */}
       <Tutorial />
+      <GreetingPopup />
     </div>
   );
 }

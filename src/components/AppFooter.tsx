@@ -2,11 +2,15 @@
 "use client";
 
 import React from 'react';
-import { ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
+import { ASSIGNMENT_REF_ID, useFinance } from '@/context/FinanceContext';
 import { Mail, Github, Linkedin } from 'lucide-react';
 import { ZorvynLogo } from '@/components/ZorvynLogo';
+import { PrivacyProtocol } from './PrivacyProtocol';
+import { SystemAudit } from './SystemAudit';
 
 export const AppFooter = () => {
+  const { setShowPrivacy, setShowAudit } = useFinance();
+
   return (
     <footer className="mt-20 border-t border-slate-100 dark:border-slate-900 pt-12 pb-16">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -62,10 +66,22 @@ export const AppFooter = () => {
       <div className="mt-16 pt-8 border-t border-slate-50 dark:border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">© 2026 Zorvyn Scan Technology • Institutional Node Terminal</p>
         <div className="flex items-center gap-8">
-          <button className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-600 transition-colors">Privacy Protocols</button>
-          <button className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-600 transition-colors">System Audit</button>
+          <button 
+            onClick={() => setShowPrivacy(true)}
+            className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-600 transition-colors"
+          >
+            Privacy Protocols
+          </button>
+          <button 
+            onClick={() => setShowAudit(true)}
+            className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-600 transition-colors"
+          >
+            System Audit
+          </button>
         </div>
       </div>
+      <PrivacyProtocol />
+      <SystemAudit />
     </footer>
   );
 };
