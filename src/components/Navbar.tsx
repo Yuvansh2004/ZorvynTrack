@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 export const Navbar = () => {
-  const { userRole, user, logout } = useFinance();
+  const { userRole, user, logout, setActiveView } = useFinance();
 
   return (
     <nav className="border-b border-slate-800/50 bg-[#020617]/90 backdrop-blur-2xl sticky top-0 z-40 px-8 py-5 flex items-center justify-between shadow-[0_10px_40px_rgba(0,0,0,0.5)] font-body">
@@ -39,7 +39,10 @@ export const Navbar = () => {
             </Label>
           </div>
           
-          <button className="p-3 rounded-2xl hover:bg-slate-800 text-slate-500 transition-all relative group border border-transparent hover:border-slate-800">
+          <button 
+            onClick={() => setActiveView('Notifications')}
+            className="p-3 rounded-2xl hover:bg-slate-800 text-slate-500 transition-all relative group border border-transparent hover:border-slate-800"
+          >
             <Bell className="w-5 h-5 group-hover:text-white transition-colors" />
             <span className="absolute top-3.5 right-3.5 w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_15px_rgba(59,130,246,1)]"></span>
           </button>

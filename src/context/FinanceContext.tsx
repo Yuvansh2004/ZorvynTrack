@@ -4,7 +4,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type TransactionType = 'Income' | 'Expense';
-export type ViewType = 'Dashboard' | 'Transactions' | 'Analytics' | 'Cards' | 'Investments' | 'Settings';
+export type ViewType = 'Dashboard' | 'Transactions' | 'Analytics' | 'Cards' | 'Investments' | 'Settings' | 'Notifications';
 export type UserRole = 'Admin' | 'Viewer';
 
 export interface Transaction {
@@ -24,7 +24,7 @@ export interface User {
 }
 
 export const DEMO_ACCOUNTS: User[] = [
-  { email: 'yuvanshkoli1011@gmail.com', name: 'Yuvansh Dashrath Koli', role: 'Admin' },
+  { email: 'yuvanshkoli@zorvyn.com', name: 'Yuvansh Dashrath Koli', role: 'Admin' },
   { email: 'priya.sharma@zorvyn.com', name: 'Priya Sharma', role: 'Admin' },
   { email: 'arjun.mehta@zorvyn.com', name: 'Arjun Mehta', role: 'Admin' },
   { email: 'ananya.iyer@zorvyn.com', name: 'Ananya Iyer', role: 'Admin' },

@@ -19,7 +19,11 @@ import {
   ShieldCheck,
   CircleDollarSign,
   BarChart3,
-  Globe
+  Globe,
+  Bell,
+  CheckCircle2,
+  AlertTriangle,
+  Info
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -37,6 +41,41 @@ const exposureData = [
   { name: 'Sat', value: 5500 },
   { name: 'Sun', value: 6200 },
 ];
+
+const NotificationsView = () => {
+  const notifications = [
+    { id: 1, type: 'alert', title: 'High Volatility Detected', message: 'NIFTY 50 showing abnormal sector movement. Hedge protocols active.', time: '2 mins ago', icon: AlertTriangle, color: 'text-rose-400' },
+    { id: 2, type: 'success', title: 'Ledger Sync Complete', message: 'All distributed nodes successfully committed to the global kernel.', time: '15 mins ago', icon: CheckCircle2, color: 'text-emerald-400' },
+    { id: 3, type: 'info', title: 'System Patch v9.2.4', message: 'New encryption headers applied to the ledger export engine.', time: '1 hour ago', icon: Info, color: 'text-primary' },
+    { id: 4, type: 'info', title: 'New Node Identity', message: 'Corporate identity verified for Yuvansh Dashrath Koli.', time: '3 hours ago', icon: Globe, color: 'text-amber-400' },
+  ];
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+      <div>
+        <h2 className="text-4xl font-black tracking-tighter text-white italic uppercase">Quantum Notifications</h2>
+        <p className="text-slate-500 text-[10px] font-black tracking-[6px] mt-1.5 opacity-70">SYSTEM TELEMETRY & EVENT LOGS</p>
+      </div>
+
+      <div className="space-y-4">
+        {notifications.map((notif) => (
+          <div key={notif.id} className="glass-card p-6 rounded-[2rem] border border-slate-800/50 flex items-center gap-6 group hover:border-primary/30 transition-all cursor-pointer">
+            <div className={`p-4 rounded-2xl bg-slate-900 border border-slate-800 ${notif.color} group-hover:scale-110 transition-transform`}>
+              <notif.icon className="w-6 h-6" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-4">
+                <h4 className="text-sm font-black text-white uppercase tracking-tight">{notif.title}</h4>
+                <span className="text-[9px] font-black text-slate-600 uppercase tracking-[2px]">{notif.time}</span>
+              </div>
+              <p className="text-[11px] text-slate-400 font-medium mt-1 leading-relaxed">{notif.message}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
 
 const DashboardView = () => {
   const [currentTime, setCurrentTime] = useState<string | null>(null);
@@ -369,6 +408,7 @@ const ViewSwitcher = () => {
     );
     case 'Investments': return <InvestmentView />;
     case 'Settings': return <SettingsView />;
+    case 'Notifications': return <NotificationsView />;
     default: return <DashboardView />;
   }
 };
