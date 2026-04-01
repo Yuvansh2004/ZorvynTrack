@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -9,12 +8,19 @@ import {
   User, 
   ChevronLeft,
   ChevronRight,
-  LogOut,
-  Wallet
+  LogOut
 } from 'lucide-react';
 import { useFinance, ViewType } from '@/context/FinanceContext';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+
+// Unified Z Logo Component
+const ZorvynLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 20L80 20L20 80L80 80" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="50" cy="50" r="10" fill="currentColor" />
+  </svg>
+);
 
 export function AppSidebar() {
   const { activeView, setActiveView, currentUser, logout } = useFinance();
@@ -41,7 +47,7 @@ export function AppSidebar() {
       <div className="p-6 flex items-center justify-between border-b border-slate-50 dark:border-slate-900">
         <div className="flex items-center gap-2">
           <div className="bg-indigo-600 p-1.5 rounded-lg shrink-0">
-            <Wallet className="w-5 h-5 text-white" />
+            <ZorvynLogo className="w-5 h-5 text-white" />
           </div>
           {!isCollapsed && (
             <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white truncate">

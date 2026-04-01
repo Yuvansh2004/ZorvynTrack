@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -11,7 +10,14 @@ import { SettingsView } from '@/components/SettingsView';
 import { LoginPage } from '@/components/LoginPage';
 import { AppFooter } from '@/components/AppFooter';
 import { Tutorial } from '@/components/Tutorial';
-import { Zap } from 'lucide-react';
+
+// Unified Z Logo for Loading Screen
+const ZorvynLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 20L80 20L20 80L80 80" stroke="currentColor" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="50" cy="50" r="10" fill="currentColor" />
+  </svg>
+);
 
 export default function Home() {
   const { isLoading, activeView, currentUser } = useFinance();
@@ -22,7 +28,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-6">
           <div className="relative animate-bounce">
             <div className="bg-indigo-600 p-4 rounded-[1.5rem] rotate-3 shadow-xl shadow-indigo-500/20">
-              <Zap className="w-10 h-10 text-white fill-white/20" />
+              <ZorvynLogo className="w-10 h-10 text-white" />
             </div>
           </div>
           <div className="flex flex-col items-center gap-2">
