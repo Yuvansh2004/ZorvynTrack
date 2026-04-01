@@ -24,14 +24,14 @@ export interface Transaction {
 }
 
 export const DEMO_ACCOUNTS: User[] = [
-  { name: 'Yuvansh Dashrath Koli', email: 'yuvanshkoli1011@gmail.com', role: 'Admin' },
+  { name: 'Yuvansh Dashrath Koli', email: 'yuvanshkoli@demozorvyn.com', role: 'Admin' },
   { name: 'Aditya Rao', email: 'aditya.rao@zorvyn.com', role: 'Viewer' },
   { name: 'Priya Sharma', email: 'priya.sharma@zorvyn.com', role: 'Viewer' },
 ];
 
 const INITIAL_DATA: Transaction[] = [
-  { id: 'y1', date: '2024-05-20', description: 'Corporate Stipend - Zorvyn', amount: 25000, category: 'Salary', type: 'Income', ownerEmail: 'yuvanshkoli1011@gmail.com' },
-  { id: 'y2', date: '2024-05-19', description: 'MacBook Pro EMI', amount: 8500, category: 'Electronics', type: 'Expense', ownerEmail: 'yuvanshkoli1011@gmail.com' },
+  { id: 'y1', date: '2024-05-20', description: 'Corporate Stipend - Zorvyn', amount: 25000, category: 'Salary', type: 'Income', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
+  { id: 'y2', date: '2024-05-19', description: 'MacBook Pro EMI', amount: 8500, category: 'Electronics', type: 'Expense', ownerEmail: 'yuvanshkoli@demozorvyn.com' },
   { id: 'a1', date: '2024-05-20', description: 'University Canteen Card', amount: 2500, category: 'Food', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
   { id: 'a2', date: '2024-05-19', description: 'NPTEL Course Certification', amount: 1200, category: 'Education', type: 'Expense', ownerEmail: 'aditya.rao@zorvyn.com' },
   { id: 'p1', date: '2024-05-20', description: 'Behance Portfolio Premium', amount: 1500, category: 'Subscription', type: 'Expense', ownerEmail: 'priya.sharma@zorvyn.com' },

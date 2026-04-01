@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -108,7 +107,7 @@ export const SettingsView = () => {
               </div>
               <div className="p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
                 <p className="text-[10px] font-black uppercase text-slate-400 mb-1">Corporate Email</p>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">yuvanshkoli1011@gmail.com</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">yuvanshkoli@demozorvyn.com</p>
               </div>
             </div>
             

@@ -1,7 +1,6 @@
-
 # ZorvynTrack - Student Internship Assignment
 
-Built by **Yuvansh Dashrath Koli** (yuvanshkoli1011@gmail.com)
+Built by **Yuvansh Dashrath Koli** (yuvanshkoli@demozorvyn.com)
 
 ## My Approach
 For this technical screening, I focused on building a clean, intuitive financial terminal that mirrors the standards of a professional fintech application while remaining firmly rooted in a student's technical perspective.
