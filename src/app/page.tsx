@@ -37,7 +37,7 @@ export default function Home() {
             <ZorvynLogo className="w-12 h-12 text-white" />
           </motion.div>
           <div className="space-y-2">
-            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-600/50">Synchronizing System</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-600/50">ZorvynTrack System Security Technology</p>
             <div className="w-32 h-1 bg-slate-200 dark:bg-slate-800 mx-auto rounded-full overflow-hidden">
               <motion.div 
                 className="h-full bg-indigo-600"

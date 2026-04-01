@@ -8,7 +8,7 @@ Built by **Yuvansh Dashrath Koli**
 ZorvynTrack is a high-impact, institutional-grade financial terminal built for the Zorvyn internship assessment. The platform focuses on student financial literacy through intuitive data visualization, secure role-based access modulation (RBAC), and precise ledger management.
 
 ### Core Institutional Features
-- **Unified Assets Kernel**: KPI cards for Balance, Income Velocity, and Expenditure classification.
+- **Unified Assets System**: KPI cards for Balance, Income Velocity, and Expenditure classification.
 - **Dynamic Ledger Authority**: 
   - **Viewer Mode**: 30-second grace period for new entries to correct errors. After 30 seconds, entries become permanent.
   - **Admin Mode**: Full override authority (Edit/Delete) at any time.
@@ -16,6 +16,7 @@ ZorvynTrack is a high-impact, institutional-grade financial terminal built for t
 - **Institutional Footer**: Professional "Developer Node" with contact details, Privacy Protocols, and System Audit logs.
 - **Onboarding System**: First-time tutorial terminal to guide users through the institutional interface.
 - **Data Persistence**: Local session encryption (via `localStorage`) to maintain ledger integrity across refreshes.
+- **ZorvynTrack System Security Technology**: Advanced branding and terminology throughout the terminal.
 
 ### Functional Requirements Alignment
 - **Requirement 1 (Dashboard)**: Real-time summary cards and Recharts-powered velocity/expenditure classifications.

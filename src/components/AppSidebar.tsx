@@ -36,15 +36,15 @@ export function AppSidebar() {
       isOpen ? "w-72" : "w-20"
     )}>
       <div className={cn(
-        "p-4 border-b border-slate-50 dark:border-slate-900 flex items-center justify-between gap-2",
-        !isOpen && "px-2"
+        "h-16 flex items-center px-4 border-b border-slate-50 dark:border-slate-900 transition-all",
+        !isOpen && "px-2 justify-center gap-1"
       )}>
-        <div className="flex items-center gap-2 min-w-0">
+        <div className="flex items-center gap-2 min-w-0 overflow-hidden flex-1">
           <div className="bg-indigo-600 p-2 rounded-xl shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none rotate-3">
             <ZorvynLogo className="w-4 h-4 text-white" />
           </div>
           {isOpen && (
-            <span className="text-xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase truncate animate-in fade-in slide-in-from-left-2 duration-300">
+            <span className="text-xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap overflow-hidden animate-in fade-in slide-in-from-left-2 duration-300">
               Zorvyn<span className="text-indigo-600">Track</span>
             </span>
           )}
@@ -54,7 +54,10 @@ export function AppSidebar() {
           variant="ghost" 
           size="icon" 
           onClick={toggleSidebar} 
-          className="shrink-0 h-8 w-8 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300"
+          className={cn(
+            "shrink-0 h-8 w-8 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-400 hover:text-indigo-600 transition-all duration-300",
+            !isOpen && "h-6 w-6 p-0"
+          )}
         >
           {isOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
         </Button>
