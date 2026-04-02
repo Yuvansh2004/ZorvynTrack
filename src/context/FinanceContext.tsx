@@ -190,6 +190,10 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
     if (savedUser) {
       const user = JSON.parse(savedUser);
+      // Ensure if the email in storage is the old admin email, we update it
+      if (user.role === 'Admin' && user.email !== DEMO_ACCOUNTS[0].email) {
+        user.email = DEMO_ACCOUNTS[0].email;
+      }
       setCurrentUser(user);
       setUserRole(user.role);
     }

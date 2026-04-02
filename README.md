@@ -3,6 +3,7 @@
 
 Built by **Yuvansh Dashrath Koli**  
 **Personal Email:** yuvanshkoli1011@gmail.com  
+**College Email:** yuvanshkoli2324@ternaengg.ac.in  
 **Reference ID:** TE85LMG1
 
 ## Project Overview
@@ -16,7 +17,7 @@ ZorvynTrack is a high-impact, institutional-grade financial terminal built for t
 ## Key Technical Approaches (The "Human Logic" Rationale)
 
 1. **Strategic Node State (Context API)**: 
-   - I utilized the React Context API (`FinanceContext.tsx`) to manage a master ledger of ~800 transactions. I chose Context over complex state libraries to maintain a **"Simple and Smart"** architecture that prioritizes auditability and performance for a single-page terminal.
+   - I utilized the React Context API (`FinanceContext.tsx`) to manage a master ledger. I chose Context over complex state libraries to maintain a **"Simple and Smart"** architecture that prioritizes auditability and performance for a single-page terminal.
 
 2. **Institutional Security Protocol**: 
    - I implemented a **"Grace Period"** system. In a real-world FinTech environment, data integrity is paramount. Here, users have a 30-second window to correct their own entries. After this, data becomes "Permanent," simulating an immutable audit trail that only an Admin node can override.
