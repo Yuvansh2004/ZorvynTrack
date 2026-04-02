@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect, useMemo } from 'react';
@@ -183,8 +182,6 @@ export const TransactionList = () => {
               </div>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="5">5 Rows</SelectItem>
-              <SelectItem value="10">10 Rows</SelectItem>
               <SelectItem value="25">25 Rows</SelectItem>
               <SelectItem value="50">50 Rows</SelectItem>
               <SelectItem value="100">100 Rows</SelectItem>
