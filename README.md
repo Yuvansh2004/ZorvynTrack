@@ -18,7 +18,7 @@ I've set up a few accounts so you can see how the permissions work.
 
 **Viewer Nodes (Student View)**
 - **Users:** `aditya.rao@DemoZorvynTrack.io`, `priya.sharma@DemoZorvynTrack.io`, `rohan.mehta@DemoZorvynTrack.io`
-- **Pass:** `viewer_rao`, `viewer_sharma`, etc.
+- **Pass:** `viewer_rao`, `viewer_sharma`, etc. (Check "Sector Credentials" in Login for full list)
 - **What it does:** Students only see their own money. They can add entries, but after 30 seconds, they can't change them anymore.
 
 ## My Approach & Thinking (The "Logic")
@@ -39,8 +39,8 @@ I've set up a few accounts so you can see how the permissions work.
     I added a "Namaste" popup when you log in. It adds a personal, respectful touch to a high-tech terminal.
 
 ## Core Features
-- **High-Velocity Ledger**: Every account comes with 50-100 random transactions to show how the system handles lots of data.
-- **Searchable Audit Trail**: You can search by description, category, date, or even the amount.
+- **High-Velocity Ledger**: Every account (Admin and Viewers) comes with **50-100 random transactions** to show how the system handles lots of data.
+- **Searchable Audit Trail**: You can search by description, category, date (YYYY-MM-DD), or even the specific amount.
 - **Admin Command Center**: Admins can wipe mock data to start fresh.
 - **Security Lock**: My developer node is locked to prevent unauthorized changes to my credentials.
 
