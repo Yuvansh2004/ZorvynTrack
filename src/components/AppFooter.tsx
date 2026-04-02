@@ -11,6 +11,7 @@ import { SystemAudit } from './SystemAudit';
 export const AppFooter = () => {
   const { setShowPrivacy, setShowAudit, setActiveView } = useFinance();
 
+  // Fixed Developer Node: Always shows Yuvansh Dashrath Koli regardless of login
   const developerInfo = {
     name: "Yuvansh Dashrath Koli",
     email: "yuvanshkoli1011@gmail.com",
@@ -19,7 +20,6 @@ export const AppFooter = () => {
     handle: "@zorvyn_admin"
   };
 
-  // Redirect company logo to AdminManager (Settings)
   const handleLogoClick = () => {
     setActiveView('Settings');
   };

@@ -4,12 +4,12 @@
 import React from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { formatINR, cn } from '@/lib/utils';
-import { Wallet, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
+import { Wallet, ArrowUpCircle, ArrowDownCircle, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 
 export const SummaryCards = () => {
-  const { transactions } = useFinance();
+  const { transactions, setActiveView } = useFinance();
 
   const income = transactions
     .filter(t => t.type === 'Income')
@@ -46,39 +46,47 @@ export const SummaryCards = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 w-full">
-      {summaryData.map((item, index) => (
-        <motion.div
-          key={item.title}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.15, duration: 0.5 }}
-          className="w-full"
-        >
-          <Card className="card-shadow overflow-hidden group hover:border-indigo-400 hover:scale-[1.01] transition-all h-full border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[3rem]">
-            <CardContent className="p-10 lg:p-14 flex flex-col justify-center h-full">
-              <div className="flex items-center gap-8 lg:gap-10">
-                <div className={`p-8 lg:p-10 rounded-[2.5rem] ${item.bg} group-hover:rotate-6 transition-transform shrink-0 shadow-lg shadow-slate-100 dark:shadow-none`}>
-                  <item.icon className={`w-12 h-12 lg:w-16 lg:h-16 ${item.color}`} />
+    <div className="w-full overflow-x-auto no-scrollbar pb-6 -mx-4 px-4 md:mx-0 md:px-0">
+      <div className="flex flex-nowrap md:grid md:grid-cols-3 gap-8 md:gap-12 min-w-max md:min-w-0">
+        {summaryData.map((item, index) => (
+          <motion.div
+            key={item.title}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.15, duration: 0.5 }}
+            className="w-[320px] md:w-full"
+          >
+            <Card 
+              onClick={() => setActiveView('Transactions')}
+              className="card-shadow overflow-hidden group hover:border-indigo-400 hover:shadow-2xl hover:-translate-y-1 cursor-pointer transition-all h-full border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[2.5rem]"
+            >
+              <CardContent className="p-8 lg:p-10 flex items-center gap-6 h-full relative">
+                <div className={`p-6 lg:p-8 rounded-[2rem] ${item.bg} group-hover:rotate-3 transition-transform shrink-0 shadow-lg shadow-slate-50 dark:shadow-none`}>
+                  <item.icon className={`w-8 h-8 lg:w-10 lg:h-10 ${item.color}`} />
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-[11px] lg:text-[12px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.4em] whitespace-nowrap mb-3">
+                
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] lg:text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em] mb-1.5">
                     {item.title}
                   </p>
-                  <div className="overflow-x-auto no-scrollbar py-2">
+                  <div className="overflow-x-auto no-scrollbar py-1">
                     <h3 className={cn(
                       "font-black text-slate-900 dark:text-white tracking-tighter tabular-nums italic whitespace-nowrap",
-                      "text-4xl md:text-5xl lg:text-6xl"
-                    )} title={formatINR(item.amount)}>
+                      "text-3xl lg:text-4xl"
+                    )}>
                       {formatINR(item.amount)}
                     </h3>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      ))}
+
+                <div className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                  <ArrowRight className="w-5 h-5 text-indigo-300" />
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 };
