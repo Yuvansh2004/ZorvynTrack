@@ -27,7 +27,7 @@ export const AppFooter = () => {
 
   return (
     <footer className="mt-20 border-t border-slate-100 dark:border-slate-900 pt-12 pb-16">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className="space-y-6">
           <div 
             className="flex items-center gap-3 cursor-pointer group"
@@ -71,16 +71,7 @@ export const AppFooter = () => {
         </div>
 
         <div className="space-y-6">
-          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Assignment Matrix</h4>
-          <ul className="space-y-3 text-xs text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider">
-            <li className="flex items-center gap-2">Reference ID: <span className="text-indigo-600 font-black">{ASSIGNMENT_REF_ID}</span></li>
-            <li className="flex items-center gap-2">Role: <span className="text-slate-900 dark:text-white">Frontend Developer</span></li>
-            <li className="flex items-center gap-2">Status: <span className="text-emerald-600">Evaluated Final</span></li>
-          </ul>
-        </div>
-
-        <div className="space-y-6">
-          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Developer Node</h4>
+          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Developed By</h4>
           <div 
             className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm select-none"
             onContextMenu={(e) => e.preventDefault()}
