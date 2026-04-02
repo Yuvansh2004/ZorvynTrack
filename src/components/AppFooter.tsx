@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -98,7 +99,7 @@ export const AppFooter = () => {
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
                 Personal: <span className="text-indigo-600 font-black tracking-tighter">{socialNodes.email}</span>
               </p>
-              <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
+              <p className="text-[10px] font-black text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
                 College: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.collegeEmail}</span>
               </p>
             </div>
