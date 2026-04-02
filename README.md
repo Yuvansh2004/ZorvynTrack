@@ -2,7 +2,7 @@
 # 🏦 ZorvynTrack - Institutional Student Finance Dashboard
 
 ### **Candidate Details**
-* **Developer:** **Yuvansh Dashrath Koli** (युवाअंश दशरथ कोळी)
+* **Developer:** **YUVANSH DASHRATH KOLI**
 * **College:** Terna Engineering College
 * **Reference ID:** TE85LMG1
 * **Project Role:** Student Frontend Developer
@@ -16,32 +16,51 @@ Every design choice—from the **Slate** color palette to the **Permanent Teleme
 
 ---
 
-## 🚀 2. Core Functionalities (What's Inside?)
+## 🚀 2. Core Functionalities & Technical Breakdown
 
-### **A. The 30-Second "Audit Integrity" Window**
-Unlike basic CRUD apps, ZorvynTrack follows professional accounting rules.
-* **The Logic:** Users have a **30-second grace period** after adding an entry to edit or delete it.
-* **The Result:** Once the timer expires, the entry locks and becomes **Permanent Telemetry**. This ensures the audit trail remains untampered.
+### **A. Global Telemetry Hub (Footer Social Logic)**
+This is a high-level architectural feature where the terminal's global contact nodes are synchronized in real-time.
+* **The Logic:** The social icons in the footer (Mail, GitHub, LinkedIn) are reactive. When the **Admin** updates their "External Nodes" in the Settings console, these links update globally for all users.
+* **Functionality of Social Nodes:**
+    * **Mail Protocol:** Opens a direct secure communication line to the Admin's configured support node.
+    * **GitHub Node:** Links to the institutional repository/source node for auditing.
+    * **LinkedIn Node:** Connects the terminal to the Admin's professional identity network.
+* **Knowledge Gain:** This demonstrates a **"Centralized Command"** architecture where a single administrative node controls the identity and communication channels of the entire terminal interface.
 
-### **B. Global Telemetry Hub (Footer Social Logic)**
-A high-level architectural feature where the terminal's global contact nodes are synchronized from the Admin session.
-* **Working:** The social icons in the footer (Mail, GitHub, LinkedIn) are reactive. When the Admin updates their "External Nodes" in the Settings console, these links update globally.
-* **Insight:** This demonstrates a "Centralized Command" architecture where one node controls the identity of the entire terminal interface.
+### **B. The 30-Second "Audit Integrity" Window**
+Professional accounting rules are implemented to ensure data accuracy and security.
+* **The Logic:** Standard users have a **30-second grace period** after adding an entry to edit or delete it.
+* **The Result:** Once the timer expires, the entry locks and becomes **Permanent Telemetry**. Only a Global Admin can override or delete these records. This ensures an untampered audit trail.
+* **Knowledge Gain:** Implements a time-locked security state that balances user error correction with institutional data integrity.
 
 ### **C. High-Velocity Ledger (Pre-loaded History)**
-To test performance and filtering, every account initializes with **50 to 100 simulated transactions**. This allows the tester to immediately see how the system handles high-volume data without manual entry.
+To test performance and filtering, every account initializes with **50 to 100 simulated transactions**. 
+* **Knowledge Gain:** Provides immediate visual feedback on the system's ability to handle high-volume data modulation and classification.
 
 ### **D. Deep Audit Search & Filtering**
 * **Precision Search:** Search by exact amounts, owner handles, or date nodes (Format: YYYY-MM-DD).
 * **Row Modulation:** Switch between 100, 250, 500, or "All" rows to view the entire ledger without lag.
 * **Category Isolation:** Isolate specific spending sectors like "Education," "Utilities," or "Investment."
 
-### **E. "Namaste" Cultural Protocol**
-A personalized initialization sequence that integrates a respectful greeting, blending high-tech institutional systems with a human, cultural touch.
+---
+
+## 🔑 3. Access Credentials (Evaluation Nodes)
+
+Testers can use these credentials to explore role-based views:
+
+* **Admin (Global Authority)**
+    * **Username:** `Admin@DemoZorvynTrack.io`
+    * **Password:** `admin_zorvyn`
+* **Viewer (Aditya Rao)**
+    * **Username:** `aditya.rao@DemoZorvynTrack.io`
+    * **Password:** `viewer_rao`
+* **Viewer (Ishita Gupta)**
+    * **Username:** `ishita.gupta@DemoZorvynTrack.io`
+    * **Password:** `viewer_gupta`
 
 ---
 
-## 🛠️ 3. Tech Stack & Architecture
+## 🛠️ 4. Tech Stack & Architecture
 
 * **Framework:** **Next.js 15** (App Router)
 * **Library:** **React 19**
@@ -52,56 +71,11 @@ A personalized initialization sequence that integrates a respectful greeting, bl
 
 ---
 
-## 🎨 4. UI/UX Design Approach
+## 🎨 5. UI/UX Design Approach
 * **Color Psychology:** Used **Indigo-600** for Authority and **Slate-50/950** for high contrast and reduced eye strain during long auditing sessions.
 * **Adaptive Typography:** Specifically engineered for student laptops (13-inch to 15-inch) to ensure telemetry data never overlaps.
 * **High-Density Layout:** Retractable sidebars and horizontal scrolling for summary cards to maximize data space.
 
 ---
 
-## 🔑 5. Access Credentials (Evaluation Nodes)
-
-Testers can use these credentials to explore role-based views:
-
-*   **Admin (Global Authority)**
-    *   **Username:** `Admin@DemoZorvynTrack.io`
-    *   **Password:** `admin_zorvyn`
-*   **Viewer (Aditya Rao)**
-    *   **Username:** `aditya.rao@DemoZorvynTrack.io`
-    *   **Password:** `viewer_rao`
-*   **Viewer (Ishita Gupta)**
-    *   **Username:** `ishita.gupta@DemoZorvynTrack.io`
-    *   **Password:** `viewer_gupta`
-
-*(Note: Other viewer passwords follow the `viewer_[surname]` pattern, such as `viewer_sharma` or `viewer_mehta`.)*
-
----
-
-## 📚 6. References & Learning
-* **Next.js Documentation:** For mastering the App Router and Server/Client component balance.
-* **Tailwind UI Patterns:** For designing clean, SaaS-style institutional components.
-* **Financial Dashboard Case Studies:** Researched professional auditing tools to understand data density.
-* **Zorvyn Problem Statement:** The primary guide for fulfilling all technical requirements.
-
----
-
-## ⚙️ 7. Installation & Setup
-
-1.  **Clone the Repository:**
-    ```bash
-    git clone [your-repo-link]
-    ```
-2.  **Install Dependencies:**
-    ```bash
-    npm install
-    ```
-3.  **Run the Development Server:**
-    ```bash
-    npm run dev
-    ```
-4.  **Open in Browser:**
-    Navigate to `http://localhost:9002` (Custom port).
-
----
-
-**Developed with ❤️ and ☕ by Yuvansh Dashrath Koli.**
+**Developed with ❤️ and Professional Precision by YUVANSH DASHRATH KOLI.**

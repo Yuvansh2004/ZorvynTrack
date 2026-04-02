@@ -44,6 +44,8 @@ export const AppFooter = () => {
           <div className="flex items-center gap-3">
             <a 
               href={socialNodes.email.includes('@') ? `mailto:${socialNodes.email}` : socialNodes.email} 
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
               title="Mail Protocol"
             >

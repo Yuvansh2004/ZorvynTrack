@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/collapsible";
 import { 
   Moon, Shield, UserCircle, Mail, User, ShieldCheck, 
-  Trash2, Database, AlertCircle, Pencil, Save, X, Github, Linkedin, ExternalLink,
+  Trash2, AlertCircle, Pencil, Save, X, Github, Linkedin, ExternalLink,
   ChevronDown, ChevronUp
 } from 'lucide-react';
 import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
@@ -126,14 +126,9 @@ export const SettingsView = () => {
                   <p className="text-sm font-black text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
                 </div>
 
-                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
+                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 md:col-span-2">
                   <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Shield className="w-3.5 h-3.5"/> Active Session Node</p>
                   <p className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-tighter">{userRole} Terminal</p>
-                </div>
-
-                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
-                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Database className="w-3.5 h-3.5"/> Reference ID</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">{ASSIGNMENT_REF_ID}</p>
                 </div>
               </div>
             </CardContent>
