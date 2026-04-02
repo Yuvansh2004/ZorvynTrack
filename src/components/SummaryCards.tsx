@@ -46,30 +46,33 @@ export const SummaryCards = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 w-full">
       {summaryData.map((item, index) => (
         <motion.div
           key={item.title}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.15, duration: 0.5 }}
+          className="w-full"
         >
-          <Card className="card-shadow overflow-hidden group hover:border-indigo-400 hover:scale-[1.01] transition-all h-full border-slate-100 dark:border-slate-800">
-            <CardContent className="p-8 lg:p-12 flex flex-col justify-center h-full">
-              <div className="flex items-center gap-6 lg:gap-10">
-                <div className={`p-5 lg:p-6 rounded-[2rem] ${item.bg} group-hover:rotate-6 transition-transform shrink-0 shadow-sm`}>
-                  <item.icon className={`w-8 h-8 lg:w-12 lg:h-12 ${item.color}`} />
+          <Card className="card-shadow overflow-hidden group hover:border-indigo-400 hover:scale-[1.01] transition-all h-full border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[2.5rem]">
+            <CardContent className="p-10 lg:p-14 flex flex-col justify-center h-full">
+              <div className="flex items-center gap-8 lg:gap-10">
+                <div className={`p-6 lg:p-8 rounded-[2.2rem] ${item.bg} group-hover:rotate-6 transition-transform shrink-0 shadow-lg shadow-slate-100 dark:shadow-none`}>
+                  <item.icon className={`w-10 h-10 lg:w-14 lg:h-14 ${item.color}`} />
                 </div>
-                <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar">
-                  <p className="text-[10px] lg:text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em] whitespace-nowrap mb-1">
+                <div className="min-w-0 flex-1">
+                  <p className="text-[10px] lg:text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.4em] whitespace-nowrap mb-2">
                     {item.title}
                   </p>
-                  <h3 className={cn(
-                    "font-black text-slate-900 dark:text-white tracking-tighter tabular-nums italic whitespace-nowrap transition-all duration-300",
-                    "text-3xl md:text-4xl lg:text-5xl"
-                  )} title={formatINR(item.amount)}>
-                    {formatINR(item.amount)}
-                  </h3>
+                  <div className="overflow-x-auto no-scrollbar py-1">
+                    <h3 className={cn(
+                      "font-black text-slate-900 dark:text-white tracking-tighter tabular-nums italic whitespace-nowrap",
+                      "text-4xl md:text-5xl lg:text-6xl"
+                    )} title={formatINR(item.amount)}>
+                      {formatINR(item.amount)}
+                    </h3>
+                  </div>
                 </div>
               </div>
             </CardContent>

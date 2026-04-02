@@ -8,6 +8,11 @@ Built by **Yuvansh Dashrath Koli**
 ## Project Overview
 ZorvynTrack is a high-impact, institutional-grade financial terminal built for the Zorvyn internship assessment. The platform focuses on student financial literacy through intuitive data visualization, secure role-based access modulation (RBAC), and precise ledger management.
 
+### Admin Access Credentials
+- **Email:** `yuvanshkoli@DemoZorvynTrack.io`
+- **Password:** `admin_zorvyn`
+- **Role:** Admin (Full Ledger Authority)
+
 ### Key Functional Approaches (The "Human" Logic)
 1. **Centralized Node State**: I utilized the React Context API (`FinanceContext.tsx`) to manage a master ledger of ~800 transactions across 10 demo accounts. I chose Context over complex libraries like Redux to maintain a "simple and smart" architecture that prioritizes auditability and performance for a single-page terminal.
 2. **Institutional Security Protocol**: I implemented a "Grace Period" system. In a real-world FinTech environment, data integrity is paramount. Here, users have a 30-second window to correct their own entries. After this, data becomes "Permanent," simulating an immutable audit trail that only an Admin can override.
