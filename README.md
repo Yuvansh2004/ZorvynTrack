@@ -1,3 +1,4 @@
+
 # 🏦 ZorvynTrack - Institutional Student Finance Dashboard
 
 ### **Candidate Details**
@@ -22,15 +23,20 @@ Unlike basic CRUD apps, ZorvynTrack follows professional accounting rules.
 * **The Logic:** Users have a **30-second grace period** after adding an entry to edit or delete it.
 * **The Result:** Once the timer expires, the entry locks and becomes **Permanent Telemetry**. This ensures the audit trail remains untampered.
 
-### **B. High-Velocity Ledger (Pre-loaded History)**
-To test performance and filtering, every account initializes with **50 to 100 simulated transactions**. This allows the tester to immediately see how the system handles high-volume data.
+### **B. Global Telemetry Hub (Footer Social Logic)**
+A high-level architectural feature where the terminal's global contact nodes are synchronized from the Admin session.
+* **Working:** The social icons in the footer (Mail, GitHub, LinkedIn) are reactive. When the Admin updates their "External Nodes" in the Settings console, these links update globally.
+* **Insight:** This demonstrates a "Centralized Command" architecture where one node controls the identity of the entire terminal interface.
 
-### **C. Deep Audit Search & Filtering**
+### **C. High-Velocity Ledger (Pre-loaded History)**
+To test performance and filtering, every account initializes with **50 to 100 simulated transactions**. This allows the tester to immediately see how the system handles high-volume data without manual entry.
+
+### **D. Deep Audit Search & Filtering**
 * **Precision Search:** Search by exact amounts, owner handles, or date nodes (Format: YYYY-MM-DD).
 * **Row Modulation:** Switch between 100, 250, 500, or "All" rows to view the entire ledger without lag.
 * **Category Isolation:** Isolate specific spending sectors like "Education," "Utilities," or "Investment."
 
-### **D. "Namaste" Cultural Protocol**
+### **E. "Namaste" Cultural Protocol**
 A personalized initialization sequence that integrates a respectful greeting, blending high-tech institutional systems with a human, cultural touch.
 
 ---
@@ -57,17 +63,15 @@ A personalized initialization sequence that integrates a respectful greeting, bl
 
 Testers can use these credentials to explore role-based views:
 
-**Admin (Global Authority)**
-- **Username:** `Admin@DemoZorvynTrack.io`
-- **Password:** `admin_zorvyn`
-
-**Viewer (Aditya Rao)**
-- **Username:** `aditya.rao@DemoZorvynTrack.io`
-- **Password:** `viewer_rao`
-
-**Viewer (Ishita Gupta)**
-- **Username:** `ishita.gupta@DemoZorvynTrack.io`
-- **Password:** `viewer_gupta`
+*   **Admin (Global Authority)**
+    *   **Username:** `Admin@DemoZorvynTrack.io`
+    *   **Password:** `admin_zorvyn`
+*   **Viewer (Aditya Rao)**
+    *   **Username:** `aditya.rao@DemoZorvynTrack.io`
+    *   **Password:** `viewer_rao`
+*   **Viewer (Ishita Gupta)**
+    *   **Username:** `ishita.gupta@DemoZorvynTrack.io`
+    *   **Password:** `viewer_gupta`
 
 *(Note: Other viewer passwords follow the `viewer_[surname]` pattern, such as `viewer_sharma` or `viewer_mehta`.)*
 
