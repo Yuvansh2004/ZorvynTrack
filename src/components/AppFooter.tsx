@@ -11,10 +11,13 @@ import { SystemAudit } from './SystemAudit';
 export const AppFooter = () => {
   const { setShowPrivacy, setShowAudit, setActiveView, adminUser } = useFinance();
 
-  // Dynamic Developer Node: Reflects the Admin's external node settings for everyone
-  const developerInfo = {
-    name: adminUser?.name || "Yuvansh Dashrath Koli",
-    email: adminUser?.personalEmail || "yuvanshkoli1011@gmail.com",
+  // Fixed Developer Node Identities + Dynamic Social Synchronisation
+  // Shows both Personal and College emails as requested.
+  // Social links reflect whatever the Admin has configured in External Nodes.
+  const developerNode = {
+    name: "Yuvansh Dashrath Koli",
+    personalEmail: "yuvanshkoli1011@gmail.com",
+    collegeEmail: "yuvanshkoli2324@ternaengg.ac.in",
     github: adminUser?.github || "https://github.com/yuvanshkoli",
     linkedin: adminUser?.linkedin || "https://linkedin.com/in/yuvanshkoli",
     handle: "@zorvyn_admin"
@@ -38,7 +41,7 @@ export const AppFooter = () => {
           </p>
           <div className="flex items-center gap-3">
             <a 
-              href={`mailto:${developerInfo.email}`} 
+              href={`mailto:${developerNode.personalEmail}`} 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
@@ -46,7 +49,7 @@ export const AppFooter = () => {
               <Mail className="w-4 h-4" />
             </a>
             <a 
-              href={developerInfo.github} 
+              href={developerNode.github} 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
@@ -54,7 +57,7 @@ export const AppFooter = () => {
               <Github className="w-4 h-4" />
             </a>
             <a 
-              href={developerInfo.linkedin} 
+              href={developerNode.linkedin} 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
@@ -76,14 +79,17 @@ export const AppFooter = () => {
         <div className="space-y-6">
           <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Developer Node</h4>
           <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm">
-            <p className="text-sm font-black text-slate-900 dark:text-white uppercase italic tracking-tight">{developerInfo.name}</p>
+            <p className="text-sm font-black text-slate-900 dark:text-white uppercase italic tracking-tight">{developerNode.name}</p>
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Institutional Node Lead</p>
             <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 space-y-2">
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                Email: <span className="text-indigo-600 font-black tracking-tighter">{developerInfo.email}</span>
+                Personal: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.personalEmail}</span>
               </p>
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                Handle: <span className="text-indigo-600 font-black tracking-tighter">{developerInfo.handle}</span>
+                College: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.collegeEmail}</span>
+              </p>
+              <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
+                Handle: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.handle}</span>
               </p>
             </div>
           </div>
