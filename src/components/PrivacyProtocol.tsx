@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -18,6 +17,11 @@ export const PrivacyProtocol = () => {
   return (
     <Dialog open={showPrivacy} onOpenChange={setShowPrivacy}>
       <DialogContent className="sm:max-w-[600px] rounded-[2.5rem] bg-white dark:bg-slate-950 p-0 overflow-hidden border-none shadow-2xl">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Privacy Protocols</DialogTitle>
+          <DialogDescription>ZorvynTrack Institutional Security and Data Protection Policies</DialogDescription>
+        </DialogHeader>
+
         <div className="bg-indigo-600 p-10 flex items-center gap-6">
           <div className="bg-white p-4 rounded-2xl shadow-xl">
             <ShieldCheck className="w-8 h-8 text-indigo-600" />
@@ -31,18 +35,24 @@ export const PrivacyProtocol = () => {
         <div className="p-10 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-              <Lock className="w-5 h-5 text-indigo-600 mb-4" />
-              <h4 className="text-[11px] font-black uppercase tracking-widest text-slate-900 dark:text-white">Encrypted Nodes</h4>
-              <p className="text-xs text-slate-500 font-medium mt-2 leading-relaxed">All transaction telemetry is processed through institutional-grade encryption protocols to ensure data integrity.</p>
+              <div className="flex items-center gap-2 mb-4">
+                <Lock className="w-5 h-5 text-indigo-600" />
+                <h4 className="text-[11px] font-black uppercase tracking-widest text-slate-900 dark:text-white">Encrypted Nodes</h4>
+              </div>
+              <p className="text-xs text-slate-500 font-medium leading-relaxed">All transaction telemetry is processed through institutional-grade encryption protocols to ensure data integrity.</p>
             </div>
             <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-              <EyeOff className="w-5 h-5 text-indigo-600 mb-4" />
-              <h4 className="text-[11px] font-black uppercase tracking-widest text-slate-900 dark:text-white">Audit Confidentiality</h4>
+              <div className="flex items-center gap-2 mb-4">
+                <EyeOff className="w-5 h-5 text-indigo-600" />
+                <h4 className="text-[11px] font-black uppercase tracking-widest text-slate-900 dark:text-white">Audit Confidentiality</h4>
+              </div>
               <p className="text-xs text-slate-500 font-medium mt-2 leading-relaxed">Viewer nodes are restricted to local telemetry only. Admin overrides are strictly logged for auditing purposes.</p>
             </div>
             <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-              <Database className="w-5 h-5 text-indigo-600 mb-4" />
-              <h4 className="text-[11px] font-black uppercase tracking-widest text-slate-900 dark:text-white">Data Retention</h4>
+              <div className="flex items-center gap-2 mb-4">
+                <Database className="w-5 h-5 text-indigo-600" />
+                <h4 className="text-[11px] font-black uppercase tracking-widest text-slate-900 dark:text-white">Data Retention</h4>
+              </div>
               <p className="text-xs text-slate-500 font-medium mt-2 leading-relaxed">Master ledger records are maintained in secure session vaults to prevent unauthorized synchronization leaks.</p>
             </div>
           </div>

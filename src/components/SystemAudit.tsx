@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -7,6 +6,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
 import { Activity, Terminal, ShieldAlert, CheckCircle2 } from 'lucide-react';
@@ -25,6 +25,11 @@ export const SystemAudit = () => {
   return (
     <Dialog open={showAudit} onOpenChange={setShowAudit}>
       <DialogContent className="sm:max-w-[550px] rounded-[2.5rem] bg-white dark:bg-slate-950 p-0 overflow-hidden border-none shadow-2xl">
+        <DialogHeader className="sr-only">
+          <DialogTitle>System Audit Diagnostics</DialogTitle>
+          <DialogDescription>Real-time node telemetry and institutional security audit logs.</DialogDescription>
+        </DialogHeader>
+
         <div className="bg-slate-50 dark:bg-slate-900 p-10 flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-5">
             <div className="bg-indigo-600 p-3.5 rounded-2xl">
