@@ -2,53 +2,49 @@
 # ZorvynTrack - Institutional Student Finance Dashboard
 
 Built by **Yuvansh Dashrath Koli**  
-**Personal Email:** yuvanshkoli1011@gmail.com  
-**College Email:** yuvanshkoli2324@ternaengg.ac.in  
+**College:** Terna Engineering College  
 **Reference ID:** TE85LMG1
 
-## Project Overview
-ZorvynTrack is a high-impact, institutional-grade financial terminal built for the Zorvyn internship assessment. I focused on making a platform that students can actually use to track their spending while feeling professional and secure. It features real-time data visualization, secure role-based access, and a precise audit trail.
+## What is ZorvynTrack?
+I built ZorvynTrack for my Zorvyn internship assessment. It's a professional-looking dashboard for students to track their money. I didn't want it to look like a simple app; I wanted it to feel like an "Institutional Terminal"—something a bank or a college office would use.
 
-### Evaluation Credentials (Logins)
-To access the system, please use the following institutional handles. You can also use the "Sector Credentials" button on the login screen to quickly switch between demo accounts.
+### Demo Credentials
+I've set up a few accounts so you can see how the permissions work.
 
-**Primary Admin Node**
-- **Email:** `Admin@DemoZorvynTrack.io`
-- **Password:** `admin_zorvyn`
-- **Access Type:** Full Ledger Authority (Global Management)
+**Admin Node (Global Power)**
+- **User:** `Admin@DemoZorvynTrack.io`
+- **Pass:** `admin_zorvyn`
+- **What it does:** You can see every single transaction from every student. You can delete mock data and export the entire ledger to CSV.
 
-**Restricted Viewer Nodes**
-- **Aditya Rao:** `aditya.rao@DemoZorvynTrack.io` (Password: `viewer_rao`)
-- **Priya Sharma:** `priya.sharma@DemoZorvynTrack.io` (Password: `viewer_sharma`)
-- **Access Type:** Restricted Audit Mode (Local Telemetry Only)
+**Viewer Nodes (Student View)**
+- **Users:** `aditya.rao@DemoZorvynTrack.io`, `priya.sharma@DemoZorvynTrack.io`, `rohan.mehta@DemoZorvynTrack.io`
+- **Pass:** `viewer_rao`, `viewer_sharma`, etc.
+- **What it does:** Students only see their own money. They can add entries, but after 30 seconds, they can't change them anymore.
 
-## How I Built This (My Logic & Approach)
+## My Approach & Thinking (The "Logic")
 
-1.  **Why I used React Context API**: 
-    Instead of overcomplicating things with heavy state libraries, I used the Context API (`FinanceContext.tsx`) to manage the entire ledger. This keeps the app fast and makes sure that every card, chart, and table is perfectly synced with the same data at all times. It acts as the "Single Source of Truth" for the entire terminal.
+1.  **State Management (Context API)**: 
+    I chose the React Context API because I wanted a "Single Source of Truth." When a student adds a transaction, I want the charts, the table, and the balance cards to update instantly. Context makes this smooth without making the code too messy.
 
-2.  **The "Grace Period" Security System**: 
-    In an institutional tool, you can't just delete historical records. I added a **30-second window** logic. Users can edit their own entries for 30 seconds (to fix typos), but after that, the data becomes "Permanent." This simulates a real audit trail where data integrity is the top priority.
+2.  **The "Grace Period" Security**: 
+    In real accounting, you can't just delete history. I added a **30-second window**. Students can fix a typo right after adding an entry, but once that window closes, the data is locked. This makes the data reliable for auditing.
 
-3.  **Solving the Laptop Screen Constraint**: 
-    I noticed that on 13-inch laptops, wide financial data gets squashed. To fix this, I implemented **"Adaptive Typography."** The main summary cards use a horizontal scroll container and forced single-line text (`whitespace-nowrap`), so the numbers are always clear and never cut off, no matter the screen size.
+3.  **Adaptive UI for Small Screens**: 
+    I noticed that on 13-inch laptops, big numbers often get cut off. I used **whitespace-nowrap** and horizontal scrolling for the summary cards. This way, the "Telemetry" (the numbers) is always clear and professional.
 
-4.  **Coloring & Theme Logic**: 
-    I chose **Indigo-600** as the primary brand color because it represents authority and trust in fintech. The interface uses a clean **Slate-50** background to reduce eye strain during long auditing sessions. I also added a "Namaste" greeting to add a personal, professional touch to the login flow.
+4.  **Color Strategy**: 
+    I picked **Indigo-600** as the main theme. Indigo feels trustworthy and modern. I paired it with **Slate-50** for the background so it's easy on the eyes during long sessions.
 
-5.  **Data Contributions**: 
-    Even though Viewers have restricted access, they can still contribute data. This reflects a collaborative campus environment where students track their own money while the Admin manages the overall system integrity.
+5.  **Namaste Greeting**: 
+    I added a "Namaste" popup when you log in. It adds a personal, respectful touch to a high-tech terminal.
 
 ## Core Features
-- **Dashboard Hub**: Wide summary cards with single-line telemetry and trend analysis.
-- **Transaction Ledger**: High-performance table with multi-parameter filtering and CSV export for Admins.
-- **Verified Authority Badge**: Professional visual identification for the system developer.
-- **Onboarding Protocol**: A point-to-point tutorial that initializes the user session.
+- **High-Velocity Ledger**: Every account comes with 50-100 random transactions to show how the system handles lots of data.
+- **Searchable Audit Trail**: You can search by description, category, date, or even the amount.
+- **Admin Command Center**: Admins can wipe mock data to start fresh.
+- **Security Lock**: My developer node is locked to prevent unauthorized changes to my credentials.
 
-## Setup Instructions
-1.  **Install**: `npm install`
-2.  **Run**: `npm run dev`
-3.  **Access**: Open `http://localhost:9002` in your browser.
-
-## Final Note
-ZorvynTrack was built to show how I think about real-world constraints—like screen size, data permanence, and professional aesthetics. Every feature, from the verified badge to the 30-second edit window, was designed to create an institutional-grade experience.
+## How to Run
+1. `npm install`
+2. `npm run dev`
+3. Go to `http://localhost:9002`

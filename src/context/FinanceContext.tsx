@@ -70,7 +70,7 @@ const generateRandomData = () => {
   const baseTime = Date.now() - (30 * 86400000);
 
   DEMO_ACCOUNTS.forEach((user) => {
-    // Force High-volume telemetry: 50 to 100 transactions per user node
+    // Force High-volume telemetry: 50 to 100 transactions for EVERY account
     const count = Math.floor(Math.random() * 51) + 50; 
     
     // Initial grant for every account
@@ -181,7 +181,13 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (savedLedger) {
-      setMasterLedger(JSON.parse(savedLedger));
+      const parsedLedger = JSON.parse(savedLedger);
+      // If for some reason the ledger is low on data, regenerate
+      if (parsedLedger.length < 500) {
+        setMasterLedger(generateRandomData());
+      } else {
+        setMasterLedger(parsedLedger);
+      }
     } else {
       setMasterLedger(generateRandomData());
     }

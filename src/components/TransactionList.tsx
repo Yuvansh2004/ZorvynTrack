@@ -35,6 +35,8 @@ export const TransactionList = () => {
 
   const filtered = transactions.filter(t => {
     const term = searchTerm.toLowerCase();
+    
+    // Robust Search: Category, Description, Amount, Date, or Owner
     const matchesSearch = 
       t.category.toLowerCase().includes(term) ||
       t.description.toLowerCase().includes(term) ||
@@ -44,6 +46,7 @@ export const TransactionList = () => {
     
     const matchesType = typeFilter === 'All' || t.type === typeFilter;
     
+    // Date Range logic
     const itemTime = new Date(t.date).getTime();
     const startTime = startDate ? new Date(startDate).getTime() : -Infinity;
     const endTime = endDate ? new Date(endDate).getTime() : Infinity;
