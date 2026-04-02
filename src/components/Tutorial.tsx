@@ -1,7 +1,6 @@
-
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import {
   Dialog,
@@ -56,11 +55,18 @@ const steps = [
 ];
 
 export const Tutorial = () => {
-  const { hasSeenTutorial, completeTutorial, currentUser, isTransitioning, showGreeting } = useFinance();
+  const { hasSeenTutorial, completeTutorial, currentUser, isTransitioning, showGreeting, isTutorialActive, setIsTutorialActive } = useFinance();
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Show tutorial ONLY if hasSeenTutorial is false, user is logged in, no transitions are active, and the greeting is closed
-  const showTutorial = !hasSeenTutorial && currentUser && !isTransitioning && !showGreeting;
+  // Auto-start tutorial only if it's the first time AND no greeting is showing
+  // Or if it was manually triggered via isTutorialActive
+  const showTutorial = (isTutorialActive || (!hasSeenTutorial && currentUser && !isTransitioning && !showGreeting));
+
+  useEffect(() => {
+    if (showTutorial) {
+      setCurrentStep(0);
+    }
+  }, [showTutorial]);
 
   if (!showTutorial) return null;
 

@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -14,19 +13,36 @@ import {
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { ZorvynLogo } from '@/components/ZorvynLogo';
+import { HelpCircle } from 'lucide-react';
 
 export const GreetingPopup = () => {
-  const { showGreeting, closeGreeting, currentUser } = useFinance();
+  const { showGreeting, closeGreeting, currentUser, setIsTutorialActive } = useFinance();
 
   if (!currentUser) return null;
 
   const userName = currentUser.name.split(' ')[0];
+
+  const handleStartTutorial = () => {
+    setIsTutorialActive(true);
+    closeGreeting();
+  };
 
   return (
     <Dialog open={showGreeting} onOpenChange={(open) => !open && closeGreeting()}>
       <DialogContent className="sm:max-w-[480px] border-none shadow-2xl p-0 overflow-hidden rounded-[3rem] bg-white dark:bg-slate-950">
         <div className="bg-indigo-600 p-12 flex flex-col items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15)_0%,transparent_100%)]" />
+          
+          {/* Optional Tutorial Trigger in the corner */}
+          <button 
+            onClick={handleStartTutorial}
+            className="absolute top-6 right-6 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all group"
+            title="Start Tutorial Protocol"
+          >
+            <HelpCircle className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+            <span className="text-[10px] font-black uppercase tracking-widest">Tutorial</span>
+          </button>
+
           <motion.div
             initial={{ scale: 0.5, opacity: 0, rotate: -15 }}
             animate={{ scale: 1, opacity: 1, rotate: 0 }}

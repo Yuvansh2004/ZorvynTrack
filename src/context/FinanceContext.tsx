@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -141,6 +140,8 @@ interface FinanceContextType {
   setShowAudit: (val: boolean) => void;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (val: boolean) => void;
+  isTutorialActive: boolean;
+  setIsTutorialActive: (val: boolean) => void;
 }
 
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
@@ -158,6 +159,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showAudit, setShowAudit] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isTutorialActive, setIsTutorialActive] = useState(false);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('zorvyn_current_user');
@@ -301,6 +303,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const completeTutorial = () => {
     setHasSeenTutorial(true);
+    setIsTutorialActive(false);
   };
 
   const closeGreeting = () => {
@@ -335,7 +338,9 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       showAudit,
       setShowAudit,
       isSidebarOpen,
-      setIsSidebarOpen
+      setIsSidebarOpen,
+      isTutorialActive,
+      setIsTutorialActive
     }}>
       {children}
     </FinanceContext.Provider>
