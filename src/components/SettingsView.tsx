@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -17,7 +16,7 @@ import {
   Trash2, AlertCircle, Pencil, Save, X, Github, Linkedin, ExternalLink,
   ChevronDown, ChevronUp
 } from 'lucide-react';
-import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
+import { useFinance } from '@/context/FinanceContext';
 import { useToast } from '@/hooks/use-toast';
 
 export const SettingsView = () => {
@@ -38,6 +37,18 @@ export const SettingsView = () => {
     github: currentUser?.github || '',
     linkedin: currentUser?.linkedin || ''
   });
+
+  useEffect(() => {
+    if (currentUser) {
+      setTempName(currentUser.name);
+      setTempEmail(currentUser.email);
+      setSocials({
+        personalEmail: currentUser.personalEmail || '',
+        github: currentUser.github || '',
+        linkedin: currentUser.linkedin || ''
+      });
+    }
+  }, [currentUser]);
 
   if (!currentUser) return null;
 
