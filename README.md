@@ -16,8 +16,8 @@
 **Reference ID:** TE85LMG1  
 **Project Role:** Student Frontend Developer  
 **Email:** yuvanshkoli1011@gmail.com  
-**GitHub:** [yuvanshkoli](https://github.com/yuvanshkoli)  
-**LinkedIn:** [yuvanshkoli](https://linkedin.com/in/yuvanshkoli)
+**GitHub:** [yuvanshkoli](https://github.com/Yuvansh2004)  
+**LinkedIn:** [yuvanshkoli](https://www.linkedin.com/in/yuvansh-koli-47a224400)
 
 ---
 
@@ -228,7 +228,7 @@ ZorvynTrack/
 
 ### **Step 1: Clone the Repository**
 ```bash
-git clone https://github.com/yuvanshkoli/zorvyntrack.git
+git clone https://github.com/Yuvansh2004/zorvyntrack.git
 cd zorvyntrack
 ```
 
