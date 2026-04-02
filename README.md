@@ -9,7 +9,7 @@ Built by **Yuvansh Dashrath Koli**
 ZorvynTrack is a high-impact, institutional-grade financial terminal built for the Zorvyn internship assessment. The platform focuses on student financial literacy through intuitive data visualization, secure role-based access modulation (RBAC), and precise ledger management.
 
 ### Admin Access Credentials (FOR EVALUATION)
-- **Email:** `yuvanshkoli@DemoZorvynTrack.io`
+- **Email:** `admin1@DemoZorvynTrack.io`
 - **Password:** `admin_zorvyn`
 - **Role:** Admin (Full Ledger Authority)
 

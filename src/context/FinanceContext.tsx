@@ -23,7 +23,7 @@ export const ASSIGNMENT_REF_ID = "TE85LMG1";
 export const DEMO_ACCOUNTS: User[] = [
   { 
     name: 'Yuvansh Dashrath Koli', 
-    email: 'yuvanshkoli@DemoZorvynTrack.io', 
+    email: 'admin1@DemoZorvynTrack.io', 
     password: 'admin_zorvyn', 
     role: 'Admin',
     personalEmail: 'yuvanshkoli1011@gmail.com',
