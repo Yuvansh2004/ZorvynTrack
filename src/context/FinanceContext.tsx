@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -69,14 +70,15 @@ const generateRandomData = () => {
   const baseTime = Date.now() - (30 * 86400000);
 
   DEMO_ACCOUNTS.forEach((user) => {
-    // High-volume telemetry: 50 to 100 per user for institutional performance testing
-    const count = Math.floor(Math.random() * 50) + 50; 
+    // Force High-volume telemetry: 50 to 100 transactions per user node
+    const count = Math.floor(Math.random() * 51) + 50; 
     
+    // Initial grant for every account
     allTransactions.push({
       id: Math.random().toString(36).substr(2, 9),
       date: new Date(baseTime).toISOString().split('T')[0],
       description: 'Institutional Stipend Grant',
-      amount: 15000 + Math.floor(Math.random() * 5000),
+      amount: 25000 + Math.floor(Math.random() * 5000),
       category: 'Income',
       type: 'Income',
       ownerEmail: user.email,
@@ -89,8 +91,8 @@ const generateRandomData = () => {
       const description = descList[Math.floor(Math.random() * descList.length)];
       const type: TransactionType = Math.random() > 0.9 ? 'Income' : 'Expense';
       const amount = type === 'Income' 
-        ? Math.floor(Math.random() * 5000) + 1000 
-        : Math.floor(Math.random() * 2000) + 50;
+        ? Math.floor(Math.random() * 5000) + 2000 
+        : Math.floor(Math.random() * 1500) + 100;
       
       const randomDays = Math.floor(Math.random() * 30);
       const randomHours = Math.floor(Math.random() * 24);
