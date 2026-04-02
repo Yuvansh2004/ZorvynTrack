@@ -6,7 +6,7 @@ Built by **Yuvansh Dashrath Koli**
 **Reference ID:** TE85LMG1
 
 ## Project Overview
-ZorvynTrack is a high-impact, institutional-grade financial terminal built for the Zorvyn internship assessment. The platform focuses on student financial literacy through intuitive data visualization, secure role-based access modulation (RBAC), and precise ledger management.
+ZorvynTrack is a high-impact, institutional-grade financial terminal built for the Zorvyn internship assessment. I focused on making a platform that students can actually use to track their spending while feeling professional and secure. It features real-time data visualization, secure role-based access, and a precise audit trail.
 
 ### Evaluation Credentials (Logins)
 | Role | Email | Password | Access Type |
@@ -15,46 +15,35 @@ ZorvynTrack is a high-impact, institutional-grade financial terminal built for t
 | **Viewer** | `aditya.rao@DemoZorvynTrack.io` | `viewer_rao` | Restricted Audit Mode |
 | **Viewer** | `priya.sharma@DemoZorvynTrack.io` | `viewer_sharma` | Restricted Audit Mode |
 
-*Note: Use the "Sector Credentials" button on the login screen to quickly switch between demo nodes.*
+*Note: Use the "Sector Credentials" button on the login screen to quickly switch between demo accounts.*
 
-## Key Technical Approaches (My Thinking)
+## How I Built This (My Logic & Approach)
 
-1. **Strategic Node State (Context API)**: 
-   - I used the React Context API (`FinanceContext.tsx`) to manage a master ledger across the whole app. I chose this over complex libraries to keep the architecture **"Simple and Smart"**. It allows for instant updates and an audit-ready state that works perfectly on a single-page terminal.
+1.  **Why I used React Context API**: 
+    - Instead of overcomplicating things with heavy state libraries, I used the Context API (`FinanceContext.tsx`) to manage the entire ledger. This keeps the app fast and makes sure that every card, chart, and table is perfectly synced with the same data at all times.
 
-2. **Institutional Security Protocol**: 
-   - I implemented a **"Grace Period"** system. In a real institutional environment, you can't just delete data. Here, users have a 30-second window to correct their own entries. After 30 seconds, data becomes "Permanent," simulating a secure immutable audit trail that only an Admin node can override.
+2.  **The "Grace Period" Security System**: 
+    - In an institutional tool, you can't just delete historical records. I added a **30-second window** logic. Users can edit their own entries for 30 seconds (to fix typos), but after that, the data becomes "Permanent." This simulates a real audit trail where data integrity is the top priority.
 
-3. **Adaptive Typography Telemetry**: 
-   - To solve layout constraints on laptop screens (13-inch), I developed an **"Adaptive Typography"** system. Financial values in the summary cards don't just shrink; they stay on one line and use a horizontal scroll node if needed, ensuring 100% legibility regardless of the currency length.
+3.  **Solving the Laptop Screen Constraint**: 
+    - I noticed that on 13-inch laptops, wide financial data gets squashed. To fix this, I implemented **"Adaptive Typography."** The main summary cards use a horizontal scroll container and forced single-line text (`whitespace-nowrap`), so the numbers are always clear and never cut off.
 
-4. **Dynamic Identity Synchronization**: 
-   - The terminal features a dynamically linked **Developer Node**. When the Admin updates their external node settings (Personal Email, GitHub, LinkedIn), the global footer icons update for all users in real-time. This shows how branding can be managed centrally.
+4.  **Coloring & Theme Logic**: 
+    - I chose **Indigo-600** as the primary brand color because it represents authority and trust in fintech. The interface uses a clean **Slate-50** background to reduce eye strain during long auditing sessions. I also added a "Namaste" greeting to add a personal, professional touch to the login flow.
 
-5. **Democratic Data Contribution**: 
-   - While maintaining RBAC, I allowed **Common Viewers** to contribute data to the ledger. This reflects a collaborative environment where students track their own spending while the Admin manages the institutional integrity.
+5.  **Data Contributions**: 
+    - Even though Viewers have restricted access, they can still contribute data. This reflects a collaborative campus environment where students track their own money while the Admin manages the overall system integrity.
 
-## Requirements Alignment Matrix
-| Requirement | Implementation Detail | Status |
-|:--- |:--- |:---:|
-| **1. Dashboard Overview** | Wide Summary Cards with single-line telemetry and AreaChart trend analysis. | ✅ |
-| **2. Transactions Ledger** | High-performance table with Search, Date-Range Filtering, and CSV Export. | ✅ |
-| **3. RBAC (Admin/Viewer)** | Democratic entry for all; Viewers restricted to 30s edit window for own entries. | ✅ |
-| **4. Insights Section** | Concentration analysis, Savings Rate health detection, and Telemetry Comparison bars. | ✅ |
-| **5. State Management** | Robust React Context managing master ledger persistence and session authorization. | ✅ |
-| **6. UI/UX Excellence** | Indigo/Slate theme modulation, collapsible modules, and "Namaste" greeting protocol. | ✅ |
+## Core Features
+- **Dashboard Hub**: Wide summary cards with single-line telemetry and trend analysis.
+- **Transaction Ledger**: High-performance table with multi-parameter filtering and CSV export for Admins.
+- **Verified Authority Badge**: Professional visual identification for the system developer.
+- **Onboarding Protocol**: A point-to-point tutorial that initializes the user session.
 
-## Setup & Installation
-1. **Environment Setup**: Ensure Node.js (v18+) is installed.
-2. **Clone & Install**:
-   ```bash
-   npm install
-   ```
-3. **Synchronization**:
-   ```bash
-   npm run dev
-   ```
-4. **Access Terminal**: Open `http://localhost:9002` in your browser.
+## Setup Instructions
+1.  **Install**: `npm install`
+2.  **Run**: `npm run dev`
+3.  **Access**: Open `http://localhost:9002` in your browser.
 
-## Developer Note
-This terminal was built to show how a human developer thinks about problem-solving. I prioritized things like the **30-second security window**, the **Verified Authority Badge**, and the **Adaptive Typography** to prove that ZorvynTrack is built for actual institutional use cases. Every color choice (Indigo-600 for brand authority) and greeting (Namaste) was made to create a resonant and professional user experience.
+## Final Note
+ZorvynTrack was built to show how I think about real-world constraints—like screen size, data permanence, and professional aesthetics. Every feature, from the verified badge to the 30-second edit window, was designed to create an institutional-grade experience.

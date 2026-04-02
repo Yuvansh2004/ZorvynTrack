@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -70,7 +69,7 @@ const generateRandomData = () => {
   const baseTime = Date.now() - (30 * 86400000);
 
   DEMO_ACCOUNTS.forEach((user) => {
-    // Increased transaction volume: 50 to 100 per user for rich telemetry
+    // High-volume telemetry: 50 to 100 per user for institutional performance testing
     const count = Math.floor(Math.random() * 50) + 50; 
     
     allTransactions.push({
@@ -191,9 +190,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
     if (savedUser) {
       const user = JSON.parse(savedUser);
-      if (user.role === 'Admin' && user.email !== DEMO_ACCOUNTS[0].email) {
-        user.email = DEMO_ACCOUNTS[0].email;
-      }
       setCurrentUser(user);
       setUserRole(user.role);
     }
