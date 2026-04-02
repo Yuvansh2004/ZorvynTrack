@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useMemo } from 'react';
@@ -63,7 +64,7 @@ export const AnalyticsCharts = () => {
             <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">View Ledger →</span>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="h-[400px] w-full">
+            <div className="h-[450px] w-full">
               {areaData.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={areaData} margin={{ top: 30, right: 30, left: 20, bottom: 0 }}>
@@ -133,7 +134,7 @@ export const AnalyticsCharts = () => {
           <CardTitle className="text-[11px] weight-black uppercase tracking-[0.25em] text-slate-400 group-hover:text-indigo-600 transition-colors">Expenditure Classification</CardTitle>
           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">View Details →</span>
         </CardHeader>
-        <CardContent className="h-[500px] pt-4 w-full flex flex-col items-center justify-center">
+        <CardContent className="h-[550px] pt-4 w-full flex flex-col items-center justify-center">
           {pieData.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
               <PieChart margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
@@ -145,9 +146,10 @@ export const AnalyticsCharts = () => {
                   dataKey="value"
                   stroke="none"
                   animationDuration={1500}
+                  isAnimationActive={true}
                 >
                   {pieData.map((_, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} className="hover:opacity-80 transition-opacity cursor-pointer outline-none" />
                   ))}
                 </Pie>
                 <Tooltip 
@@ -164,7 +166,7 @@ export const AnalyticsCharts = () => {
                     textTransform: 'uppercase',
                     color: '#6366f1'
                   }}
-                  formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Total Expenditure']}
+                  formatter={(value: number, name: string) => [`₹${value.toLocaleString('en-IN')}`, name]}
                 />
                 <Legend 
                   verticalAlign="bottom" 
@@ -177,7 +179,10 @@ export const AnalyticsCharts = () => {
                     textTransform: 'uppercase', 
                     letterSpacing: '0.05em', 
                     paddingTop: '30px',
-                    width: '100%'
+                    width: '100%',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center'
                   }}
                 />
               </PieChart>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -177,7 +178,7 @@ export const SettingsView = () => {
                       </Button>
                     </div>
                   ) : (
-                    <p className="text-sm font-black text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
+                    <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
                   )}
                 </div>
 

@@ -27,10 +27,10 @@ This is a high-level architectural feature where the terminal's global contact n
     * **LinkedIn Node:** Connects the terminal to the Admin's professional identity network.
 * **Knowledge Gain:** This demonstrates a **"Centralized Command"** architecture where a single administrative node controls the identity and communication channels of the entire terminal interface.
 
-### **B. The 30-Second "Audit Integrity" Window**
+### **B. The "Audit Integrity" Logic**
 Professional accounting rules are implemented to ensure data accuracy and security.
-* **The Logic:** Users have a **30-second grace period** after entering the **Settings View** to modify their **System Handle** (Email). This prevents unauthorized long-term identity modulation. Similarly, new transactions have a 30-second window before locking.
-* **The Result:** Once the timer expires, the entry or field locks and becomes **Permanent Telemetry**. Only a Global Admin can override or delete locked transaction records.
+* **The Logic:** New transactions and profile identity records have a **30-second grace period** after creation/entry before locking.
+* **The Result:** Once the timer expires, the entry becomes **Permanent Telemetry**. Only a Global Admin can override or delete locked transaction records.
 * **Knowledge Gain:** Implements a time-locked security state that balances user error correction with institutional data integrity.
 
 ### **C. High-Velocity Ledger (Pre-loaded History)**
