@@ -9,7 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 
 export const SummaryCards = () => {
-  const { transactions, setActiveView } = useFinance();
+  const { transactions, setActiveView, isSidebarOpen } = useFinance();
 
   const income = transactions
     .filter(t => t.type === 'Income')
@@ -54,29 +54,40 @@ export const SummaryCards = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.15, duration: 0.5 }}
-            className="w-[400px] lg:w-[450px]"
+            className={cn(
+              "transition-all duration-500",
+              isSidebarOpen ? "w-[380px] lg:w-[420px]" : "w-[420px] lg:w-[480px]"
+            )}
           >
             <Card 
               onClick={() => setActiveView('Transactions')}
               className="card-shadow overflow-hidden group hover:border-indigo-400 hover:shadow-2xl hover:-translate-y-1 cursor-pointer transition-all h-full border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[3rem]"
             >
-              <CardContent className="p-10 lg:p-14 flex items-center gap-10 h-full relative">
-                <div className={`p-8 lg:p-10 rounded-[2.5rem] ${item.bg} group-hover:rotate-3 transition-transform shrink-0 shadow-lg shadow-slate-50 dark:shadow-none`}>
-                  <item.icon className={`w-10 h-10 lg:w-12 lg:h-12 ${item.color}`} />
+              <CardContent className="p-10 lg:p-14 flex items-center gap-8 h-full relative">
+                <div className={cn(
+                  "rounded-[2.5rem] flex items-center justify-center shrink-0 shadow-lg shadow-slate-50 dark:shadow-none transition-all duration-500",
+                  item.bg,
+                  isSidebarOpen ? "p-6 lg:p-8" : "p-8 lg:p-10"
+                )}>
+                  <item.icon className={cn(
+                    "transition-all duration-500",
+                    item.color,
+                    isSidebarOpen ? "w-8 h-8 lg:w-10 lg:h-10" : "w-10 h-10 lg:w-12 lg:h-12"
+                  )} />
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <p className="text-[11px] lg:text-[12px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.4em] mb-3">
+                  <p className="text-[10px] lg:text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.4em] mb-2">
                     {item.title}
                   </p>
-                  <div className="overflow-x-auto no-scrollbar py-2">
-                    <h3 className={cn(
-                      "font-black text-slate-900 dark:text-white tracking-tighter tabular-nums italic whitespace-nowrap",
-                      "text-4xl lg:text-5xl"
-                    )}>
-                      {formatINR(item.amount)}
-                    </h3>
-                  </div>
+                  <h3 className={cn(
+                    "font-black text-slate-900 dark:text-white tracking-tighter tabular-nums italic transition-all duration-500",
+                    isSidebarOpen 
+                      ? "text-3xl lg:text-4xl" 
+                      : "text-4xl lg:text-5xl"
+                  )}>
+                    {formatINR(item.amount)}
+                  </h3>
                 </div>
 
                 <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all">
