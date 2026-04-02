@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
@@ -15,7 +15,7 @@ import {
 import { 
   Moon, Shield, UserCircle, Mail, User, ShieldCheck, 
   Trash2, AlertCircle, Pencil, Save, X, Github, Linkedin, ExternalLink,
-  ChevronDown, ChevronUp
+  ChevronDown, ChevronUp, Clock
 } from 'lucide-react';
 import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
 import { useToast } from '@/hooks/use-toast';
@@ -26,7 +26,12 @@ export const SettingsView = () => {
   
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState(currentUser?.name || '');
+  
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const [tempEmail, setTempEmail] = useState(currentUser?.email || '');
+  
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
+  const [editTimer, setEditTimer] = useState(30);
 
   const [isEditingSocials, setIsEditingSocials] = useState(false);
   const [socials, setSocials] = useState({
@@ -34,6 +39,13 @@ export const SettingsView = () => {
     github: currentUser?.github || '',
     linkedin: currentUser?.linkedin || ''
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setEditTimer((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (!currentUser) return null;
 
@@ -44,6 +56,23 @@ export const SettingsView = () => {
       toast({
         title: "Profile Updated",
         description: "Your identity node has been successfully updated in the system.",
+      });
+    }
+  };
+
+  const handleSaveEmail = () => {
+    if (tempEmail.trim() && tempEmail.includes('@')) {
+      updateProfile({ email: tempEmail.trim() });
+      setIsEditingEmail(false);
+      toast({
+        title: "System Handle Synchronized",
+        description: "Your session identity email has been updated.",
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Invalid Protocol",
+        description: "Please enter a valid institutional email node.",
       });
     }
   };
@@ -62,6 +91,11 @@ export const SettingsView = () => {
   const handleCancelName = () => {
     setTempName(currentUser.name);
     setIsEditingName(false);
+  };
+
+  const handleCancelEmail = () => {
+    setTempEmail(currentUser.email);
+    setIsEditingEmail(false);
   };
 
   return (
@@ -121,9 +155,44 @@ export const SettingsView = () => {
                   )}
                 </div>
                 
-                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
-                  <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5"/> System Handle</p>
-                  <p className="text-sm font-black text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
+                <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 group relative">
+                  <div className="flex justify-between items-center mb-1.5">
+                    <p className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5"/> System Handle</p>
+                    {editTimer > 0 && !isEditingEmail && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-[9px] font-black text-amber-500 uppercase tracking-tighter flex items-center gap-1">
+                          <Clock className="w-2.5 h-2.5" /> {editTimer}s
+                        </span>
+                        <Button 
+                          size="icon" 
+                          variant="ghost" 
+                          className="h-6 w-6 text-slate-400 hover:text-indigo-600"
+                          onClick={() => setIsEditingEmail(true)}
+                        >
+                          <Pencil className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+
+                  {isEditingEmail ? (
+                    <div className="flex items-center gap-2">
+                      <Input 
+                        value={tempEmail}
+                        onChange={(e) => setTempEmail(e.target.value)}
+                        className="h-8 font-bold text-sm rounded-lg"
+                        autoFocus
+                      />
+                      <Button size="icon" variant="ghost" className="h-8 w-8 text-emerald-600" onClick={handleSaveEmail}>
+                        <Save className="w-4 h-4" />
+                      </Button>
+                      <Button size="icon" variant="ghost" className="h-8 w-8 text-rose-600" onClick={handleCancelEmail}>
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <p className="text-sm font-black text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
+                  )}
                 </div>
 
                 <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 md:col-span-2">

@@ -29,18 +29,18 @@ This is a high-level architectural feature where the terminal's global contact n
 
 ### **B. The 30-Second "Audit Integrity" Window**
 Professional accounting rules are implemented to ensure data accuracy and security.
-* **The Logic:** Standard users have a **30-second grace period** after adding an entry to edit or delete it.
-* **The Result:** Once the timer expires, the entry locks and becomes **Permanent Telemetry**. Only a Global Admin can override or delete these records. This ensures an untampered audit trail.
+* **The Logic:** Users have a **30-second grace period** after entering the **Settings View** to modify their **System Handle** (Email). This prevents unauthorized long-term identity modulation. Similarly, new transactions have a 30-second window before locking.
+* **The Result:** Once the timer expires, the entry or field locks and becomes **Permanent Telemetry**. Only a Global Admin can override or delete locked transaction records.
 * **Knowledge Gain:** Implements a time-locked security state that balances user error correction with institutional data integrity.
 
 ### **C. High-Velocity Ledger (Pre-loaded History)**
 To test performance and filtering, every account initializes with **50 to 100 simulated transactions**. 
-* **Knowledge Gain:** Provides immediate visual feedback on the system's ability to handle high-volume data modulation and classification.
+* **Knowledge Gain:** Provides immediate visual feedback on the system's ability to handle high-volume data modulation and classification across different user nodes.
 
 ### **D. Deep Audit Search & Filtering**
-* **Precision Search:** Search by exact amounts, owner handles, or date nodes (Format: YYYY-MM-DD).
-* **Row Modulation:** Switch between 100, 250, 500, or "All" rows to view the entire ledger without lag.
-* **Category Isolation:** Isolate specific spending sectors like "Education," "Utilities," or "Investment."
+* **Precision Search:** Search by exact amounts, category nodes, or date nodes (Format: YYYY-MM-DD).
+* **Row Modulation:** Switch between 25, 50, 100, 250, 500, or "All" rows to view the entire ledger without lag.
+* **Category Isolation:** Isolate specific spending sectors like "Education," "Utilities," or "Investment" using the high-precision filter protocol.
 
 ---
 
