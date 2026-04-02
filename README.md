@@ -42,7 +42,7 @@ Technology should still feel human. I added a "Namaste" greeting during the init
 
 ### A. High-Velocity Ledger (Audit-Rich Data)
 Every single account (Admin and all 9 Viewers) initializes with **50 to 100 random transactions**. This isn't just "dummy text"—it's a deep historical simulation of an entire academic year. You can immediately test the scrolling, filtering, and performance of the terminal.
-- **Note to Interviewers**: Log into any account—be it `ishita.gupta` or `aditya.rao`—and you will find a rich, unique financial history waiting for analysis.
+- **Note to Interviewers**: Log into any account—be it `ishita.gupta` or `aditya.rao` - and you will find a rich, unique financial history waiting for analysis.
 
 ### B. Deep Audit Search
 The search handle is engineered for speed and precision. You can search for:
