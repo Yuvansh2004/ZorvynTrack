@@ -53,7 +53,7 @@ export const AnalyticsCharts = () => {
 
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, name, value }: any) => {
     const RADIAN = Math.PI / 180;
-    const radius = outerRadius * 1.15;
+    const radius = outerRadius * 1.25; // Increase radius for better visibility
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -61,12 +61,12 @@ export const AnalyticsCharts = () => {
       <text 
         x={x} 
         y={y} 
-        fill="#94a3b8" 
+        fill="#475569" 
         textAnchor={x > cx ? 'start' : 'end'} 
         dominantBaseline="central"
-        className="text-[9px] font-black uppercase tracking-tighter"
+        className="text-[10px] font-black uppercase tracking-tighter"
       >
-        {`${name}: ₹${value}`}
+        {`${name}: ₹${value.toLocaleString('en-IN')}`}
       </text>
     );
   };
@@ -88,7 +88,7 @@ export const AnalyticsCharts = () => {
             <div className="h-[350px] w-full">
               {areaData.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={areaData}>
+                  <AreaChart data={areaData} margin={{ top: 20, right: 30, left: 20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#6366f1" stopOpacity={0.2}/>
@@ -112,7 +112,7 @@ export const AnalyticsCharts = () => {
                     />
                     <Tooltip 
                       contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', padding: '12px' }}
-                      formatter={(value: number) => [`₹${Math.abs(value)}`, 'Value']}
+                      formatter={(value: number) => [`₹${Math.abs(value).toLocaleString('en-IN')}`, 'Value']}
                     />
                     <Area 
                       type="monotone" 
@@ -121,18 +121,18 @@ export const AnalyticsCharts = () => {
                       fillOpacity={1} 
                       fill="url(#colorAmount)" 
                       strokeWidth={4}
-                      dot={{ r: 4, fill: '#6366f1', strokeWidth: 2, stroke: '#fff' }}
-                      activeDot={{ r: 6, strokeWidth: 0 }}
+                      dot={{ r: 5, fill: '#6366f1', strokeWidth: 2, stroke: '#fff' }}
+                      activeDot={{ r: 7, strokeWidth: 0 }}
                       animationDuration={1500}
                     >
                       <LabelList 
                         dataKey="absAmount" 
                         position="top" 
-                        offset={10}
-                        fontSize={9} 
-                        fontWeight={800} 
+                        offset={15}
+                        fontSize={10} 
+                        fontWeight={900} 
                         fill="#6366f1" 
-                        formatter={(val: number) => `₹${val}`}
+                        formatter={(val: number) => `₹${val.toLocaleString('en-IN')}`}
                       />
                     </Area>
                   </AreaChart>
@@ -158,16 +158,16 @@ export const AnalyticsCharts = () => {
         <CardContent className="h-[350px] pt-4 w-full flex items-center justify-center">
           {pieData.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+              <PieChart margin={{ top: 0, right: 40, left: 40, bottom: 0 }}>
                 <Pie
                   data={pieData}
-                  innerRadius="55%"
-                  outerRadius="75%"
+                  innerRadius="50%"
+                  outerRadius="70%"
                   paddingAngle={8}
                   dataKey="value"
                   stroke="none"
                   label={renderCustomizedLabel}
-                  labelLine={false}
+                  labelLine={true}
                   animationDuration={1500}
                 >
                   {pieData.map((_, index) => (
@@ -176,7 +176,7 @@ export const AnalyticsCharts = () => {
                 </Pie>
                 <Tooltip 
                   contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}
-                  formatter={(value: number) => [`₹${value}`, 'Total']}
+                  formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Total']}
                 />
                 <Legend 
                   verticalAlign="bottom" 
