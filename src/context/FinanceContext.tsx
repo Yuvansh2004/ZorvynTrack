@@ -70,10 +70,10 @@ const generateRandomData = () => {
   const baseTime = Date.now() - (30 * 86400000);
 
   DEMO_ACCOUNTS.forEach((user) => {
-    // Force High-volume telemetry: 50 to 100 transactions for EVERY account
+    // FORCE High-volume telemetry: 50 to 100 transactions for EVERY account
     const count = Math.floor(Math.random() * 51) + 50; 
     
-    // Initial grant for every account
+    // Initial grant for every account to ensure balance isn't zero
     allTransactions.push({
       id: Math.random().toString(36).substr(2, 9),
       date: new Date(baseTime).toISOString().split('T')[0],
@@ -89,7 +89,7 @@ const generateRandomData = () => {
       const category = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
       const descList = DESCRIPTIONS[category];
       const description = descList[Math.floor(Math.random() * descList.length)];
-      const type: TransactionType = Math.random() > 0.9 ? 'Income' : 'Expense';
+      const type: TransactionType = Math.random() > 0.85 ? 'Income' : 'Expense';
       const amount = type === 'Income' 
         ? Math.floor(Math.random() * 5000) + 2000 
         : Math.floor(Math.random() * 1500) + 100;
@@ -182,7 +182,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
     if (savedLedger) {
       const parsedLedger = JSON.parse(savedLedger);
-      // Ensure high-volume data exists
+      // Ensure high-volume data exists across accounts. Force regeneration if count looks suspiciously low.
       if (parsedLedger.length < 500) {
         setMasterLedger(generateRandomData());
       } else {
