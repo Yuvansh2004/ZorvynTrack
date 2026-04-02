@@ -21,8 +21,8 @@ ZorvynTrack is a high-impact, institutional-grade financial terminal built for t
 2. **Institutional Security Protocol**: 
    - I implemented a **"Grace Period"** system. In a real-world FinTech environment, data integrity is paramount. Here, users have a 30-second window to correct their own entries. After this, data becomes "Permanent," simulating an immutable audit trail that only an Admin node can override.
 
-3. **Adaptive Long-Node Telemetry**: 
-   - To solve layout constraints on laptop screens, I developed an **"Adaptive Typography"** system. Currency values dynamically resize based on the sidebar state to ensure 100% legibility in a single line without truncation.
+3. **Adaptive Typography Telemetry**: 
+   - To solve layout constraints on laptop screens, I developed an **"Adaptive Typography"** system. Currency values in summary cards dynamically resize based on the sidebar state and container width to ensure 100% legibility without truncation or internal scrolling.
 
 4. **Dynamic Identity Synchronization**: 
    - The terminal features a dynamically linked **Developer Node**. When the Admin updates their external node settings (Email, GitHub, LinkedIn), the global footer icons update for all users in real-time.
