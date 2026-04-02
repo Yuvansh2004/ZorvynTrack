@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -22,22 +23,22 @@ export const ASSIGNMENT_REF_ID = "TE85LMG1";
 export const DEMO_ACCOUNTS: User[] = [
   { 
     name: 'Yuvansh Dashrath Koli', 
-    email: 'yuvanshkoli@demozorvyn.com', 
+    email: 'yuvanshkoli@DemoZorvynTrack.io', 
     password: 'admin_zorvyn', 
     role: 'Admin',
     personalEmail: 'yuvanshkoli1011@gmail.com',
     github: 'https://github.com/yuvanshkoli',
     linkedin: 'https://linkedin.com/in/yuvanshkoli'
   },
-  { name: 'Aditya Rao', email: 'aditya.rao@zorvyn.com', password: 'viewer_rao', role: 'Viewer' },
-  { name: 'Priya Sharma', email: 'priya.sharma@zorvyn.com', password: 'viewer_sharma', role: 'Viewer' },
-  { name: 'Rohan Mehta', email: 'rohan.mehta@zorvyn.com', password: 'viewer_mehta', role: 'Viewer' },
-  { name: 'Sneha Kapoor', email: 'sneha.kapoor@zorvyn.com', password: 'viewer_kapoor', role: 'Viewer' },
-  { name: 'Vikram Singh', email: 'vikram.singh@zorvyn.com', password: 'viewer_singh', role: 'Viewer' },
-  { name: 'Ananya Iyer', email: 'ananya.iyer@zorvyn.com', password: 'viewer_iyer', role: 'Viewer' },
-  { name: 'Arjun Verma', email: 'arjun.verma@zorvyn.com', password: 'viewer_verma', role: 'Viewer' },
-  { name: 'Ishita Gupta', email: 'ishita.gupta@zorvyn.com', password: 'viewer_gupta', role: 'Viewer' },
-  { name: 'Kabir Malhotra', email: 'kabir.malhotra@zorvyn.com', password: 'viewer_malhotra', role: 'Viewer' },
+  { name: 'Aditya Rao', email: 'aditya.rao@DemoZorvynTrack.io', password: 'viewer_rao', role: 'Viewer' },
+  { name: 'Priya Sharma', email: 'priya.sharma@DemoZorvynTrack.io', password: 'viewer_sharma', role: 'Viewer' },
+  { name: 'Rohan Mehta', email: 'rohan.mehta@DemoZorvynTrack.io', password: 'viewer_mehta', role: 'Viewer' },
+  { name: 'Sneha Kapoor', email: 'sneha.kapoor@DemoZorvynTrack.io', password: 'viewer_kapoor', role: 'Viewer' },
+  { name: 'Vikram Singh', email: 'vikram.singh@DemoZorvynTrack.io', password: 'viewer_singh', role: 'Viewer' },
+  { name: 'Ananya Iyer', email: 'ananya.iyer@DemoZorvynTrack.io', password: 'viewer_iyer', role: 'Viewer' },
+  { name: 'Arjun Verma', email: 'arjun.verma@DemoZorvynTrack.io', password: 'viewer_verma', role: 'Viewer' },
+  { name: 'Ishita Gupta', email: 'ishita.gupta@DemoZorvynTrack.io', password: 'viewer_gupta', role: 'Viewer' },
+  { name: 'Kabir Malhotra', email: 'kabir.malhotra@DemoZorvynTrack.io', password: 'viewer_malhotra', role: 'Viewer' },
 ];
 
 export interface Transaction {
@@ -66,14 +67,14 @@ const DESCRIPTIONS: Record<string, string[]> = {
 
 const generateRandomData = () => {
   const allTransactions: Transaction[] = [];
-  const baseTime = 1767225600000; // Jan 1 2026
+  const baseTime = Date.now() - (30 * 86400000); // 30 days ago
 
   DEMO_ACCOUNTS.forEach((user) => {
     const count = Math.floor(Math.random() * 20) + 30; 
     
     allTransactions.push({
       id: Math.random().toString(36).substr(2, 9),
-      date: '2026-01-01',
+      date: new Date(baseTime).toISOString().split('T')[0],
       description: 'Institutional Stipend Grant',
       amount: 15000 + Math.floor(Math.random() * 5000),
       category: 'Income',
@@ -182,6 +183,11 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
     if (savedUser) {
       const user = JSON.parse(savedUser);
+      // Ensure existing users get the new domain if they were logged in
+      if (user.email.endsWith('@demozorvyn.com') || user.email.endsWith('@zorvyn.com')) {
+         const newEmail = user.email.split('@')[0] + '@DemoZorvynTrack.io';
+         user.email = newEmail;
+      }
       setCurrentUser(user);
       setUserRole(user.role);
     }
@@ -221,7 +227,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerTransition = (callback: () => void) => {
     setIsTransitioning(true);
-    const duration = Math.floor(Math.random() * 1000) + 1000;
+    const duration = 1000;
     setTimeout(() => {
       callback();
       setIsTransitioning(false);

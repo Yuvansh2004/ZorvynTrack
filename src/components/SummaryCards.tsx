@@ -55,18 +55,18 @@ export const SummaryCards = () => {
           transition={{ delay: index * 0.15, duration: 0.5 }}
         >
           <Card className="card-shadow overflow-hidden group hover:border-indigo-400 hover:scale-[1.01] transition-all h-full">
-            <CardContent className="p-6 lg:p-10 flex flex-col justify-center h-full">
+            <CardContent className="p-6 lg:p-10 flex flex-col justify-center h-full overflow-hidden">
               <div className="flex items-center gap-4 lg:gap-8">
                 <div className={`p-4 lg:p-5 rounded-[1.5rem] lg:rounded-[2rem] ${item.bg} group-hover:rotate-6 transition-transform shrink-0`}>
                   <item.icon className={`w-6 h-6 lg:w-10 lg:h-10 ${item.color}`} />
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-[9px] lg:text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] truncate">{item.title}</p>
+                <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar">
+                  <p className="text-[9px] lg:text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">{item.title}</p>
                   <h3 className={cn(
-                    "font-black text-slate-900 dark:text-white mt-2 lg:mt-3 tracking-tighter tabular-nums italic truncate transition-all duration-300",
+                    "font-black text-slate-900 dark:text-white mt-2 lg:mt-3 tracking-tighter tabular-nums italic whitespace-nowrap transition-all duration-300",
                     isSidebarOpen 
-                      ? "text-lg md:text-xl lg:text-3xl" 
-                      : "text-xl md:text-2xl lg:text-4xl"
+                      ? "text-xl md:text-2xl lg:text-3xl" 
+                      : "text-2xl md:text-3xl lg:text-4xl"
                   )} title={formatINR(item.amount)}>
                     {formatINR(item.amount)}
                   </h3>

@@ -8,8 +8,14 @@ import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { 
   Moon, Shield, UserCircle, Mail, User, ShieldCheck, 
-  Trash2, Database, AlertCircle, Pencil, Save, X, Github, Linkedin, ExternalLink 
+  Trash2, Database, AlertCircle, Pencil, Save, X, Github, Linkedin, ExternalLink,
+  ChevronDown, ChevronUp
 } from 'lucide-react';
 import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
 import { useToast } from '@/hooks/use-toast';
@@ -20,6 +26,7 @@ export const SettingsView = () => {
   
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState(currentUser?.name || '');
+  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(true);
 
   const [isEditingSocials, setIsEditingSocials] = useState(false);
   const [socials, setSocials] = useState({
@@ -69,27 +76,46 @@ export const SettingsView = () => {
         </div>
       </div>
 
-      <div className="bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-start gap-4">
-          <div className="p-3 bg-white dark:bg-slate-950 rounded-xl shadow-sm">
-            <AlertCircle className="w-5 h-5 text-rose-600" />
-          </div>
-          <div className="max-w-xl">
-            <h4 className="text-sm font-black uppercase tracking-tight text-rose-900 dark:text-rose-400">System Disclaimer</h4>
-            <p className="text-xs text-rose-800 dark:text-rose-300 font-medium mt-1 leading-relaxed">
-              This terminal currently contains mock telemetry and dummy entries for demonstration. If you wish to delete the mock data or reset the system ledger to a clean state, execute the wipe command.
-            </p>
+      <Collapsible
+        open={isDisclaimerOpen}
+        onOpenChange={setIsDisclaimerOpen}
+        className="w-full"
+      >
+        <div className="bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-800/50 p-6 rounded-2xl">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-start gap-4">
+              <CollapsibleTrigger asChild>
+                <button className="p-3 bg-white dark:bg-slate-950 rounded-xl shadow-sm hover:scale-110 transition-transform">
+                  <AlertCircle className="w-5 h-5 text-rose-600" />
+                </button>
+              </CollapsibleTrigger>
+              <div className="max-w-xl">
+                <div className="flex items-center gap-2">
+                  <h4 className="text-sm font-black uppercase tracking-tight text-rose-900 dark:text-rose-400">System Disclaimer</h4>
+                  <CollapsibleTrigger asChild>
+                    <button className="text-rose-400 hover:text-rose-600">
+                      {isDisclaimerOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    </button>
+                  </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent className="space-y-2 mt-2">
+                  <p className="text-xs text-rose-800 dark:text-rose-300 font-medium leading-relaxed">
+                    This terminal currently contains mock telemetry and dummy entries for demonstration. If you wish to delete the mock data or reset the system ledger to a clean state, execute the wipe command.
+                  </p>
+                </CollapsibleContent>
+              </div>
+            </div>
+            <Button 
+              variant="destructive" 
+              onClick={resetLedger}
+              className="rounded-xl font-black uppercase text-[10px] tracking-[2px] px-8 h-11 shadow-lg shadow-rose-200 dark:shadow-none hover:scale-105 transition-transform"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Clear Mock Data
+            </Button>
           </div>
         </div>
-        <Button 
-          variant="destructive" 
-          onClick={resetLedger}
-          className="rounded-xl font-black uppercase text-[10px] tracking-[2px] px-8 h-11 shadow-lg shadow-rose-200 dark:shadow-none hover:scale-105 transition-transform"
-        >
-          <Trash2 className="w-4 h-4 mr-2" />
-          Clear Mock Data
-        </Button>
-      </div>
+      </Collapsible>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
