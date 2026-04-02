@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useFinance, Transaction } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, X, Pencil, ArrowRight, ListFilter, Clock } from 'lucide-react';
+import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, Pencil, ArrowRight, ListFilter, Clock } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -78,7 +78,7 @@ export const TransactionList = () => {
   const hasAnyActions = displayData.some(t => canEdit(t)) || userRole === 'Admin';
 
   return (
-    <Card className="border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden">
+    <Card className="border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden bg-white dark:bg-slate-900 transition-colors">
       <CardHeader className="space-y-6">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
           <div>
@@ -95,8 +95,7 @@ export const TransactionList = () => {
                 Export
               </Button>
             )}
-            {/* Common people (Viewers) can also add data now */}
-            <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight rounded-xl">
+            <Button size="sm" onClick={() => setIsModalOpen(true)} className="h-9 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold uppercase tracking-tight rounded-xl text-white">
               <Plus className="w-4 h-4 mr-2" />
               New Entry
             </Button>
@@ -108,7 +107,7 @@ export const TransactionList = () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
               placeholder="Search records..." 
-              className="pl-9 h-10 w-full text-xs font-bold rounded-xl"
+              className="pl-9 h-10 w-full text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -119,7 +118,7 @@ export const TransactionList = () => {
               <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
               <Input 
                 type="date"
-                className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl"
+                className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 placeholder="Start Date"
@@ -130,7 +129,7 @@ export const TransactionList = () => {
               <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
               <Input 
                 type="date"
-                className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl"
+                className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 placeholder="End Date"
@@ -139,7 +138,7 @@ export const TransactionList = () => {
           </div>
 
           <Select value={typeFilter} onValueChange={setTypeFilter}>
-            <SelectTrigger className="h-10 text-xs font-bold rounded-xl">
+            <SelectTrigger className="h-10 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none">
               <SelectValue placeholder="All Types" />
             </SelectTrigger>
             <SelectContent>
@@ -151,7 +150,7 @@ export const TransactionList = () => {
 
           <div className="flex items-center gap-2">
             <Select value={rowsLimit} onValueChange={setRowsLimit}>
-              <SelectTrigger className="h-10 text-xs font-bold rounded-xl">
+              <SelectTrigger className="h-10 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none">
                 <div className="flex items-center gap-2">
                   <ListFilter className="w-3.5 h-3.5" />
                   <span>Rows: {rowsLimit}</span>
@@ -172,7 +171,7 @@ export const TransactionList = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="text-slate-400 border-b border-slate-50 dark:border-slate-900">
+              <tr className="text-slate-400 border-b border-slate-50 dark:border-slate-800">
                 <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Date</th>
                 <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Description</th>
                 <th className="pb-4 font-black uppercase text-[10px] tracking-widest">Category</th>
@@ -183,7 +182,7 @@ export const TransactionList = () => {
                 {hasAnyActions && <th className="pb-4 text-right font-black uppercase text-[10px] tracking-widest">Action</th>}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 dark:divide-slate-900">
+            <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
               <AnimatePresence mode="popLayout">
                 {displayData.map((t) => {
                   const editable = canEdit(t);
@@ -193,7 +192,7 @@ export const TransactionList = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="group hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors"
+                      className="group hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors"
                     >
                       <td className="py-4 text-slate-500 font-bold tabular-nums">{t.date}</td>
                       <td className="py-4 font-bold text-slate-800 dark:text-slate-200">{t.description}</td>

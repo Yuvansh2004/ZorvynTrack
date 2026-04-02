@@ -12,7 +12,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ZorvynLogo } from '@/components/ZorvynLogo';
 
 export const GreetingPopup = () => {
@@ -23,7 +23,7 @@ export const GreetingPopup = () => {
   const userName = currentUser.name.split(' ')[0];
 
   return (
-    <Dialog open={showGreeting} onOpenChange={closeGreeting}>
+    <Dialog open={showGreeting} onOpenChange={(open) => !open && closeGreeting()}>
       <DialogContent className="sm:max-w-[480px] border-none shadow-2xl p-0 overflow-hidden rounded-[3rem] bg-white dark:bg-slate-950">
         <div className="bg-indigo-600 p-12 flex flex-col items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15)_0%,transparent_100%)]" />

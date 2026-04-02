@@ -12,7 +12,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { History, Menu, Home, CheckCircle2, ChevronRight, Zap } from 'lucide-react';
+import { History, Menu, Home, CheckCircle2, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { ZorvynLogo } from '@/components/ZorvynLogo';
@@ -27,7 +27,7 @@ const steps = [
   },
   {
     title: "Sidebar Navigation",
-    description: "The sidebar on the left is your institutional command handle. Use the Z logo for identification and the Arrow toggle to switch between expanded and compact modes.",
+    description: "The sidebar on the left is your institutional command handle. Use the Z logo for identification and the Arrow toggle beside it to switch layout modes.",
     icon: Menu,
     color: "text-indigo-600",
     detail: "The arrow beside the logo allows for seamless layout modulation."
@@ -60,7 +60,9 @@ export const Tutorial = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
   // Show tutorial ONLY if hasSeenTutorial is false, user is logged in, no transitions are active, and the greeting is closed
-  if (hasSeenTutorial || !currentUser || isTransitioning || showGreeting) return null;
+  const showTutorial = !hasSeenTutorial && currentUser && !isTransitioning && !showGreeting;
+
+  if (!showTutorial) return null;
 
   const step = steps[currentStep];
 
@@ -79,7 +81,7 @@ export const Tutorial = () => {
   };
 
   return (
-    <Dialog open={!hasSeenTutorial} onOpenChange={(open) => !open && completeTutorial()}>
+    <Dialog open={showTutorial} onOpenChange={(open) => !open && completeTutorial()}>
       <DialogContent className="sm:max-w-[520px] border-none shadow-2xl p-0 overflow-hidden rounded-[3rem] bg-white dark:bg-slate-950">
         <div className="bg-indigo-600 p-12 flex items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15)_0%,transparent_100%)]" />

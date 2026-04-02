@@ -70,7 +70,7 @@ const generateRandomData = () => {
   const baseTime = 1767225600000; // Jan 1 2026
 
   DEMO_ACCOUNTS.forEach((user) => {
-    const count = Math.floor(Math.random() * 51) + 50; 
+    const count = Math.floor(Math.random() * 20) + 30; 
     
     allTransactions.push({
       id: Math.random().toString(36).substr(2, 9),
@@ -219,7 +219,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerTransition = (callback: () => void) => {
     setIsTransitioning(true);
-    const duration = Math.floor(Math.random() * 2000) + 1000;
+    const duration = Math.floor(Math.random() * 1000) + 1000;
     setTimeout(() => {
       callback();
       setIsTransitioning(false);
@@ -256,7 +256,8 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const updateProfile = (updates: Partial<User>) => {
     if (!currentUser) return;
-    setCurrentUser({ ...currentUser, ...updates });
+    const updatedUser = { ...currentUser, ...updates };
+    setCurrentUser(updatedUser);
   };
 
   const addTransaction = (transaction: Omit<Transaction, 'id' | 'ownerEmail' | 'createdAt'>) => {
@@ -277,7 +278,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     const isOwner = currentUser && transaction.ownerEmail === currentUser.email;
     const isWithinWindow = (Date.now() - transaction.createdAt) < 30000;
 
-    // Both Admins and Owners can edit, but owners only in grace period
     if (userRole === 'Admin' || (isOwner && isWithinWindow)) {
       setMasterLedger(prev => prev.map(t => t.id === id ? { ...t, ...updates } : t));
     }

@@ -12,14 +12,15 @@ ZorvynTrack is a high-impact, institutional-grade financial terminal built for t
 1. **Centralized Node State**: Utilized React Context API (`FinanceContext.tsx`) to manage a master ledger of ~800 transactions across 10 demo accounts. I chose Context over Redux to keep the architecture "simple and smart," prioritizing auditability and performance for a single-page terminal.
 2. **Institutional Security Protocol**: Implemented a "Grace Period" system. In a real-world FinTech environment, data integrity is paramount. Here, Viewers have a 30-second window to correct their own entries. After this, data becomes "Permanent," simulating an immutable audit trail.
 3. **Adaptive Telemetry UI**: Developed a reactive font-scaling engine for the Dashboard Summary Cards. Financial values (INR) automatically resize based on the Sidebar's toggle state. This ensures 100% legibility on 13-inch laptops and mobile devices without visual overlap.
-4. **Data-Rich Telemetry**: Built a generation engine that initializes the platform with professional, future-dated transactions starting from **January 1st, 2026**. This ensures the charts show meaningful "velocity" rather than empty states.
+4. **Onboarding Synchronization**: Redesigned the sequence so the "Namaste" greeting triggers on every login. For new users, a point-to-point Tutorial initializes immediately after the greeting is dismissed, ensuring a welcoming and technical introduction.
+5. **Data-Rich Telemetry**: Built a generation engine that initializes the platform with professional, future-dated transactions starting from **January 1st, 2026**. This ensures the charts show meaningful "velocity" rather than empty states.
 
 ## Requirements Alignment Matrix
 | Requirement | Implementation Detail | Status |
 |:--- |:--- |:---:|
 | **1. Dashboard Overview** | Real-time Summary Cards, Transaction Velocity (AreaChart), and Expenditure Breakdown (PieChart). | ✅ |
 | **2. Transactions Ledger** | High-performance table with Search, Date-Range Filtering, Sorting, and CSV Export. | ✅ |
-| **3. RBAC (Admin/Viewer)** | Distinct authority levels. Admins can override; Viewers have restricted 30-second edit windows. | ✅ |
+| **3. RBAC (Admin/Viewer)** | Distinct authority levels. Admins can override; Viewers have restricted 30-second edit windows for own entries. | ✅ |
 | **4. Insights Section** | Concentration analysis, Savings Rate health detection, and Telemetry Comparison bars. | ✅ |
 | **5. State Management** | Robust React Context managing master ledger persistence and session authorization. | ✅ |
 | **6. UI/UX Excellence** | Dark/Light theme modulated, responsive sidebar-drawer, and "Namaste" greeting protocol. | ✅ |

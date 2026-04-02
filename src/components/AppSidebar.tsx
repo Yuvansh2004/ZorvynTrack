@@ -43,7 +43,7 @@ export function AppSidebar() {
       <div className="h-24 flex items-center border-b border-slate-50 dark:border-slate-900 px-4">
         {/* Dynamic header: Row-based side-by-side layout for logo and arrow */}
         <div className={cn(
-          "flex w-full items-center px-1",
+          "flex w-full items-center px-1 transition-all duration-500",
           isSidebarOpen ? "justify-between" : "justify-center gap-3"
         )}>
           <div 
@@ -51,7 +51,7 @@ export function AppSidebar() {
             onClick={handleLogoClick}
           >
             <div className="bg-indigo-600 rounded-xl p-2 shrink-0 shadow-lg shadow-indigo-100 dark:shadow-none group-hover:scale-110 transition-transform">
-              <ZorvynLogo className={cn("text-white", isSidebarOpen ? "w-4 h-4" : "w-3.5 h-3.5")} />
+              <ZorvynLogo className={cn("text-white transition-all", isSidebarOpen ? "w-4 h-4" : "w-3.5 h-3.5")} />
             </div>
             {(isMobile || isSidebarOpen) && (
               <span className="text-[14px] font-black italic tracking-tighter text-slate-900 dark:text-white uppercase whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300">
