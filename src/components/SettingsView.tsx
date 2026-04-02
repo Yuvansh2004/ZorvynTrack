@@ -52,8 +52,10 @@ export const SettingsView = () => {
     updateProfile(socials);
     setIsEditingSocials(false);
     toast({
-      title: "Social Nodes Updated",
-      description: "External institutional links have been synchronized.",
+      title: "External Nodes Updated",
+      description: currentUser.role === 'Admin' 
+        ? "Global institutional links have been synchronized." 
+        : "Personal dashboard cluster has been updated.",
     });
   };
 
@@ -67,7 +69,7 @@ export const SettingsView = () => {
       <div className="flex justify-between items-end border-b border-slate-100 dark:border-slate-900 pb-6">
         <div>
           <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
-            Admin<span className="text-indigo-600">Manager</span>
+            {userRole === 'Admin' ? 'Admin' : 'Profile'}<span className="text-indigo-600">Manager</span>
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Institutional Node Terminal: {ASSIGNMENT_REF_ID}</p>
         </div>
@@ -134,7 +136,7 @@ export const SettingsView = () => {
                 <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 group relative">
                   <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><User className="w-3.5 h-3.5"/> Full Name</p>
                   
-                  {isEditingName && userRole === 'Admin' ? (
+                  {isEditingName ? (
                     <div className="flex items-center gap-2">
                       <Input 
                         value={tempName}
@@ -152,16 +154,14 @@ export const SettingsView = () => {
                   ) : (
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-bold text-slate-900 dark:text-white">{currentUser.name}</p>
-                      {userRole === 'Admin' && (
-                        <Button 
-                          size="icon" 
-                          variant="ghost" 
-                          className="h-7 w-7 text-slate-400 hover:text-indigo-600 hover:bg-transparent"
-                          onClick={() => setIsEditingName(true)}
-                        >
-                          <Pencil className="w-3.5 h-3.5" />
-                        </Button>
-                      )}
+                      <Button 
+                        size="icon" 
+                        variant="ghost" 
+                        className="h-7 w-7 text-slate-400 hover:text-indigo-600 hover:bg-transparent"
+                        onClick={() => setIsEditingName(true)}
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -190,28 +190,29 @@ export const SettingsView = () => {
               <CardTitle className="text-lg font-black italic uppercase tracking-tight flex items-center gap-2 text-slate-800 dark:text-white">
                 <ExternalLink className="w-5 h-5 text-indigo-600" /> External Nodes
               </CardTitle>
-              {userRole === 'Admin' && (
-                !isEditingSocials ? (
-                  <Button variant="ghost" size="sm" onClick={() => setIsEditingSocials(true)} className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-600">
-                    Modify Links
+              {!isEditingSocials ? (
+                <Button variant="ghost" size="sm" onClick={() => setIsEditingSocials(true)} className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-600">
+                  Modify Links
+                </Button>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Button variant="ghost" size="sm" onClick={handleSaveSocials} className="text-emerald-600">
+                    <Save className="w-4 h-4" />
                   </Button>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" onClick={handleSaveSocials} className="text-emerald-600">
-                      <Save className="w-4 h-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm" onClick={() => setIsEditingSocials(false)} className="text-rose-600">
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
-                )
+                  <Button variant="ghost" size="sm" onClick={() => setIsEditingSocials(false)} className="text-rose-600">
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
               )}
             </CardHeader>
             <CardContent className="pt-6 space-y-4">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 italic">
+                {userRole === 'Admin' ? 'Note: These links will synchronize with the global terminal footer.' : 'Note: These links will appear in your personal dashboard cluster.'}
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-1.5"><Mail className="w-3 h-3"/> Personal Email</Label>
-                  {isEditingSocials && userRole === 'Admin' ? (
+                  {isEditingSocials ? (
                     <Input 
                       value={socials.personalEmail}
                       onChange={(e) => setSocials(p => ({ ...p, personalEmail: e.target.value }))}
@@ -224,7 +225,7 @@ export const SettingsView = () => {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-1.5"><Github className="w-3 h-3"/> GitHub Handle</Label>
-                  {isEditingSocials && userRole === 'Admin' ? (
+                  {isEditingSocials ? (
                     <Input 
                       value={socials.github}
                       onChange={(e) => setSocials(p => ({ ...p, github: e.target.value }))}
@@ -237,7 +238,7 @@ export const SettingsView = () => {
                 </div>
                 <div className="space-y-2 md:col-span-2">
                   <Label className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-1.5"><Linkedin className="w-3 h-3"/> LinkedIn Node</Label>
-                  {isEditingSocials && userRole === 'Admin' ? (
+                  {isEditingSocials ? (
                     <Input 
                       value={socials.linkedin}
                       onChange={(e) => setSocials(p => ({ ...p, linkedin: e.target.value }))}

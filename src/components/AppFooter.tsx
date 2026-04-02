@@ -11,16 +11,20 @@ import { SystemAudit } from './SystemAudit';
 export const AppFooter = () => {
   const { setShowPrivacy, setShowAudit, setActiveView, adminUser } = useFinance();
 
-  // Fixed Developer Node Identities + Dynamic Social Synchronisation
-  // Shows both Personal and College emails as requested.
-  // Social links reflect whatever the Admin has configured in External Nodes.
+  // Fixed Developer Node Identities 
+  // Displays both Personal and College emails as requested.
   const developerNode = {
     name: "Yuvansh Dashrath Koli",
     personalEmail: "yuvanshkoli1011@gmail.com",
     collegeEmail: "yuvanshkoli2324@ternaengg.ac.in",
-    github: adminUser?.github || "https://github.com/yuvanshkoli",
-    linkedin: adminUser?.linkedin || "https://linkedin.com/in/yuvanshkoli",
     handle: "@zorvyn_admin"
+  };
+
+  // Global Social Nodes synchronized from Admin Settings
+  const socialNodes = {
+    email: adminUser?.personalEmail || developerNode.personalEmail,
+    github: adminUser?.github || "https://github.com/yuvanshkoli",
+    linkedin: adminUser?.linkedin || "https://linkedin.com/in/yuvanshkoli"
   };
 
   return (
@@ -41,26 +45,27 @@ export const AppFooter = () => {
           </p>
           <div className="flex items-center gap-3">
             <a 
-              href={`mailto:${developerNode.personalEmail}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
+              href={`mailto:${socialNodes.email}`} 
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
+              title="Contact Lead Node"
             >
               <Mail className="w-4 h-4" />
             </a>
             <a 
-              href={developerNode.github} 
+              href={socialNodes.github} 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
+              title="GitHub Node"
             >
               <Github className="w-4 h-4" />
             </a>
             <a 
-              href={developerNode.linkedin} 
+              href={socialNodes.linkedin} 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
+              title="LinkedIn Node"
             >
               <Linkedin className="w-4 h-4" />
             </a>
