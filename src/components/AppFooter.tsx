@@ -95,8 +95,8 @@ export const AppFooter = () => {
                 <path d="M10.6465 16.3536L6.6465 12.3536C6.451 12.1581 6.451 11.8416 6.6465 11.6466L7.3535 10.9396C7.549 10.7441 7.8655 10.7441 8.0605 10.9396L11 13.8791L16.4395 8.43959C16.635 8.24409 16.9515 8.24409 17.1465 8.43959L17.8535 9.14659C18.049 9.34409 18.049 9.65859 17.8535 9.85359L11.3535 16.3536C11.1585 16.5491 10.8415 16.5491 10.6465 16.3536Z" fill="white"/>
                 <defs>
                   <linearGradient id="paint0_linear_badge" x1="5.1975" y1="5.1975" x2="18.973" y2="18.973" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#75DAFF"/>
-                    <stop offset="1" stop-color="#1EA2E4"/>
+                    <stop stopColor="#75DAFF"/>
+                    <stop offset="1" stopColor="#1EA2E4"/>
                   </linearGradient>
                 </defs>
               </svg>
