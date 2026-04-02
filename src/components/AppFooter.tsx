@@ -9,7 +9,15 @@ import { PrivacyProtocol } from './PrivacyProtocol';
 import { SystemAudit } from './SystemAudit';
 
 export const AppFooter = () => {
-  const { setShowPrivacy, setShowAudit, currentUser, setActiveView } = useFinance();
+  const { setShowPrivacy, setShowAudit, setActiveView } = useFinance();
+
+  const developerInfo = {
+    name: "Yuvansh Dashrath Koli",
+    email: "yuvanshkoli1011@gmail.com",
+    github: "https://github.com/yuvanshkoli",
+    linkedin: "https://linkedin.com/in/yuvanshkoli",
+    handle: "@zorvyn_admin"
+  };
 
   // Redirect company logo to AdminManager (Settings)
   const handleLogoClick = () => {
@@ -34,7 +42,7 @@ export const AppFooter = () => {
           </p>
           <div className="flex items-center gap-3">
             <a 
-              href={currentUser?.personalEmail ? `mailto:${currentUser.personalEmail}` : '#'} 
+              href={`mailto:${developerInfo.email}`} 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
@@ -42,7 +50,7 @@ export const AppFooter = () => {
               <Mail className="w-4 h-4" />
             </a>
             <a 
-              href={currentUser?.github || '#'} 
+              href={developerInfo.github} 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
@@ -50,7 +58,7 @@ export const AppFooter = () => {
               <Github className="w-4 h-4" />
             </a>
             <a 
-              href={currentUser?.linkedin || '#'} 
+              href={developerInfo.linkedin} 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
@@ -72,14 +80,14 @@ export const AppFooter = () => {
         <div className="space-y-6">
           <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Developer Node</h4>
           <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm">
-            <p className="text-sm font-black text-slate-900 dark:text-white uppercase italic tracking-tight">{currentUser?.name || 'Yuvansh Dashrath Koli'}</p>
+            <p className="text-sm font-black text-slate-900 dark:text-white uppercase italic tracking-tight">{developerInfo.name}</p>
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Institutional Node Lead</p>
             <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 space-y-2">
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                Email: <span className="text-indigo-600 font-black tracking-tighter">{currentUser?.personalEmail || 'yuvanshkoli1011@gmail.com'}</span>
+                Email: <span className="text-indigo-600 font-black tracking-tighter">{developerInfo.email}</span>
               </p>
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                Handle: <span className="text-indigo-600 font-black tracking-tighter">@zorvyn_admin</span>
+                Handle: <span className="text-indigo-600 font-black tracking-tighter">{developerInfo.handle}</span>
               </p>
             </div>
           </div>

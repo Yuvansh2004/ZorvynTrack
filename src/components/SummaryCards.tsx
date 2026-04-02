@@ -46,7 +46,7 @@ export const SummaryCards = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 w-full">
       {summaryData.map((item, index) => (
         <motion.div
           key={item.title}
@@ -55,17 +55,17 @@ export const SummaryCards = () => {
           transition={{ delay: index * 0.15, duration: 0.5 }}
           className="w-full"
         >
-          <Card className="card-shadow overflow-hidden group hover:border-indigo-400 hover:scale-[1.01] transition-all h-full border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[2.5rem]">
+          <Card className="card-shadow overflow-hidden group hover:border-indigo-400 hover:scale-[1.01] transition-all h-full border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[3rem]">
             <CardContent className="p-10 lg:p-14 flex flex-col justify-center h-full">
               <div className="flex items-center gap-8 lg:gap-10">
-                <div className={`p-6 lg:p-8 rounded-[2.2rem] ${item.bg} group-hover:rotate-6 transition-transform shrink-0 shadow-lg shadow-slate-100 dark:shadow-none`}>
-                  <item.icon className={`w-10 h-10 lg:w-14 lg:h-14 ${item.color}`} />
+                <div className={`p-8 lg:p-10 rounded-[2.5rem] ${item.bg} group-hover:rotate-6 transition-transform shrink-0 shadow-lg shadow-slate-100 dark:shadow-none`}>
+                  <item.icon className={`w-12 h-12 lg:w-16 lg:h-16 ${item.color}`} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] lg:text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.4em] whitespace-nowrap mb-2">
+                  <p className="text-[11px] lg:text-[12px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.4em] whitespace-nowrap mb-3">
                     {item.title}
                   </p>
-                  <div className="overflow-x-auto no-scrollbar py-1">
+                  <div className="overflow-x-auto no-scrollbar py-2">
                     <h3 className={cn(
                       "font-black text-slate-900 dark:text-white tracking-tighter tabular-nums italic whitespace-nowrap",
                       "text-4xl md:text-5xl lg:text-6xl"
