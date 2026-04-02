@@ -23,7 +23,7 @@ export const ASSIGNMENT_REF_ID = "TE85LMG1";
 export const DEMO_ACCOUNTS: User[] = [
   { 
     name: 'Yuvansh Dashrath Koli', 
-    email: 'admin1@DemoZorvynTrack.io', 
+    email: 'Admin@DemoZorvynTrack.io', 
     password: 'admin_zorvyn', 
     role: 'Admin',
     personalEmail: 'yuvanshkoli1011@gmail.com',
@@ -237,7 +237,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const login = (email: string, password?: string) => {
-    // If logging in as admin, use the current adminUser state (which might have updated socials)
     let user = DEMO_ACCOUNTS.find(acc => acc.email === email && acc.password === password);
     if (user && user.role === 'Admin' && adminUser) {
       user = adminUser;
