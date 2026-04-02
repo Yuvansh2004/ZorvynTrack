@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { ASSIGNMENT_REF_ID, useFinance } from '@/context/FinanceContext';
+import { useFinance } from '@/context/FinanceContext';
 import { Mail, Github, Linkedin } from 'lucide-react';
 import { ZorvynLogo } from '@/components/ZorvynLogo';
 import { PrivacyProtocol } from './PrivacyProtocol';
@@ -10,16 +10,16 @@ import { SystemAudit } from './SystemAudit';
 export const AppFooter = () => {
   const { setShowPrivacy, setShowAudit, setActiveView, adminUser } = useFinance();
 
-  // Fixed Developer Node Identities 
+  // Dynamic Developer Node Identities - Synchronized with Admin Profile
   const developerNode = {
-    name: "Yuvansh Dashrath Koli",
-    personalEmail: "yuvanshkoli1011@gmail.com",
-    collegeEmail: "yuvanshkoli2324@ternaengg.ac.in"
+    name: adminUser?.name || "Yuvansh Dashrath Koli",
+    personalEmail: adminUser?.personalEmail || "yuvanshkoli1011@gmail.com",
+    collegeEmail: "yuvanshkoli2324@ternaengg.ac.in" // Academic constant
   };
 
   // Global Social Nodes synchronized from Admin Settings Command Center
   const socialNodes = {
-    email: adminUser?.personalEmail || developerNode.personalEmail,
+    email: developerNode.personalEmail,
     github: adminUser?.github || "https://github.com/yuvanshkoli",
     linkedin: adminUser?.linkedin || "https://linkedin.com/in/yuvanshkoli"
   };
@@ -96,7 +96,7 @@ export const AppFooter = () => {
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Student</p>
             <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 space-y-2 pointer-events-none">
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                Personal: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.personalEmail}</span>
+                Personal: <span className="text-indigo-600 font-black tracking-tighter">{socialNodes.email}</span>
               </p>
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
                 College: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.collegeEmail}</span>

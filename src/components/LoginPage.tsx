@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 import { ZorvynLogo } from '@/components/ZorvynLogo';
 
 export const LoginPage = () => {
-  const { login, isDarkMode, setIsDarkMode } = useFinance();
+  const { login, isDarkMode, setIsDarkMode, adminUser } = useFinance();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -149,31 +149,39 @@ export const LoginPage = () => {
                   <DialogDescription className="font-bold text-xs uppercase tracking-widest">Select a node to synchronize credentials.</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-3 mt-6">
-                  {DEMO_ACCOUNTS.map((acc) => (
-                    <div 
-                      key={acc.email} 
-                      className={cn(
-                        "p-5 rounded-3xl border transition-all cursor-pointer group",
-                        isDarkMode ? "border-slate-800 hover:bg-slate-800" : "border-slate-100 hover:bg-slate-50 hover:border-indigo-200"
-                      )}
-                      onClick={() => fillDemo(acc)}
-                    >
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <p className="text-sm font-black uppercase italic tracking-tight group-hover:text-indigo-600 transition-colors">{acc.name}</p>
+                  {DEMO_ACCOUNTS.map((acc) => {
+                    // Dynamic identity mapping: If it's the Admin node, use the synchronized adminUser name
+                    const isGlobalAdmin = acc.role === 'Admin';
+                    const displayName = isGlobalAdmin && adminUser ? adminUser.name : acc.name;
+                    
+                    return (
+                      <div 
+                        key={acc.email} 
+                        className={cn(
+                          "p-5 rounded-3xl border transition-all cursor-pointer group",
+                          isDarkMode ? "border-slate-800 hover:bg-slate-800" : "border-slate-100 hover:bg-slate-50 hover:border-indigo-200"
+                        )}
+                        onClick={() => fillDemo(acc)}
+                      >
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <p className="text-sm font-black uppercase italic tracking-tight group-hover:text-indigo-600 transition-colors">
+                                {displayName}
+                              </p>
+                            </div>
+                            <p className="text-[10px] text-slate-400 font-bold">{acc.email}</p>
+                            <p className="text-[9px] text-indigo-500 font-black mt-1 uppercase tracking-tighter">Key: {acc.password}</p>
                           </div>
-                          <p className="text-[10px] text-slate-400 font-bold">{acc.email}</p>
-                          <p className="text-[9px] text-indigo-500 font-black mt-1 uppercase tracking-tighter">Key: {acc.password}</p>
+                          <span className={cn(
+                            "text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest shadow-lg dark:shadow-none bg-slate-100 dark:bg-slate-800 text-slate-500"
+                          )}>
+                            {acc.role}
+                          </span>
                         </div>
-                        <span className={cn(
-                          "text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest shadow-lg dark:shadow-none bg-slate-100 dark:bg-slate-800 text-slate-500"
-                        )}>
-                          {acc.role}
-                        </span>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </DialogContent>
             </Dialog>
