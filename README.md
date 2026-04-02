@@ -57,13 +57,22 @@ A personalized initialization sequence that integrates a respectful greeting, bl
 
 Testers can use these credentials to explore role-based views:
 
-| Role | Username | Password |
-| :--- | :--- | :--- |
-| **Admin (Global Authority)** | `Admin@DemoZorvynTrack.io` | `admin_zorvyn` |
-| **Viewer (Aditya Rao)** | `aditya.rao@DemoZorvynTrack.io` | `viewer_rao` |
-| **Viewer (Ishita Gupta)** | `ishita.gupta@DemoZorvynTrack.io` | `viewer_gupta` |
+**Admin Command Node (Global Authority)**
+- **Username:** `Admin@DemoZorvynTrack.io`
+- **Password:** `admin_zorvyn`
+- **Role Logic:** Full visibility across all 10 student nodes. Management access to reset the global ledger and export records.
 
-*(Note: Other viewer passwords follow the `viewer_[surname]` pattern.)*
+**Viewer Node (Aditya Rao)**
+- **Username:** `aditya.rao@DemoZorvynTrack.io`
+- **Password:** `viewer_rao`
+- **Role Logic:** Private telemetry view with a 30-second audit window.
+
+**Viewer Node (Ishita Gupta)**
+- **Username:** `ishita.gupta@DemoZorvynTrack.io`
+- **Password:** `viewer_gupta`
+- **Role Logic:** Private telemetry view with a 30-second audit window.
+
+*(Note: Other demo accounts follow the `viewer_[surname]` password pattern, such as `viewer_sharma` or `viewer_mehta`.)*
 
 ---
 
