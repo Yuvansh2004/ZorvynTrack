@@ -15,7 +15,7 @@ import {
 import { 
   Moon, Shield, UserCircle, Mail, User, ShieldCheck, 
   Trash2, AlertCircle, Pencil, Save, X, Github, Linkedin, ExternalLink,
-  ChevronDown, ChevronUp, Clock
+  ChevronDown, ChevronUp
 } from 'lucide-react';
 import { useFinance, ASSIGNMENT_REF_ID } from '@/context/FinanceContext';
 import { useToast } from '@/hooks/use-toast';
@@ -31,7 +31,6 @@ export const SettingsView = () => {
   const [tempEmail, setTempEmail] = useState(currentUser?.email || '');
   
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
-  const [editTimer, setEditTimer] = useState(30);
 
   const [isEditingSocials, setIsEditingSocials] = useState(false);
   const [socials, setSocials] = useState({
@@ -39,13 +38,6 @@ export const SettingsView = () => {
     github: currentUser?.github || '',
     linkedin: currentUser?.linkedin || ''
   });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setEditTimer((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   if (!currentUser) return null;
 
@@ -105,7 +97,7 @@ export const SettingsView = () => {
           <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
             {userRole === 'Admin' ? 'Admin' : 'Profile'}<span className="text-indigo-600">Manager</span>
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Institutional Node Terminal: {ASSIGNMENT_REF_ID}</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Institutional Node Terminal: Active Mode</p>
         </div>
         <div className="bg-indigo-600/10 px-4 py-2 rounded-xl border border-indigo-500/20">
           <p className="text-[10px] font-black uppercase tracking-widest text-indigo-600">Secure Profile Control</p>
@@ -158,20 +150,15 @@ export const SettingsView = () => {
                 <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 group relative">
                   <div className="flex justify-between items-center mb-1.5">
                     <p className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5"/> System Handle</p>
-                    {editTimer > 0 && !isEditingEmail && (
-                      <div className="flex items-center gap-2">
-                        <span className="text-[9px] font-black text-amber-500 uppercase tracking-tighter flex items-center gap-1">
-                          <Clock className="w-2.5 h-2.5" /> {editTimer}s
-                        </span>
-                        <Button 
-                          size="icon" 
-                          variant="ghost" 
-                          className="h-6 w-6 text-slate-400 hover:text-indigo-600"
-                          onClick={() => setIsEditingEmail(true)}
-                        >
-                          <Pencil className="w-3 h-3" />
-                        </Button>
-                      </div>
+                    {!isEditingEmail && (
+                      <Button 
+                        size="icon" 
+                        variant="ghost" 
+                        className="h-6 w-6 text-slate-400 hover:text-indigo-600"
+                        onClick={() => setIsEditingEmail(true)}
+                      >
+                        <Pencil className="w-3 h-3" />
+                      </Button>
                     )}
                   </div>
 
