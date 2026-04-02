@@ -123,7 +123,7 @@ export const SettingsView = () => {
                 
                 <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">
                   <p className="text-[10px] font-black uppercase text-slate-400 mb-1.5 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5"/> System Handle</p>
-                  <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
+                  <p className="text-sm font-black text-indigo-600 dark:text-indigo-400 break-all">{currentUser.email}</p>
                 </div>
 
                 <div className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30">

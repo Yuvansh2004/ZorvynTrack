@@ -151,7 +151,7 @@ export const LoginPage = () => {
                 </DialogHeader>
                 <div className="space-y-3 mt-6">
                   {DEMO_ACCOUNTS.map((acc) => {
-                    // Pull dynamic name from adminUser if this is the global admin account
+                    // Standardized display for all institutional nodes
                     const isGlobalAdmin = acc.role === 'Admin';
                     const displayName = isGlobalAdmin && adminUser ? adminUser.name : acc.name;
                     
@@ -175,7 +175,7 @@ export const LoginPage = () => {
                             <p className="text-[9px] text-indigo-500 font-black mt-1 uppercase tracking-tighter">Key: {acc.password}</p>
                           </div>
                           <span className={cn(
-                            "text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest shadow-lg dark:shadow-none bg-slate-100 dark:bg-slate-800 text-slate-500"
+                            "text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest shadow-lg dark:shadow-none bg-slate-100 dark:bg-sidebar-accent text-slate-500"
                           )}>
                             {acc.role}
                           </span>

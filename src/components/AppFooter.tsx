@@ -82,9 +82,9 @@ export const AppFooter = () => {
               </p>
             </div>
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Student</p>
-            <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 space-y-2 pointer-events-none">
+            <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 space-y-2">
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                Personal: <span className="text-indigo-600 font-black tracking-tighter">{socialNodes.email}</span>
+                Personal: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.personalEmail}</span>
               </p>
               <p className="text-[10px] font-black text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
                 College: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.collegeEmail}</span>
