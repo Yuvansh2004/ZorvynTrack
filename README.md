@@ -48,7 +48,7 @@ A personalized initialization sequence that integrates a respectful greeting, bl
 
 ## 🎨 4. UI/UX Design Approach
 * **Color Psychology:** Used **Indigo-600** for Authority and **Slate-50/950** for high contrast and reduced eye strain during long auditing sessions.
-* **Adaptive Typography:** Specifically engineered for student laptops (13-15 inch) to ensure telemetry data never overlaps.
+* **Adaptive Typography:** Specifically engineered for student laptops (13-inch to 15-inch) to ensure telemetry data never overlaps.
 * **High-Density Layout:** Retractable sidebars and horizontal scrolling for summary cards to maximize data space.
 
 ---
@@ -57,22 +57,19 @@ A personalized initialization sequence that integrates a respectful greeting, bl
 
 Testers can use these credentials to explore role-based views:
 
-**Admin Command Node (Global Authority)**
+**Admin (Global Authority)**
 - **Username:** `Admin@DemoZorvynTrack.io`
 - **Password:** `admin_zorvyn`
-- **Role Logic:** Full visibility across all 10 student nodes. Management access to reset the global ledger and export records.
 
-**Viewer Node (Aditya Rao)**
+**Viewer (Aditya Rao)**
 - **Username:** `aditya.rao@DemoZorvynTrack.io`
 - **Password:** `viewer_rao`
-- **Role Logic:** Private telemetry view with a 30-second audit window.
 
-**Viewer Node (Ishita Gupta)**
+**Viewer (Ishita Gupta)**
 - **Username:** `ishita.gupta@DemoZorvynTrack.io`
 - **Password:** `viewer_gupta`
-- **Role Logic:** Private telemetry view with a 30-second audit window.
 
-*(Note: Other demo accounts follow the `viewer_[surname]` password pattern, such as `viewer_sharma` or `viewer_mehta`.)*
+*(Note: Other viewer passwords follow the `viewer_[surname]` pattern, such as `viewer_sharma` or `viewer_mehta`.)*
 
 ---
 

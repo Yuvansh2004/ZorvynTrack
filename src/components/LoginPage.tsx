@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from 'react';
@@ -155,8 +154,7 @@ export const LoginPage = () => {
                       key={acc.email} 
                       className={cn(
                         "p-5 rounded-3xl border transition-all cursor-pointer group",
-                        isDarkMode ? "border-slate-800 hover:bg-slate-800" : "border-slate-100 hover:bg-slate-50 hover:border-indigo-200",
-                        acc.role === 'Admin' && "border-indigo-500/50 bg-indigo-50/10 dark:bg-indigo-900/10"
+                        isDarkMode ? "border-slate-800 hover:bg-slate-800" : "border-slate-100 hover:bg-slate-50 hover:border-indigo-200"
                       )}
                       onClick={() => fillDemo(acc)}
                     >
