@@ -182,7 +182,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
     if (savedLedger) {
       const parsedLedger = JSON.parse(savedLedger);
-      // If for some reason the ledger is low on data, regenerate
+      // Ensure high-volume data exists
       if (parsedLedger.length < 500) {
         setMasterLedger(generateRandomData());
       } else {
