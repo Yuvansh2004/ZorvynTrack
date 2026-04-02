@@ -1,10 +1,11 @@
+
 "use client";
 
 import React, { useMemo } from 'react';
 import { useFinance } from '@/context/FinanceContext';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Legend 
+  PieChart, Pie, Cell, Legend, LabelList
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -32,7 +33,7 @@ export const AnalyticsCharts = () => {
       .map(t => ({
         name: new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
         amount: t.type === 'Income' ? t.amount : -t.amount,
-        displayAmount: t.amount
+        absAmount: t.amount
       }));
   }, [transactions]);
 
@@ -49,6 +50,26 @@ export const AnalyticsCharts = () => {
       .map(([name, value]) => ({ name, value }))
       .sort((a, b) => b.value - a.value);
   }, [transactions]);
+
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, name, value }: any) => {
+    const RADIAN = Math.PI / 180;
+    const radius = outerRadius * 1.15;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text 
+        x={x} 
+        y={y} 
+        fill="#94a3b8" 
+        textAnchor={x > cx ? 'start' : 'end'} 
+        dominantBaseline="central"
+        className="text-[9px] font-black uppercase tracking-tighter"
+      >
+        {`${name}: ₹${value}`}
+      </text>
+    );
+  };
 
   return (
     <>
@@ -100,8 +121,20 @@ export const AnalyticsCharts = () => {
                       fillOpacity={1} 
                       fill="url(#colorAmount)" 
                       strokeWidth={4}
+                      dot={{ r: 4, fill: '#6366f1', strokeWidth: 2, stroke: '#fff' }}
+                      activeDot={{ r: 6, strokeWidth: 0 }}
                       animationDuration={1500}
-                    />
+                    >
+                      <LabelList 
+                        dataKey="absAmount" 
+                        position="top" 
+                        offset={10}
+                        fontSize={9} 
+                        fontWeight={800} 
+                        fill="#6366f1" 
+                        formatter={(val: number) => `₹${val}`}
+                      />
+                    </Area>
                   </AreaChart>
                 </ResponsiveContainer>
               ) : (
@@ -128,11 +161,13 @@ export const AnalyticsCharts = () => {
               <PieChart>
                 <Pie
                   data={pieData}
-                  innerRadius="65%"
-                  outerRadius="85%"
+                  innerRadius="55%"
+                  outerRadius="75%"
                   paddingAngle={8}
                   dataKey="value"
                   stroke="none"
+                  label={renderCustomizedLabel}
+                  labelLine={false}
                   animationDuration={1500}
                 >
                   {pieData.map((_, index) => (
@@ -147,7 +182,7 @@ export const AnalyticsCharts = () => {
                   verticalAlign="bottom" 
                   height={60} 
                   iconType="circle"
-                  wrapperStyle={{ fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', paddingTop: '10px' }}
+                  wrapperStyle={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', paddingTop: '10px' }}
                 />
               </PieChart>
             </ResponsiveContainer>

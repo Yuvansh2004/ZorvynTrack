@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from 'react';
@@ -150,7 +151,7 @@ export const LoginPage = () => {
                 </DialogHeader>
                 <div className="space-y-3 mt-6">
                   {DEMO_ACCOUNTS.map((acc) => {
-                    // Dynamic identity mapping: If it's the Admin node, use the synchronized adminUser name
+                    // Pull dynamic name from adminUser if this is the global admin account
                     const isGlobalAdmin = acc.role === 'Admin';
                     const displayName = isGlobalAdmin && adminUser ? adminUser.name : acc.name;
                     

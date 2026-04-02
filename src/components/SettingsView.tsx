@@ -43,7 +43,7 @@ export const SettingsView = () => {
       setIsEditingName(false);
       toast({
         title: "Profile Updated",
-        description: "Your name has been successfully updated in the system.",
+        description: "Your identity node has been successfully updated in the system.",
       });
     }
   };
