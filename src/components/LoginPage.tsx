@@ -162,14 +162,12 @@ export const LoginPage = () => {
                         <div>
                           <div className="flex items-center gap-2">
                             <p className="text-sm font-black uppercase italic tracking-tight group-hover:text-indigo-600 transition-colors">{acc.name}</p>
-                            {acc.role === 'Admin' && <span className="text-[8px] font-black text-indigo-600 uppercase border border-indigo-600 px-1.5 rounded">Primary</span>}
                           </div>
                           <p className="text-[10px] text-slate-400 font-bold">{acc.email}</p>
                           <p className="text-[9px] text-indigo-500 font-black mt-1 uppercase tracking-tighter">Key: {acc.password}</p>
                         </div>
                         <span className={cn(
-                          "text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest shadow-lg dark:shadow-none",
-                          acc.role === 'Admin' ? "bg-indigo-600 text-white shadow-indigo-200" : "bg-slate-100 text-slate-500"
+                          "text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest shadow-lg dark:shadow-none bg-slate-100 dark:bg-slate-800 text-slate-500"
                         )}>
                           {acc.role}
                         </span>
