@@ -12,7 +12,7 @@ export const AppFooter = () => {
   const { setShowPrivacy, setShowAudit, setActiveView, adminUser } = useFinance();
 
   // Fixed Developer Node Identities 
-  // Displays both Personal and College emails as requested.
+  // Permanently displays both Personal and College emails as requested.
   const developerNode = {
     name: "Yuvansh Dashrath Koli",
     personalEmail: "yuvanshkoli1011@gmail.com",
@@ -20,7 +20,7 @@ export const AppFooter = () => {
     handle: "@zorvyn_admin"
   };
 
-  // Global Social Nodes synchronized from Admin Settings
+  // Global Social Nodes synchronized from Admin Settings Command Center
   const socialNodes = {
     email: adminUser?.personalEmail || developerNode.personalEmail,
     github: adminUser?.github || "https://github.com/yuvanshkoli",
@@ -47,7 +47,7 @@ export const AppFooter = () => {
             <a 
               href={`mailto:${socialNodes.email}`} 
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
-              title="Contact Lead Node"
+              title="Direct Mail Protocol"
             >
               <Mail className="w-4 h-4" />
             </a>
@@ -56,7 +56,7 @@ export const AppFooter = () => {
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
-              title="GitHub Node"
+              title="GitHub Command Node"
             >
               <Github className="w-4 h-4" />
             </a>
@@ -65,7 +65,7 @@ export const AppFooter = () => {
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
-              title="LinkedIn Node"
+              title="LinkedIn Institutional Node"
             >
               <Linkedin className="w-4 h-4" />
             </a>
