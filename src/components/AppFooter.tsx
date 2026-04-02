@@ -10,10 +10,10 @@ import { SystemAudit } from './SystemAudit';
 export const AppFooter = () => {
   const { setShowPrivacy, setShowAudit, setActiveView, adminUser } = useFinance();
 
-  // Dynamic Developer Node Identities - Synchronized with Admin Profile
+  // Permanent Developer Node Identity - Hardcoded for Attribution Integrity
   const developerNode = {
-    name: adminUser?.name || "Yuvansh Dashrath Koli",
-    personalEmail: adminUser?.personalEmail || "yuvanshkoli1011@gmail.com",
+    name: "YUVANSH DASHRATH KOLI",
+    personalEmail: "yuvanshkoli1011@gmail.com",
     collegeEmail: "yuvanshkoli2324@ternaengg.ac.in" // Academic constant
   };
 
