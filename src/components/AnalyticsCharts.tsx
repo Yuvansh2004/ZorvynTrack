@@ -51,7 +51,7 @@ export const AnalyticsCharts = () => {
 
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, name, value }: any) => {
     const RADIAN = Math.PI / 180;
-    const radius = outerRadius * 1.15;
+    const radius = outerRadius * 1.25;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -153,14 +153,14 @@ export const AnalyticsCharts = () => {
           <CardTitle className="text-[11px] weight-black uppercase tracking-[0.25em] text-slate-400 group-hover:text-indigo-600 transition-colors">Expenditure Classification</CardTitle>
           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">View Details →</span>
         </CardHeader>
-        <CardContent className="h-[400px] pt-6 w-full flex flex-col items-center justify-center">
+        <CardContent className="h-[500px] pt-10 w-full flex flex-col items-center justify-center">
           {pieData.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart margin={{ top: 20, right: 60, left: 60, bottom: 20 }}>
+              <PieChart margin={{ top: 20, right: 80, left: 80, bottom: 20 }}>
                 <Pie
                   data={pieData}
-                  innerRadius="45%"
-                  outerRadius="65%"
+                  innerRadius="40%"
+                  outerRadius="60%"
                   paddingAngle={8}
                   dataKey="value"
                   stroke="none"
@@ -178,9 +178,17 @@ export const AnalyticsCharts = () => {
                 />
                 <Legend 
                   verticalAlign="bottom" 
-                  height={80} 
+                  align="center"
                   iconType="circle"
-                  wrapperStyle={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', paddingTop: '20px' }}
+                  layout="horizontal"
+                  wrapperStyle={{ 
+                    fontSize: '9px', 
+                    fontWeight: 800, 
+                    textTransform: 'uppercase', 
+                    letterSpacing: '0.05em', 
+                    paddingTop: '30px',
+                    width: '100%'
+                  }}
                 />
               </PieChart>
             </ResponsiveContainer>
