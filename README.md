@@ -16,16 +16,16 @@ ZorvynTrack is a high-impact, institutional-grade financial terminal built for t
 ## Key Technical Approaches (The "Human Logic" Rationale)
 
 1. **Strategic Node State (Context API)**: 
-   - I utilized the React Context API (`FinanceContext.tsx`) to manage a master ledger of ~800 transactions across 10 demo accounts. I chose Context over complex state libraries like Redux to maintain a **"Simple and Smart"** architecture that prioritizes auditability and performance for a single-page terminal.
+   - I utilized the React Context API (`FinanceContext.tsx`) to manage a master ledger of ~800 transactions. I chose Context over complex state libraries to maintain a **"Simple and Smart"** architecture that prioritizes auditability and performance for a single-page terminal.
 
 2. **Institutional Security Protocol**: 
    - I implemented a **"Grace Period"** system. In a real-world FinTech environment, data integrity is paramount. Here, users have a 30-second window to correct their own entries. After this, data becomes "Permanent," simulating an immutable audit trail that only an Admin node can override.
 
 3. **Adaptive Long-Node Telemetry**: 
-   - To solve layout constraints on 13-inch laptop screens, I developed a **"Horizontal Long-Node Scroll"** system for the Summary Cards. Financial values (INR) are treated as full-width nodes within a scrollable container, ensuring 100% legibility regardless of sidebar state.
+   - To solve layout constraints on laptop screens, I developed a **"Horizontal Grid Scroll"** system for the Summary Cards. Cards maintain a professional width (**400px**) and values use **Adaptive Typography** to ensure 100% legibility in a single line regardless of sidebar state.
 
-4. **Sequential Onboarding synchronization**: 
-   - The terminal features a culturally resonant **"Namaste"** greeting protocol. For new users, a point-to-point Tutorial initializes immediately *after* the greeting is dismissed, providing a human-led onboarding experience that explains the system architecture.
+4. **Dynamic Identity Synchronization**: 
+   - The terminal features a dynamically linked **Developer Node**. When the Admin updates their external node settings (Email, GitHub, LinkedIn), the footer identity updates for all users in real-time.
 
 5. **Democratic Data Contribution**: 
    - While maintaining RBAC, I allowed **Common Viewers** to contribute data to the ledger, reflecting a "Smart" collaborative environment where students can track their own spending while Admins manage the institutional integrity.
@@ -33,7 +33,7 @@ ZorvynTrack is a high-impact, institutional-grade financial terminal built for t
 ## Requirements Alignment Matrix
 | Requirement | Implementation Detail | Status |
 |:--- |:--- |:---:|
-| **1. Dashboard Overview** | Real-time Summary Cards with scroll nodes, AreaChart trend, and PieChart breakdown. | ✅ |
+| **1. Dashboard Overview** | Adaptive Summary Cards with scroll container, AreaChart trend, and PieChart breakdown. | ✅ |
 | **2. Transactions Ledger** | High-performance table with Search, Date-Range Filtering, Sorting, and CSV Export. | ✅ |
 | **3. RBAC (Admin/Viewer)** | Democratic entry for all; Viewers restricted to 30s edit window for own entries. | ✅ |
 | **4. Insights Section** | Concentration analysis, Savings Rate health detection, and Telemetry Comparison bars. | ✅ |

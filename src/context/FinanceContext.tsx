@@ -67,7 +67,7 @@ const DESCRIPTIONS: Record<string, string[]> = {
 
 const generateRandomData = () => {
   const allTransactions: Transaction[] = [];
-  const baseTime = Date.now() - (30 * 86400000); // 30 days ago
+  const baseTime = Date.now() - (30 * 86400000);
 
   DEMO_ACCOUNTS.forEach((user) => {
     const count = Math.floor(Math.random() * 20) + 30; 
@@ -128,6 +128,7 @@ interface FinanceContextType {
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => void;
   currentUser: User | null;
+  adminUser: User | null;
   updateProfile: (updates: Partial<User>) => void;
   login: (email: string, password?: string) => boolean;
   logout: () => void;
@@ -155,6 +156,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [adminUser, setAdminUser] = useState<User | null>(DEMO_ACCOUNTS[0]);
   const [hasSeenTutorial, setHasSeenTutorial] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
@@ -164,6 +166,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const savedUser = localStorage.getItem('zorvyn_current_user');
+    const savedAdmin = localStorage.getItem('zorvyn_admin_user');
     const savedTheme = localStorage.getItem('zorvyn_theme');
     const savedLedger = localStorage.getItem('zorvyn_master_ledger');
     const tutorialSeen = localStorage.getItem('zorvyn_tutorial_seen');
@@ -181,13 +184,12 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       setMasterLedger(generateRandomData());
     }
 
+    if (savedAdmin) {
+      setAdminUser(JSON.parse(savedAdmin));
+    }
+
     if (savedUser) {
       const user = JSON.parse(savedUser);
-      // Ensure existing users get the new domain if they were logged in
-      if (user.email.endsWith('@demozorvyn.com') || user.email.endsWith('@zorvyn.com')) {
-         const newEmail = user.email.split('@')[0] + '@DemoZorvynTrack.io';
-         user.email = newEmail;
-      }
       setCurrentUser(user);
       setUserRole(user.role);
     }
@@ -206,6 +208,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem('zorvyn_master_ledger', JSON.stringify(masterLedger));
       localStorage.setItem('zorvyn_theme', isDarkMode ? 'dark' : 'light');
       localStorage.setItem('zorvyn_tutorial_seen', hasSeenTutorial.toString());
+      localStorage.setItem('zorvyn_admin_user', JSON.stringify(adminUser));
       if (currentUser) {
         localStorage.setItem('zorvyn_current_user', JSON.stringify(currentUser));
       } else {
@@ -218,7 +221,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
         document.documentElement.classList.remove('dark');
       }
     }
-  }, [masterLedger, currentUser, isLoading, isDarkMode, hasSeenTutorial]);
+  }, [masterLedger, currentUser, adminUser, isLoading, isDarkMode, hasSeenTutorial]);
 
   const transactions = masterLedger.filter(t => {
     if (userRole === 'Admin') return true;
@@ -227,15 +230,19 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerTransition = (callback: () => void) => {
     setIsTransitioning(true);
-    const duration = 1000;
     setTimeout(() => {
       callback();
       setIsTransitioning(false);
-    }, duration);
+    }, 1000);
   };
 
   const login = (email: string, password?: string) => {
-    const user = DEMO_ACCOUNTS.find(acc => acc.email === email && acc.password === password);
+    // If logging in as admin, use the current adminUser state (which might have updated socials)
+    let user = DEMO_ACCOUNTS.find(acc => acc.email === email && acc.password === password);
+    if (user && user.role === 'Admin' && adminUser) {
+      user = adminUser;
+    }
+    
     if (user) {
       triggerTransition(() => {
         setCurrentUser(user);
@@ -255,17 +262,14 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const handleSetActiveView = (view: ViewType) => {
-    if (view === activeView) return;
-    triggerTransition(() => {
-      setActiveView(view);
-    });
-  };
-
   const updateProfile = (updates: Partial<User>) => {
     if (!currentUser) return;
     const updatedUser = { ...currentUser, ...updates };
     setCurrentUser(updatedUser);
+    
+    if (updatedUser.role === 'Admin') {
+      setAdminUser(updatedUser);
+    }
   };
 
   const addTransaction = (transaction: Omit<Transaction, 'id' | 'ownerEmail' | 'createdAt'>) => {
@@ -307,22 +311,13 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     setMasterLedger(generateRandomData());
   };
 
-  const completeTutorial = () => {
-    setHasSeenTutorial(true);
-    setIsTutorialActive(false);
-  };
-
-  const closeGreeting = () => {
-    setShowGreeting(false);
-  };
-
   return (
     <FinanceContext.Provider value={{ 
       transactions, 
       userRole, 
       setUserRole,
       activeView,
-      setActiveView: handleSetActiveView,
+      setActiveView: (view: ViewType) => triggerTransition(() => setActiveView(view)),
       addTransaction, 
       updateTransaction,
       deleteTransaction, 
@@ -332,13 +327,14 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       isDarkMode,
       setIsDarkMode,
       currentUser,
+      adminUser,
       updateProfile,
       login,
       logout,
       hasSeenTutorial,
-      completeTutorial,
+      completeTutorial: () => { setHasSeenTutorial(true); setIsTutorialActive(false); },
       showGreeting,
-      closeGreeting,
+      closeGreeting: () => setShowGreeting(false),
       showPrivacy,
       setShowPrivacy,
       showAudit,

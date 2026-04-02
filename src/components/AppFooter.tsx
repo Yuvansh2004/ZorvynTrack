@@ -9,19 +9,15 @@ import { PrivacyProtocol } from './PrivacyProtocol';
 import { SystemAudit } from './SystemAudit';
 
 export const AppFooter = () => {
-  const { setShowPrivacy, setShowAudit, setActiveView } = useFinance();
+  const { setShowPrivacy, setShowAudit, setActiveView, adminUser } = useFinance();
 
-  // Fixed Developer Node: Always shows Yuvansh Dashrath Koli regardless of login
+  // Dynamic Developer Node: Reflects the Admin's external node settings for everyone
   const developerInfo = {
-    name: "Yuvansh Dashrath Koli",
-    email: "yuvanshkoli1011@gmail.com",
-    github: "https://github.com/yuvanshkoli",
-    linkedin: "https://linkedin.com/in/yuvanshkoli",
+    name: adminUser?.name || "Yuvansh Dashrath Koli",
+    email: adminUser?.personalEmail || "yuvanshkoli1011@gmail.com",
+    github: adminUser?.github || "https://github.com/yuvanshkoli",
+    linkedin: adminUser?.linkedin || "https://linkedin.com/in/yuvanshkoli",
     handle: "@zorvyn_admin"
-  };
-
-  const handleLogoClick = () => {
-    setActiveView('Settings');
   };
 
   return (
@@ -30,7 +26,7 @@ export const AppFooter = () => {
         <div className="space-y-6">
           <div 
             className="flex items-center gap-3 cursor-pointer group"
-            onClick={handleLogoClick}
+            onClick={() => setActiveView('Settings')}
           >
             <div className="bg-indigo-600 p-2 rounded-xl shadow-lg shadow-indigo-100 dark:shadow-none group-hover:scale-110 transition-transform">
               <ZorvynLogo className="w-4 h-4 text-white" />
