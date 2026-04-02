@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useMemo } from 'react';
@@ -25,11 +24,10 @@ const COLORS = [
 export const AnalyticsCharts = () => {
   const { transactions, setActiveView } = useFinance();
 
-  // Memoize chart data to ensure absolute accuracy and prevent jitter
   const areaData = useMemo(() => {
     return [...transactions]
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-      .slice(-15) // Show a wider window of recent velocity
+      .slice(-15)
       .map(t => ({
         name: new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
         amount: t.type === 'Income' ? t.amount : -t.amount,
@@ -53,7 +51,7 @@ export const AnalyticsCharts = () => {
 
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, name, value }: any) => {
     const RADIAN = Math.PI / 180;
-    const radius = outerRadius * 1.25; // Increase radius for better visibility
+    const radius = outerRadius * 1.15;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -85,10 +83,10 @@ export const AnalyticsCharts = () => {
             <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">View Ledger →</span>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="h-[350px] w-full">
+            <div className="h-[400px] w-full">
               {areaData.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={areaData} margin={{ top: 20, right: 30, left: 20, bottom: 0 }}>
+                  <AreaChart data={areaData} margin={{ top: 30, right: 30, left: 20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#6366f1" stopOpacity={0.2}/>
@@ -155,14 +153,14 @@ export const AnalyticsCharts = () => {
           <CardTitle className="text-[11px] weight-black uppercase tracking-[0.25em] text-slate-400 group-hover:text-indigo-600 transition-colors">Expenditure Classification</CardTitle>
           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">View Details →</span>
         </CardHeader>
-        <CardContent className="h-[350px] pt-4 w-full flex items-center justify-center">
+        <CardContent className="h-[400px] pt-6 w-full flex flex-col items-center justify-center">
           {pieData.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart margin={{ top: 0, right: 40, left: 40, bottom: 0 }}>
+              <PieChart margin={{ top: 20, right: 60, left: 60, bottom: 20 }}>
                 <Pie
                   data={pieData}
-                  innerRadius="50%"
-                  outerRadius="70%"
+                  innerRadius="45%"
+                  outerRadius="65%"
                   paddingAngle={8}
                   dataKey="value"
                   stroke="none"
@@ -180,9 +178,9 @@ export const AnalyticsCharts = () => {
                 />
                 <Legend 
                   verticalAlign="bottom" 
-                  height={60} 
+                  height={80} 
                   iconType="circle"
-                  wrapperStyle={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', paddingTop: '10px' }}
+                  wrapperStyle={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', paddingTop: '20px' }}
                 />
               </PieChart>
             </ResponsiveContainer>
