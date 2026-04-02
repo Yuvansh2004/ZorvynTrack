@@ -182,7 +182,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
     if (savedLedger) {
       const parsedLedger = JSON.parse(savedLedger);
-      // Ensure high-volume data exists across accounts. Force regeneration if count looks suspiciously low.
+      // Force high-volume generation if the ledger looks suspiciously small (less than 500 total records for 10 users)
       if (parsedLedger.length < 500) {
         setMasterLedger(generateRandomData());
       } else {

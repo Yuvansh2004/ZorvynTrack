@@ -5,49 +5,80 @@ Built by **Yuvansh Dashrath Koli**
 **College:** Terna Engineering College  
 **Reference ID:** TE85LMG1
 
-## What is ZorvynTrack?
-I built ZorvynTrack for my Zorvyn internship assessment. It's a professional-looking dashboard for students to track their money. I didn't want it to look like a simple app; I wanted it to feel like an "Institutional Terminal"—something a bank or a college office would use.
+## Project Overview: The "Institutional" Vision
+ZorvynTrack is not just a personal finance tracker; it is designed as an **Institutional Node Terminal**. My goal was to move away from the "app-like" feel of consumer banking and create something that looks and feels like a professional auditing tool used by a college finance office or a bank's global ledger terminal.
 
-### Demo Credentials
-I've set up a few accounts so you can see how the permissions work. Every account comes pre-loaded with a deep history of 50-100 transactions so you can test the filters and search immediately.
+---
 
-**Admin Node (Global Power)**
-- **User:** `Admin@DemoZorvynTrack.io`
-- **Pass:** `admin_zorvyn`
-- **Capability:** Full audit visibility across all student nodes. Management access to wipe mock data and export the global ledger to CSV.
+## My "Human Logic" & Architectural Approach
 
-**Viewer Nodes (Student View)**
-- **Users:** 
-  - `aditya.rao@DemoZorvynTrack.io` (Pass: `viewer_rao`)
-  - `priya.sharma@DemoZorvynTrack.io` (Pass: `viewer_sharma`)
-  - `rohan.mehta@DemoZorvynTrack.io` (Pass: `viewer_mehta`)
-  - `sneha.kapoor@DemoZorvynTrack.io` (Pass: `viewer_kapoor`)
-- **Capability:** Students only see their own telemetry. They can add entries, but after a 30-second security window, the entries become permanent for audit integrity.
+As a student developer, I wanted to solve the problems I face with current financial tools. Here is my thinking from start to finish:
 
-## My Approach & Thinking (The "Logic")
+### 1. State Management: The "Central Telemetry Hub"
+I chose the **React Context API** to serve as the heart of the system. In a finance terminal, data needs to be perfectly synchronized. When a student adds an expense, it shouldn't just update the list; it needs to instantly modulate the **Transaction Velocity Charts**, update the **Summary Cards**, and adjust the **Insight Algorithms**. Using Context allows the entire UI to react like a real-time banking instrument.
 
-1.  **State Management (Context API)**: 
-    I used the React Context API as my "Central Telemetry Hub." When a student adds an expense, I want the charts, the summary cards, and the table to synchronize instantly. It makes the UI feel like a real-time banking terminal.
+### 2. The "30-Second Security Window" (Audit Integrity)
+In real-world accounting, you can't just "delete" the past. To simulate this professional integrity, I implemented a **Grace Period Protocol**.
+- **The Logic**: Students have exactly **30 seconds** after adding an entry to fix typos or adjust categories.
+- **The Result**: Once that timer expires, the entry becomes **Permanent Telemetry**. It can no longer be edited or deleted by a Viewer node, ensuring that the student's audit trail remains untampered and reliable for the college office.
 
-2.  **The "Grace Period" Security**: 
-    In real-world accounting, you can't just delete the past. I added a **30-second window**. Students can fix a typo right after they hit "Add," but once that timer expires, the entry is locked. This makes the data reliable for audits.
+### 3. Color Psychology: Indigo-600 & Slate-50
+I avoided common "playful" colors. 
+- **Indigo-600**: I chose this as the primary brand color because it signals **Authority, Security, and Trust**. It feels institutional and "bank-grade."
+- **Slate-50 & 950**: The backgrounds are modulated to reduce eye strain during long auditing sessions. The high contrast ensures that telemetry data is the hero of the screen.
 
-3.  **Adaptive UI for Small Screens**: 
-    Institutional data is often dense. I noticed that on 13-inch laptops, charts and numbers get crowded. I used horizontal scrolling for summary cards and "Adaptive Typography" to ensure that numbers are never cut off.
+### 4. Adaptive UI for High-Density Telemetry
+Institutional data is often dense. I noticed that on standard 13-inch student laptops, large charts often break layouts.
+- **The Solution**: I implemented **Adaptive Typography** and horizontal-scrolling Summary Cards. This ensures that even with **50-100 transactions** on the screen, the numbers never overlap or become unreadable.
 
-4.  **Color Psychology**: 
-    I chose **Indigo-600** as the primary brand color. Indigo feels trustworthy and secure. I paired it with **Slate-50** backgrounds to keep the "terminal" look easy on the eyes during long review sessions.
+### 5. The "Namaste" Cultural Protocol
+Technology should still feel human. I added a "Namaste" greeting during the initialization sequence. This adds a layer of respect and personalization to an otherwise high-tech institutional system.
 
-5.  **Namaste Greeting**: 
-    I added a "Namaste" protocol when you log in. It adds a personal, respectful touch to an otherwise high-tech institutional system.
+---
 
-## Core Features
-- **High-Velocity Ledger**: Every account initializes with **50-100 random transactions** to simulate a busy academic year.
-- **Deep Audit Search**: The search bar isn't just for text; you can search by specific **amounts** or **dates (YYYY-MM-DD)** to find entries instantly.
-- **Admin Command Center**: Admins can reset the mock telemetry to a clean state for new testing cycles.
-- **Permanent Records**: Viewer nodes cannot delete historical data, ensuring audit trails remain intact.
+## Core Features & Advanced Audit Tools
 
-## How to Run
+### 1. High-Velocity Ledger (Audit-Rich Data)
+Every single account (Admin and all 9 Viewers) initializes with **50 to 100 random transactions**. This isn't just "dummy text"—it's a deep historical simulation of an entire academic year. You can immediately test the scrolling, filtering, and performance of the terminal.
+
+### 2. Deep Audit Search
+The search handle is engineered for speed. You don't just search for "Food"—you can search for:
+- **Exact Amounts**: Type "450" to find all transactions matching that value.
+- **Date Nodes**: Type "2026-02" to see all telemetry from that specific month.
+- **Node Owners**: Admins can search by owner handle to audit specific students.
+
+### 3. Advanced Row Modulation
+To handle the high-volume data, I've added advanced row limits: **100, 250, 500, and "All"**. This allows a professional auditor to view the entire ledger at once without pagination lag.
+
+---
+
+## How to Run the Terminal
 1. `npm install`
 2. `npm run dev`
 3. Access the terminal at `http://localhost:9002`
+
+---
+
+## Evaluation Credentials (Node Access)
+
+**Admin Command Node (Global Authority)**
+- **User:** `Admin@DemoZorvynTrack.io`
+- **Pass:** `admin_zorvyn`
+- **Logic**: Full visibility across all 10 student nodes. Management access to reset the global ledger and export records to CSV.
+
+**Viewer Nodes (Student Viewers)**
+- **Users**: 
+  - `aditya.rao@DemoZorvynTrack.io` (Pass: `viewer_rao`)
+  - `priya.sharma@DemoZorvynTrack.io` (Pass: `viewer_sharma`)
+  - `rohan.mehta@DemoZorvynTrack.io` (Pass: `viewer_mehta`)
+- **Logic**: These accounts only see their own private telemetry. They have the 30-second window to manage entries before they lock permanently.
+
+---
+
+## Tech Stack
+- **Framework**: Next.js 15 (App Router)
+- **Engine**: React 19
+- **Styling**: Tailwind CSS (Institutional Theme)
+- **Telemetry Charts**: Recharts
+- **Icons**: Lucide-React
+- **State**: React Context API
