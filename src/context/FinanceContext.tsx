@@ -70,7 +70,8 @@ const generateRandomData = () => {
   const baseTime = Date.now() - (30 * 86400000);
 
   DEMO_ACCOUNTS.forEach((user) => {
-    const count = Math.floor(Math.random() * 20) + 30; 
+    // Increased transaction volume: 50 to 100 per user for rich telemetry
+    const count = Math.floor(Math.random() * 50) + 50; 
     
     allTransactions.push({
       id: Math.random().toString(36).substr(2, 9),
@@ -190,7 +191,6 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
 
     if (savedUser) {
       const user = JSON.parse(savedUser);
-      // Ensure if the email in storage is the old admin email, we update it
       if (user.role === 'Admin' && user.email !== DEMO_ACCOUNTS[0].email) {
         user.email = DEMO_ACCOUNTS[0].email;
       }

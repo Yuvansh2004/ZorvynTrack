@@ -12,12 +12,10 @@ export const AppFooter = () => {
   const { setShowPrivacy, setShowAudit, setActiveView, adminUser } = useFinance();
 
   // Fixed Developer Node Identities 
-  // Permanently displays both Personal and College emails as requested.
   const developerNode = {
     name: "Yuvansh Dashrath Koli",
     personalEmail: "yuvanshkoli1011@gmail.com",
-    collegeEmail: "yuvanshkoli2324@ternaengg.ac.in",
-    handle: "@zorvyn_admin"
+    collegeEmail: "yuvanshkoli2324@ternaengg.ac.in"
   };
 
   // Global Social Nodes synchronized from Admin Settings Command Center
@@ -111,9 +109,6 @@ export const AppFooter = () => {
               </p>
               <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
                 College: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.collegeEmail}</span>
-              </p>
-              <p className="text-[10px] font-bold text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                Handle: <span className="text-indigo-600 font-black tracking-tighter">{developerNode.handle}</span>
               </p>
             </div>
           </div>
