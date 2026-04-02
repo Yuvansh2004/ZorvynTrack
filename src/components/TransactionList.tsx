@@ -1,10 +1,10 @@
 
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useFinance, Transaction } from '@/context/FinanceContext';
 import { formatINR } from '@/lib/utils';
-import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, Pencil, ArrowRight, ListFilter, Clock } from 'lucide-react';
+import { Search, Plus, Trash2, Download, FileSpreadsheet, Calendar as CalendarIcon, Pencil, ArrowRight, ListFilter, Clock, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -19,9 +19,10 @@ export const TransactionList = () => {
   const { transactions, userRole, deleteTransaction, currentUser } = useFinance();
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('All');
+  const [categoryFilter, setCategoryFilter] = useState<string>('All Categories');
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
-  const [rowsLimit, setRowsLimit] = useState<string>('All');
+  const [rowsLimit, setRowsLimit] = useState<string>('25');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   
@@ -32,6 +33,12 @@ export const TransactionList = () => {
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Dynamically extract categories from current transactions for the filter
+  const uniqueCategories = useMemo(() => {
+    const cats = new Set(transactions.map(t => t.category));
+    return Array.from(cats).sort();
+  }, [transactions]);
 
   const filtered = transactions.filter(t => {
     const term = searchTerm.toLowerCase();
@@ -45,6 +52,7 @@ export const TransactionList = () => {
       t.ownerEmail.toLowerCase().includes(term);
     
     const matchesType = typeFilter === 'All' || t.type === typeFilter;
+    const matchesCategory = categoryFilter === 'All Categories' || t.category === categoryFilter;
     
     // Date Range logic
     const itemTime = new Date(t.date).getTime();
@@ -52,7 +60,7 @@ export const TransactionList = () => {
     const endTime = endDate ? new Date(endDate).getTime() : Infinity;
     const matchesDateRange = itemTime >= startTime && itemTime <= endTime;
     
-    return matchesSearch && matchesType && matchesDateRange;
+    return matchesSearch && matchesType && matchesCategory && matchesDateRange;
   });
 
   const displayData = rowsLimit === 'All' ? filtered : filtered.slice(0, parseInt(rowsLimit));
@@ -105,18 +113,18 @@ export const TransactionList = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3 w-full">
-          <div className="relative col-span-1 md:col-span-2 xl:col-span-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 w-full">
+          <div className="relative xl:col-span-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
-              placeholder="Search records..." 
+              placeholder="Search amount, date..." 
               className="pl-9 h-10 w-full text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           
-          <div className="flex items-center gap-2 col-span-1 md:col-span-2 xl:col-span-2">
+          <div className="flex items-center gap-2 xl:col-span-2">
             <div className="relative flex-1">
               <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
               <Input 
@@ -124,7 +132,6 @@ export const TransactionList = () => {
                 className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                placeholder="Start Date"
               />
             </div>
             <ArrowRight className="w-4 h-4 text-slate-300 shrink-0" />
@@ -135,14 +142,16 @@ export const TransactionList = () => {
                 className="h-10 pl-9 pr-3 w-full text-[11px] font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                placeholder="End Date"
               />
             </div>
           </div>
 
           <Select value={typeFilter} onValueChange={setTypeFilter}>
             <SelectTrigger className="h-10 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none">
-              <SelectValue placeholder="All Types" />
+              <div className="flex items-center gap-2">
+                <Filter className="w-3.5 h-3.5" />
+                <SelectValue placeholder="All Types" />
+              </div>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="All">All Types</SelectItem>
@@ -151,23 +160,39 @@ export const TransactionList = () => {
             </SelectContent>
           </Select>
 
-          <div className="flex items-center gap-2">
-            <Select value={rowsLimit} onValueChange={setRowsLimit}>
-              <SelectTrigger className="h-10 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none">
-                <div className="flex items-center gap-2">
-                  <ListFilter className="w-3.5 h-3.5" />
-                  <span>Rows: {rowsLimit}</span>
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Rows</SelectItem>
-                <SelectItem value="5">Top 5</SelectItem>
-                <SelectItem value="10">Top 10</SelectItem>
-                <SelectItem value="25">Top 25</SelectItem>
-                <SelectItem value="50">Top 50</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <SelectTrigger className="h-10 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none">
+              <div className="flex items-center gap-2">
+                <ListFilter className="w-3.5 h-3.5" />
+                <SelectValue placeholder="Categories" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="All Categories">All Categories</SelectItem>
+              {uniqueCategories.map(cat => (
+                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={rowsLimit} onValueChange={setRowsLimit}>
+            <SelectTrigger className="h-10 text-xs font-bold rounded-xl bg-slate-50 dark:bg-slate-800 border-none">
+              <div className="flex items-center gap-2">
+                <span className="opacity-50">Limit:</span>
+                <span>{rowsLimit}</span>
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="5">5 Rows</SelectItem>
+              <SelectItem value="10">10 Rows</SelectItem>
+              <SelectItem value="25">25 Rows</SelectItem>
+              <SelectItem value="50">50 Rows</SelectItem>
+              <SelectItem value="100">100 Rows</SelectItem>
+              <SelectItem value="250">250 Rows</SelectItem>
+              <SelectItem value="500">500 Rows</SelectItem>
+              <SelectItem value="All">All Rows</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </CardHeader>
       <CardContent>
