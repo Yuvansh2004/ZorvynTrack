@@ -37,9 +37,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.genkit/*
 .env*
-
-# firebase
-firebase-debug.log
-firestore-debug.log
+node_modules/
+.next/
+dist/
+out/
+*.log
+*.sqlite

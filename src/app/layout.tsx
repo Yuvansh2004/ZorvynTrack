@@ -6,6 +6,9 @@ import { Toaster } from '@/components/ui/toaster';
 export const metadata: Metadata = {
   title: 'ZorvynTrack - Student Finance Dashboard',
   description: 'Internship assignment for Zorvyn FinTech.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
