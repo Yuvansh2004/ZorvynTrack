@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from 'react';
@@ -143,10 +144,10 @@ export const LoginPage = () => {
                   <Info className="w-3.5 h-3.5 mr-2" /> Sector Credentials
                 </Button>
               </DialogTrigger>
-              <DialogContent className={cn("rounded-[2rem] border-none", isDarkMode ? "bg-slate-900 text-white" : "bg-white text-slate-900")}>
+              <DialogContent className={cn("rounded-[2rem] border-none max-h-[80vh] overflow-y-auto", isDarkMode ? "bg-slate-900 text-white" : "bg-white text-slate-900")}>
                 <DialogHeader>
                   <DialogTitle className="text-2xl font-black italic uppercase tracking-tighter">Demo <span className="text-indigo-600">Sectors</span></DialogTitle>
-                  <DialogDescription className="font-bold text-xs">Synchronize terminal with evaluated nodes.</DialogDescription>
+                  <DialogDescription className="font-bold text-xs uppercase tracking-widest">Select a node to synchronize credentials.</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-3 mt-6">
                   {DEMO_ACCOUNTS.map((acc) => (
@@ -154,16 +155,24 @@ export const LoginPage = () => {
                       key={acc.email} 
                       className={cn(
                         "p-5 rounded-3xl border transition-all cursor-pointer group",
-                        isDarkMode ? "border-slate-800 hover:bg-slate-800" : "border-slate-100 hover:bg-slate-50 hover:border-indigo-200"
+                        isDarkMode ? "border-slate-800 hover:bg-slate-800" : "border-slate-100 hover:bg-slate-50 hover:border-indigo-200",
+                        acc.role === 'Admin' && "border-indigo-500/50 bg-indigo-50/10 dark:bg-indigo-900/10"
                       )}
                       onClick={() => fillDemo(acc)}
                     >
                       <div className="flex justify-between items-center">
                         <div>
-                          <p className="text-sm font-black uppercase italic tracking-tight group-hover:text-indigo-600 transition-colors">{acc.name}</p>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm font-black uppercase italic tracking-tight group-hover:text-indigo-600 transition-colors">{acc.name}</p>
+                            {acc.role === 'Admin' && <span className="text-[8px] font-black text-indigo-600 uppercase border border-indigo-600 px-1.5 rounded">Primary</span>}
+                          </div>
                           <p className="text-[10px] text-slate-400 font-bold">{acc.email}</p>
+                          <p className="text-[9px] text-indigo-500 font-black mt-1 uppercase tracking-tighter">Key: {acc.password}</p>
                         </div>
-                        <span className="text-[9px] font-black bg-indigo-600 text-white px-3 py-1.5 rounded-xl uppercase tracking-widest shadow-lg shadow-indigo-100 dark:shadow-none">
+                        <span className={cn(
+                          "text-[9px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest shadow-lg dark:shadow-none",
+                          acc.role === 'Admin' ? "bg-indigo-600 text-white shadow-indigo-200" : "bg-slate-100 text-slate-500"
+                        )}>
                           {acc.role}
                         </span>
                       </div>

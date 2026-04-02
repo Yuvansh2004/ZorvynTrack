@@ -8,17 +8,27 @@ Built by **Yuvansh Dashrath Koli**
 ## Project Overview
 ZorvynTrack is a high-impact, institutional-grade financial terminal built for the Zorvyn internship assessment. The platform focuses on student financial literacy through intuitive data visualization, secure role-based access modulation (RBAC), and precise ledger management.
 
-### Admin Access Credentials
+### Admin Access Credentials (FOR EVALUATION)
 - **Email:** `yuvanshkoli@DemoZorvynTrack.io`
 - **Password:** `admin_zorvyn`
 - **Role:** Admin (Full Ledger Authority)
 
-### Key Functional Approaches (The "Human" Logic)
-1. **Centralized Node State**: I utilized the React Context API (`FinanceContext.tsx`) to manage a master ledger of ~800 transactions across 10 demo accounts. I chose Context over complex libraries like Redux to maintain a "simple and smart" architecture that prioritizes auditability and performance for a single-page terminal.
-2. **Institutional Security Protocol**: I implemented a "Grace Period" system. In a real-world FinTech environment, data integrity is paramount. Here, users have a 30-second window to correct their own entries. After this, data becomes "Permanent," simulating an immutable audit trail that only an Admin can override.
-3. **Adaptive Telemetry UI**: Developed a **"Long-Node Scroll"** system and responsive scaling for the Dashboard Summary Cards. Financial values (INR) are handled as full-width nodes with horizontal scrolling, ensuring 100% legibility on laptop screens without truncation.
-4. **Onboarding Synchronization**: The terminal features a culturally resonant "Namaste" greeting on every login. For new users, a point-to-point Tutorial initializes *immediately after* the greeting to explain the system architecture, mirroring a human-led onboarding experience.
-5. **Data-Rich Telemetry**: Built a generation engine that initializes the platform with professional, future-dated transactions starting from **January 1st, 2026**. This ensures the charts show meaningful "velocity" rather than empty states.
+## Key Technical Approaches (The "Human Logic" Rationale)
+
+1. **Strategic Node State (Context API)**: 
+   - I utilized the React Context API (`FinanceContext.tsx`) to manage a master ledger of ~800 transactions across 10 demo accounts. I chose Context over complex state libraries like Redux to maintain a **"Simple and Smart"** architecture that prioritizes auditability and performance for a single-page terminal.
+
+2. **Institutional Security Protocol**: 
+   - I implemented a **"Grace Period"** system. In a real-world FinTech environment, data integrity is paramount. Here, users have a 30-second window to correct their own entries. After this, data becomes "Permanent," simulating an immutable audit trail that only an Admin node can override.
+
+3. **Adaptive Long-Node Telemetry**: 
+   - To solve layout constraints on 13-inch laptop screens, I developed a **"Horizontal Long-Node Scroll"** system for the Summary Cards. Financial values (INR) are treated as full-width nodes within a scrollable container, ensuring 100% legibility regardless of sidebar state.
+
+4. **Sequential Onboarding synchronization**: 
+   - The terminal features a culturally resonant **"Namaste"** greeting protocol. For new users, a point-to-point Tutorial initializes immediately *after* the greeting is dismissed, providing a human-led onboarding experience that explains the system architecture.
+
+5. **Democratic Data Contribution**: 
+   - While maintaining RBAC, I allowed **Common Viewers** to contribute data to the ledger, reflecting a "Smart" collaborative environment where students can track their own spending while Admins manage the institutional integrity.
 
 ## Requirements Alignment Matrix
 | Requirement | Implementation Detail | Status |
